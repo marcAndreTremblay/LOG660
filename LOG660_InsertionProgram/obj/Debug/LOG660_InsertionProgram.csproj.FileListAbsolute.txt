@@ -1,2 +1,3 @@
 C:\Users\marc\Dropbox\University\Hiver_2017\LOG320 - Strcuture de données et algorithme\Lab 1\LOG660_InsertionProgram\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
 C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+C:\Users\Samuel\Desktop\session 7\SQLDB LOG660\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config

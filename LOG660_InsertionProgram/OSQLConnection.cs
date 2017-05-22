@@ -19,7 +19,7 @@ namespace LOG660_InsertionProgram
                    "(CONNECT_DATA =" +
                    "(SERVER = DEDICATED)" +
                    "(SID = LOG660)));" +
-                   "User Id=equipe39;Password=wkIrnP7g;";
+                   "User Id=equipe4;Password=wkIrnP7g;";
 
             OracleConnection conn = new OracleConnection(oradb); // C#
           
@@ -28,25 +28,19 @@ namespace LOG660_InsertionProgram
 
             Console.WriteLine("Connected to Oracle" + conn.ServerVersion);
 
+            string inset_test = @"insert into Film_Info (fk_RealisateurID,annee,titre,pays,langue_original,genre,film_resume,scenarisme,duree) 
+             VALUES(1,2000,'Le retour de la putine','Cananada','Francais','Drole en Criss','This great movies is about this !','Mr.Scenarisme',130)";
 
-            OracleCommand cmd = new OracleCommand();
-
-            cmd.Connection = conn;
-
-           
-            cmd.CommandText = @"CREATE TABLE my_test_table (t_id INT PRIMARY KEY, 
-                                                            t_c2 INT, 
-                                                            t_c3 INT
-                                                        );";
+            OracleCommand cmd = new OracleCommand(inset_test, conn);
             cmd.CommandType = CommandType.Text;
-
+          //  cmd.ExecuteReader();
             OracleDataReader dr = cmd.ExecuteReader();
 
-            dr.Read();
+            bool result =  dr.Read();
+            bool result1 = dr.Read();
+         
+            int test = dr.GetInt32(0);
 
-            System.Console.WriteLine(dr.GetString(0));
-
-           
 
             conn.Dispose();
         }

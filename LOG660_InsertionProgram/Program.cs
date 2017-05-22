@@ -17,6 +17,10 @@ namespace LOG660_InsertionProgram
     {
         static void Main(string[] args)
         {
+            OSQLConnection my_connection = new OSQLConnection();
+
+
+
             FileStream fs = File.Open("./clients_latin1.xml",FileMode.Open);
             XmlReader r = XmlReader.Create(fs);
             while (r.Read())

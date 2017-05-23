@@ -56,4 +56,9 @@
       <IsDefault>true</IsDefault>
     </DBRef>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\DatabaseBuild.sql">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
 </Project>

@@ -57,10 +57,10 @@
     </DBRef>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="big-data-3.logti.etsmtl.ca1521LOG660.EQUIPE4.CHECK_EXPIRATION_CARTECREDIT.sql">
+    <Content Include="Scripts\DatabaseBuild.sql">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Scripts\DatabaseBuild.sql">
+    <Content Include="Scripts\destruction_table.sql">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>

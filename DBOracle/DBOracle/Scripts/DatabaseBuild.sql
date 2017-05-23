@@ -27,20 +27,22 @@ PersonneID INTEGER,
 ForfaitID INTEGER, 
 AdresseID INTEGER,
 CarteCreditID INTEGER, 
-numeroTel VARCHAR(20), 
+numeroTel VARCHAR(20) UNIQUE, 
 courriel VARCHAR(50), 
 password VARCHAR(100),  
-PRIMARY KEY(ClientID));
+PRIMARY KEY(ClientID),
+CHECK(password like '^[a-zA-Z0-9]{5,}$'));
 
 CREATE TABLE Employe
 (EmployeID iNTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
 PersonneID INTEGER, 
 AdresseID INTEGER, 
 numeroTel VARCHAR(20), 
-courriel VARCHAR(50), 
+courriel VARCHAR(50) UNIQUE, 
 password VARCHAR(100), 
 matricule VARCHAR(7),  
-PRIMARY KEY(EmployeID));
+PRIMARY KEY(EmployeID),
+CHECK(password like '^[a-zA-Z0-9]{5,}$'));
 
 CREATE TABLE CarteCredit
 (CarteCreditID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
@@ -147,27 +149,3 @@ FOREIGN KEY (ClientID) REFERENCES Client(ClientID);
 ALTER TABLE FILM
 ADD CONSTRAINT FK_RealisateurFilm
 FOREIGN KEY (RealisateurID) REFERENCES Realisateur(RealisateurID);
-
-CREATE OR REPLACE TRIGGER "CHECK_EXPIRATION_CARTECREDIT"
-  BEFORE
-  INSERT OR UPDATE OF "DATEEXPIRATION"
-  ON "CARTECREDIT"
-  WHEN (NEW.DateExpiration > sysdate)
-DECLARE
-
-BEGIN -- executable part starts here
-
-  -- Write PL/SQL and SQL statements to implement the processing logic
-  -- Example: Restricting EMP table update through UPDATE Trigger ON TABLE
-  --          varSalaryDiff = ((:new.SAL - :old.SAL)/:old.SAL)*100;
-  --          IF (varSalaryDiff < 0 || varSalaryDiff > 20) THEN
-  --            RAISE invalid_salary;
-  --          END IF;
-  raise_application_error;
-  NULL;
-
-  -- EXCEPTION -- exception-handling part starts here
-  -- WHEN invalid_salary THEN
-  --   dbms_output.put_line('Updated salary is not within the range');
-
-END;

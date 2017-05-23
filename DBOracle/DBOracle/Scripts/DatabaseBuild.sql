@@ -60,7 +60,8 @@ PRIMARY KEY(ForfaitID));
 CREATE TABLE Film_Acteur
 (ActeurID INTEGER, 
 FilmID INTEGER, 
-personnage VARCHAR)
+personnage VARCHAR(50),
+PRIMARY KEY(ActeurID, FilmID));
 
 CREATE TABLE Inventaire
 (CodeCopieID INTEGER, 

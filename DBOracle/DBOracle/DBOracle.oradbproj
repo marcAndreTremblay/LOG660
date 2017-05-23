@@ -57,6 +57,9 @@
     </DBRef>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="big-data-3.logti.etsmtl.ca1521LOG660.EQUIPE4.CHECK_EXPIRATION_CARTECREDIT.sql">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Scripts\DatabaseBuild.sql">
       <SubType>Content</SubType>
     </Content>

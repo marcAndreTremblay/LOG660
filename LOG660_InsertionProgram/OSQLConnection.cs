@@ -48,9 +48,14 @@ namespace LOG660_InsertionProgram
             string adress_insertion = @"insert into EQUIPE4.ADRESSE (ADRESSEID, NOCIVIQUE,RUE,VILLE,PROVINCE,CODEPOSTAL) 
                         values ('" + "', '" + "','" + "','" + "','" + "','" + "'); ";
 
+<<<<<<< HEAD
             //Step 4 with ids in step 1,2,3 create a client instance
             string client_insertion = @"insert into EQUIPE4.CLIENT (CLIENTID, PERSONNEID,FORFAITID,ADRESSEID,CARTECREDITID,NUMEROTEL,COURRIEL,PASSWORD) 
                                     values ('" + "', '" + "','" + "','" + "','" + "','" + "','" + "','" + "');";
+=======
+            Console.WriteLine("Connected to Oracle" + conn.ServerVersion);
+            Console.WriteLine("Connected with : " + oradb);
+>>>>>>> 010b6ee6d069c8f191ba186eea1a5ef68bfba8dd
 
 
             string person2ne_insertion = @"insert into EQUIPE4.PERSONNE (PRENOM,NOMFAMILLE,DATENAISSANCE) 

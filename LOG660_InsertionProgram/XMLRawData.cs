@@ -27,6 +27,7 @@ namespace LOG660_InsertionProgram
     };
     public class XMLFilmData
     {
+<<<<<<< HEAD
         public int id;
         public string title;
         public int year;
@@ -39,6 +40,20 @@ namespace LOG660_InsertionProgram
         public List<XMLRoleData> roles_list;
         public List<string> annonce_list;
         public List<string> scenariste_list;
+=======
+        int id;
+        string title;
+        int year;
+        string pays;
+        string langue;
+        int duree; //Minute
+        string resumer;
+
+        List<string> genre_list;
+        List<XMLRoleData> roles_list;
+        List<string> annonce_list;
+        List<string> scenariste_list;
+>>>>>>> 010b6ee6d069c8f191ba186eea1a5ef68bfba8dd
 
         //For table realisateur
         public string realisateur_id;
@@ -68,6 +83,7 @@ namespace LOG660_InsertionProgram
     }
     public class XMLClientData
     {
+<<<<<<< HEAD
         public int bd_id;
         public int xml_id;
         public string last_name;
@@ -82,11 +98,27 @@ namespace LOG660_InsertionProgram
         public XMLInfoCredit credit_carte_indo;
         public string mot_de_passe;
         public string forfait; //char(1)
+=======
+        int id;
+        string last_name;
+        string first_name;
+        string courriel;
+        string telephone;
+        string aniversaire;
+        string address;
+        string ville;
+        string province;
+        string code_postal;
+        XMLInfoCredit credit_carte_info;
+        string mot_de_passe;
+        string forfait; //char(1)
+>>>>>>> 010b6ee6d069c8f191ba186eea1a5ef68bfba8dd
 
         public XMLClientData()
         {
 
         }
+
     }
 
     public class XMLNaissanceData

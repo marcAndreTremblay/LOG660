@@ -9,3 +9,15 @@ C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionP
 C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\Oracle.DataAccess.dll
 C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
 C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb
+<<<<<<< HEAD
+=======
+C:\Users\Samuel\Source\Repos\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+C:\Users\Samuel\Source\Repos\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
+C:\Users\Samuel\Source\Repos\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.pdb
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\Oracle.DataAccess.dll
+D:\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
+D:\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb
+>>>>>>> 010b6ee6d069c8f191ba186eea1a5ef68bfba8dd

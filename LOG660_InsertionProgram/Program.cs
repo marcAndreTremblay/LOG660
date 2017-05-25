@@ -26,7 +26,7 @@ namespace LOG660_InsertionProgram
 
 
 
-           // OSQLConnection my_connection = new OSQLConnection();
+            OSQLConnection my_connection = new OSQLConnection();
 
 
             //Base file './' is in the debug folder

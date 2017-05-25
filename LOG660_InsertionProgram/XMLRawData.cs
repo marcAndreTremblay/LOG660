@@ -16,8 +16,8 @@ namespace LOG660_InsertionProgram
     public class XMLRoleData {
 
         //Insert this into acteur table
-        int acteur_id;
-        string acteur_name;
+        public int acteur_id;
+        public string acteur_name;
 
         string personnage_name;
         public XMLRoleData()
@@ -27,37 +27,39 @@ namespace LOG660_InsertionProgram
     };
     public class XMLFilmData
     {
-        int id;
-        string title;
-        int year;
-        string pays;
-        string langue;
-        int duréé; //Minute
-        string resumer;
+        public int id;
+        public string title;
+        public int year;
+        public string pays;
+        public string langue;
+        public int duréé; //Minute
+        public string resumer;
 
-        List<string> genre_list;
-        List<XMLRoleData> roles_list;
-        List<string> annonce_list;
-        List<string> scenariste_list;
+        public List<string> genre_list;
+        public List<XMLRoleData> roles_list;
+        public List<string> annonce_list;
+        public List<string> scenariste_list;
 
         //For table realisateur
-        string realisateur_id;
-        string realisateur_name;
+        public string realisateur_id;
+        public string realisateur_name;
 
         public XMLFilmData()
         {
             genre_list = new List<string>();
             roles_list = new List<XMLRoleData>();
+            scenariste_list = new List<string>();
+            annonce_list = new List<string>();
         }
     }
 
 
     public class XMLInfoCredit
     {
-        string carte_type; //Mastercarte - Visa - American ezpress
-        string No;
-        int exp_mount;
-        int exp_year;
+        public string carte_type; //Mastercarte - Visa - American ezpress
+        public string No;
+        public int exp_mount;
+        public int exp_year;
 
         public XMLInfoCredit()
         {
@@ -66,19 +68,20 @@ namespace LOG660_InsertionProgram
     }
     public class XMLClientData
     {
-        int id;
-        string last_name;
-        string first_name;
-        string courriel;
-        string telephone;
-        string aniversaire;
-        string address;
-        string ville;
-        string province;
-        string code_postal;
-        XMLInfoCredit credit_carte_indo;
-        string mot_de_passe;
-        string forfait; //char(1)
+        public int bd_id;
+        public int xml_id;
+        public string last_name;
+        public string first_name;
+        public string courriel;
+        public string telephone;
+        public string aniversaire;
+        public string address;
+        public string ville;
+        public string province;
+        public string code_postal;
+        public XMLInfoCredit credit_carte_indo;
+        public string mot_de_passe;
+        public string forfait; //char(1)
 
         public XMLClientData()
         {
@@ -88,8 +91,8 @@ namespace LOG660_InsertionProgram
 
     public class XMLNaissanceData
     {
-        string data; //yyyy-MM-JJ
-        string lieu; // city, state, country
+        public string data; //yyyy-MM-JJ
+        public string lieu; // city, state, country
         public XMLNaissanceData()
         {
 
@@ -97,11 +100,12 @@ namespace LOG660_InsertionProgram
     }
     public class XMLPersonneData
     {
-        int id;
-        string name;
-        string biographie;
-        XMLNaissanceData naissance;
-        string photo_link;
+        public int db_id;
+        public int xml_id;
+        public string name;
+        public string biographie;
+        public XMLNaissanceData naissance;
+        public string photo_link;
 
         public XMLPersonneData()
         {

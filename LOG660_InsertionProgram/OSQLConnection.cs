@@ -12,6 +12,8 @@ namespace LOG660_InsertionProgram
 {
     public class OSQLConnection
     {
+        OracleConnection m_connection;
+
         public OSQLConnection()
         {
             string oradb = "Data Source=(DESCRIPTION =" +
@@ -21,19 +23,40 @@ namespace LOG660_InsertionProgram
                    "(SID = LOG660)));" +
                    "User Id=equipe4;Password=wkIrnP7g;";
 
-            OracleConnection conn = new OracleConnection(oradb); // C#
-          
-          //  conn.ConnectionString = @"Data Source=big-data-3.logti.etsmtl.ca;User Id=equipe39;Password=wkIrnP7g;"; 
-            conn.Open();
+            m_connection = new OracleConnection(oradb); // C#
 
-            Console.WriteLine("Connected to Oracle" + conn.ServerVersion);
+            //  conn.ConnectionString = @"Data Source=big-data-3.logti.etsmtl.ca;User Id=equipe39;Password=wkIrnP7g;"; 
+            m_connection.Open();
 
-            string inset_test = @"insert into Film_Info (fk_RealisateurID,annee,titre,pays,langue_original,genre,film_resume,scenarisme,duree) 
-             VALUES(1,2000,'Le retour de la putine','Cananada','Francais','Drole en Criss','This great movies is about this !','Mr.Scenarisme',130)";
+            Console.WriteLine("Connected to Oracle" + m_connection.ServerVersion);
 
-           
 
-            OracleCommand cmd = new OracleCommand(inset_test, conn);
+
+
+
+
+ 
+            //Step 1 -> add a personne and retrive the last id created
+            string personne_insertion = @"insert into EQUIPE4.PERSONNE (PERSONNEID, PRENOM,NOMFAMILLE,DATENAISSANCE) 
+                     values ('"+ "', '" + "', '" + "','" + "');";
+
+            //Step 2 -> Create a credit card instance and retrive the last id created
+            string credit_card_insertion = @"insert into EQUIPE4.CARTECREDIT (CARTECREDITID, TYPECARTE,NUMERO,DATEEXPIRATION,CVV) 
+                     values ('" + "', '" + "','" + "','" + "','" + "');";
+
+            //Step 3 -> Create a adress instance and retrive the last id created
+            string adress_insertion = @"insert into EQUIPE4.ADRESSE (ADRESSEID, NOCIVIQUE,RUE,VILLE,PROVINCE,CODEPOSTAL) 
+                        values ('" + "', '" + "','" + "','" + "','" + "','" + "'); ";
+
+            //Step 4 with ids in step 1,2,3 create a client instance
+            string client_insertion = @"insert into EQUIPE4.CLIENT (CLIENTID, PERSONNEID,FORFAITID,ADRESSEID,CARTECREDITID,NUMEROTEL,COURRIEL,PASSWORD) 
+                                    values ('" + "', '" + "','" + "','" + "','" + "','" + "','" + "','" + "');";
+
+
+            string person2ne_insertion = @"insert into EQUIPE4.PERSONNE (PRENOM,NOMFAMILLE,DATENAISSANCE) 
+                     values ('Test_from_prog', 'Test_from_prog','1992-06-23')";
+
+            OracleCommand cmd = new OracleCommand(person2ne_insertion, m_connection);
             cmd.CommandType = CommandType.Text;
           //  cmd.ExecuteReader();
             OracleDataReader dr = cmd.ExecuteReader();
@@ -41,10 +64,10 @@ namespace LOG660_InsertionProgram
             bool result =  dr.Read();
             bool result1 = dr.Read();
          
-            int test = dr.GetInt32(0);
+            //int test = dr.GetInt32(0);
 
 
-            conn.Dispose();
+            m_connection.Dispose();
         }
     }
 }

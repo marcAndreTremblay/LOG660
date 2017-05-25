@@ -27,6 +27,7 @@ namespace LOG660_InsertionProgram
             conn.Open();
 
             Console.WriteLine("Connected to Oracle" + conn.ServerVersion);
+            Console.WriteLine("Connected with : " + oradb);
 
             string inset_test = @"insert into Film_Info (fk_RealisateurID,annee,titre,pays,langue_original,genre,film_resume,scenarisme,duree) 
              VALUES(1,2000,'Le retour de la putine','Cananada','Francais','Drole en Criss','This great movies is about this !','Mr.Scenarisme',130)";

@@ -32,7 +32,7 @@ namespace LOG660_InsertionProgram
         int year;
         string pays;
         string langue;
-        int duréé; //Minute
+        int duree; //Minute
         string resumer;
 
         List<string> genre_list;
@@ -76,7 +76,7 @@ namespace LOG660_InsertionProgram
         string ville;
         string province;
         string code_postal;
-        XMLInfoCredit credit_carte_indo;
+        XMLInfoCredit credit_carte_info;
         string mot_de_passe;
         string forfait; //char(1)
 
@@ -84,6 +84,7 @@ namespace LOG660_InsertionProgram
         {
 
         }
+
     }
 
     public class XMLNaissanceData

@@ -9,3 +9,9 @@ C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionP
 C:\Users\Samuel\Source\Repos\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
 C:\Users\Samuel\Source\Repos\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
 C:\Users\Samuel\Source\Repos\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.pdb
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\Oracle.DataAccess.dll
+D:\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
+D:\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb

@@ -24,9 +24,9 @@ namespace LOG660_InsertionProgram
             List<XMLFilmData> xml_film_data = new List<XMLFilmData>();
             List<XMLPersonneData> xml_personne_data = new List<XMLPersonneData>();
 
+            List<string> forfait_list = new List<string>();
 
-
-           // OSQLConnection my_connection = new OSQLConnection();
+    //        OSQLConnection my_connection = new OSQLConnection();
 
 
             //Base file './' is in the debug folder
@@ -35,26 +35,57 @@ namespace LOG660_InsertionProgram
             FileStream xml_personne_film = File.Open("./clients_latin1.xml", FileMode.Open);
 
             XmlReader r = XmlReader.Create(xml_personne_film);
-            
+
+            string c_node_name = "";
             while (r.Read())
             {
                 if (r.NodeType == XmlNodeType.Element)
                 {
-                   // Console.WriteLine();
-                    Console.Write("<" + r.Name + ">");
-                    if (r.HasAttributes)
-                    {
-                        for (int i = 0; i < r.AttributeCount; i++)
+                    c_node_name = r.Name;
+                    //if(r.Name == "forfait")
+                    //  {
+                        Console.Write("<" + c_node_name + ">");
+                        if (r.HasAttributes)
                         {
-                            Console.WriteLine("\tATTRIBUTE: " + r.GetAttribute(i));
+                            for (int i = 0; i < r.AttributeCount; i++)
+                            {
+                                Console.WriteLine("\tATTRIBUTE: " + r.GetAttribute(i));
+                            }
                         }
+                        bool result = r.Read();
+                        if (result == true)
+                        {
+                            if (r.NodeType == XmlNodeType.Text)
+                            {
+                                Console.WriteLine("\tVALUE: " + r.Value);
+                            }
+                    ///    }
                     }
-                }
-                else if (r.NodeType == XmlNodeType.Text)
-                {
-                    Console.WriteLine("\tVALUE: " + r.Value);
+                    else
+                    {
+                        r.Read();
+                    }  
                 }
             }
+            //while (r.Read())
+            //{
+            //    if (r.NodeType == XmlNodeType.Element)
+            //    {
+            //        // Console.WriteLine();
+            //        Console.Write("<" + r.Name + ">");
+            //        if (r.HasAttributes)
+            //        {
+            //            for (int i = 0; i < r.AttributeCount; i++)
+            //            {
+            //                Console.WriteLine("\tATTRIBUTE: " + r.GetAttribute(i));
+            //            }
+            //        }
+            //    }
+            //    else if (r.NodeType == XmlNodeType.Text)
+            //    {
+            //        Console.WriteLine("\tVALUE: " + r.Value);
+            //    }
+            //}
 
             System.Console.ReadKey();
 

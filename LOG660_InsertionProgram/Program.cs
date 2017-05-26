@@ -18,25 +18,20 @@ namespace LOG660_InsertionProgram
 
     class Program
     {
-        static void Main(string[] args)
+        static void FetchFilmData(FileStream xml_file,
+                                    List<XMLFilmData> list_data)
         {
-            List<XMLClientData> xml_clients_data = new List<XMLClientData>();
-            List<XMLFilmData> xml_film_data = new List<XMLFilmData>();
-            List<XMLPersonneData> xml_personne_data = new List<XMLPersonneData>();
+            XmlReader r = XmlReader.Create(xml_file);
+            XMLFilmData c_f_data = null;
 
-            List<string> forfait_list = new List<string>();
-
-       //    OSQLConnection my_connection = new OSQLConnection();
+            String c_node_name = "";
 
 
-
-            //Base file './' is in the debug folder
-            //FileStream xml_client_file = File.Open("./clients_latin1.xml",FileMode.Open);
-        //    FileStream xml_film_file = File.Open("./films_latin1.xml", FileMode.Open);
-            FileStream xml_personne_film = File.Open("./personnes_latin1.xml", FileMode.Open);
-
+        }
+        static void FetchPresonneData(FileStream xml_personne_film,
+                                        List<XMLPersonneData> xml_personne_data)
+        {
             XmlReader r = XmlReader.Create(xml_personne_film);
-
             XMLPersonneData c_p_data = null;
 
             string c_node_name = "";
@@ -49,16 +44,17 @@ namespace LOG660_InsertionProgram
                     {
                         case "personne":
                             {
-                                if(c_p_data != null)
+                                Console.WriteLine("<" + c_node_name + ">");
+                                if (c_p_data != null)
                                 {
-                                   xml_personne_data.Add(c_p_data);
-                                   c_p_data = null;
-                                   c_p_data = new XMLPersonneData();
+                                    xml_personne_data.Add(c_p_data);
+                                    c_p_data = null;
+                                    c_p_data = new XMLPersonneData();
                                 }
                                 else
                                 {
                                     c_p_data = new XMLPersonneData();
-                                    Console.WriteLine("<" + c_node_name + ">");
+
                                 }
                                 if (r.HasAttributes)
                                 {
@@ -66,16 +62,17 @@ namespace LOG660_InsertionProgram
                                 }
                                 break;
                             }
-                        
-                        default: {
+
+                        default:
+                            {
                                 Console.WriteLine("<" + c_node_name + ">");
-                               
+
                                 bool result = r.Read();
                                 if (result == true)
                                 {
                                     if (r.NodeType == XmlNodeType.Text)
                                     {
-                                        if(c_node_name == "nom")
+                                        if (c_node_name == "nom")
                                         {
                                             c_p_data.name = r.Value;
                                             Console.WriteLine("\tVALUE: " + r.Value);
@@ -103,11 +100,36 @@ namespace LOG660_InsertionProgram
                                 {
                                     r.Read();
                                 }
-                                break; }
-                    } 
+                                break;
+                            }
+                    }
                 }
             }
-            
+
+        }
+        static void Main(string[] args)
+        {
+            List<XMLClientData> xml_clients_data = new List<XMLClientData>();
+         
+          
+
+            List<string> forfait_list = new List<string>();
+
+            // Creat a connection with oracle SQL
+            // OSQLConnection my_connection = new OSQLConnection();
+
+
+            // Fetch personne data from the xml personnes_latin1.xml and store them into a list
+                FileStream xml_personne_film = File.Open("./personnes_latin1.xml", FileMode.Open);
+                List<XMLPersonneData> xml_personne_data = new List<XMLPersonneData>();
+                FetchPresonneData(xml_personne_film, xml_personne_data);
+            // End personnes data fetch
+
+            // Fetch personne data from the xml personnes_latin1.xml and store them into a list
+                FileStream xml_film_file = File.Open("./films_latin1.xml", FileMode.Open);
+                List<XMLFilmData> xml_film_data = new List<XMLFilmData>();
+                FetchFilmData(xml_film_file, xml_film_data);
+            //End film fetch
 
             System.Console.ReadKey();
 

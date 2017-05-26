@@ -14,6 +14,13 @@ namespace LOG660_InsertionProgram
     {
         OracleConnection m_connection;
 
+
+
+        public void InsertPersonne(XMLPersonneData data)
+        {
+            string cmd_string = @"insert into EQUIPE4.PERSONNE ( PRENOM,NOMFAMILLE,DATENAISSANCE) 
+                  values ( '"+ data.name + "', '" + data.last_name + "','"+ data.naissance_info.data + "')";
+        }
         public OSQLConnection()
         {
             string oradb = "Data Source=(DESCRIPTION =" +
@@ -48,14 +55,10 @@ namespace LOG660_InsertionProgram
             string adress_insertion = @"insert into EQUIPE4.ADRESSE (ADRESSEID, NOCIVIQUE,RUE,VILLE,PROVINCE,CODEPOSTAL) 
                         values ('" + "', '" + "','" + "','" + "','" + "','" + "'); ";
 
-<<<<<<< HEAD
+
             //Step 4 with ids in step 1,2,3 create a client instance
-            string client_insertion = @"insert into EQUIPE4.CLIENT (CLIENTID, PERSONNEID,FORFAITID,ADRESSEID,CARTECREDITID,NUMEROTEL,COURRIEL,PASSWORD) 
-                                    values ('" + "', '" + "','" + "','" + "','" + "','" + "','" + "','" + "');";
-=======
-            Console.WriteLine("Connected to Oracle" + conn.ServerVersion);
-            Console.WriteLine("Connected with : " + oradb);
->>>>>>> 010b6ee6d069c8f191ba186eea1a5ef68bfba8dd
+            string client_insertion = @"insert into EQUIPE4.CLIENT (CLIENTID, PERSONNEID,FORFAITID,ADRESSEID,CARTECREDITID,NUMEROTEL,COURRIEL,PASSWORD) ";
+
 
 
             string person2ne_insertion = @"insert into EQUIPE4.PERSONNE (PRENOM,NOMFAMILLE,DATENAISSANCE) 

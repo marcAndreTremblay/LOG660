@@ -178,3 +178,23 @@ BEGIN
 	END IF;
 END;
 /
+
+CREATE OR REPLACE TRIGGER VerifierSiLocationDisponible
+BEFORE INSERT ON Location_Client
+FOR EACH ROW
+BEGIN
+	IF (SELECT * FROM Location_Client WHERE CodeCopieID = :NEW.CodeCopieID AND dateRetour IS NOT NULL) EXISTS THEN
+		RAISE_APPLICATION_ERROR('-20000', 'La copie doit être disponible pour pouvoir la louer');
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER VerifierSiClientLouePlusQueMax
+BEFORE INSERT ON Location_Client
+FOR EACH ROW
+BEGIN
+	IF (SELECT COUNT(*) FROM Location_Client WHERE CLIENTID = :NEW.CLIENTID AND dateRetour IS NOT NULL) > (SELECT LocationMax FROM Client INNER JOIN forfait ON Client.FORFAITID = Forfait.FORFAITID) THEN
+		RAISE_APPLICATION_ERROR('-20000', 'Le client ne peut pas avoir plus de location que son forfait lui permet');
+	END IF;
+END;
+/

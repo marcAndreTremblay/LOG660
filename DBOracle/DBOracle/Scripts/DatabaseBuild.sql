@@ -57,7 +57,7 @@ CREATE TABLE Forfait
 coutParMois INTEGER, 
 typeForfait VARCHAR(15), 
 locationMax INTEGER, 
-dureeMax TIMESTAMP,  
+dureeMaxJour INTEGER,  
 PRIMARY KEY(ForfaitID));
 
 CREATE TABLE Film_Acteur
@@ -149,3 +149,32 @@ FOREIGN KEY (ClientID) REFERENCES Client(ClientID);
 ALTER TABLE FILM
 ADD CONSTRAINT FK_RealisateurFilm
 FOREIGN KEY (RealisateurID) REFERENCES Realisateur(RealisateurID);
+
+--------------------------------------------------------------------------------------------------------------------
+--                                               Les procédures
+--------------------------------------------------------------------------------------------------------------------
+INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (5, 'Débutant', 1, 10);
+INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (10, 'Intermédiaire', 5, 30);
+INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (15, 'Avencé', 10, NULL);
+
+CREATE OR REPLACE TRIGGER VerifierDateExpirationCarte --testé
+BEFORE INSERT ON CarteCredit
+FOR EACH ROW
+BEGIN
+	IF :NEW.DateExpiration <= trunc(sysdate) THEN
+		RAISE_APPLICATION_ERROR('-20000', 'Carte de crédit expiré');
+	END IF;
+END;
+/
+
+
+CREATE OR REPLACE TRIGGER VerifierAgeClient
+BEFORE INSERT ON Client
+FOR EACH ROW
+BEGIN
+	IF (SELECT DateNaissance FROM Personne WHERE PersonneID = :NEW.PersonneID) < ADD_MONTH(SYSDATE, -216) THEN --le select marche pas
+		DELETE FROM Personne WHERE PersonneID = :NEW.PersonneID;
+		RAISE_APPLICATION_ERROR('-20000', 'Le client doit avoir au moins 18 ans');
+	END IF;
+END;
+/

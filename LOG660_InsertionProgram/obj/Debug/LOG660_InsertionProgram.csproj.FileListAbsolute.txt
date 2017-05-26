@@ -18,6 +18,4 @@ D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\Oracle.DataAccess.dll
 D:\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
 D:\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb
 >>>>>>> 010b6ee6d069c8f191ba186eea1a5ef68bfba8dd
-C:\Users\Mandaniaina\Source\Repos\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
-C:\Users\Mandaniaina\Source\Repos\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
-C:\Users\Mandaniaina\Source\Repos\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb
+C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.csprojResolveAssemblyReference.cache

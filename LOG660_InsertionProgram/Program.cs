@@ -457,6 +457,8 @@ namespace LOG660_InsertionProgram
 
         static void Main(string[] args)
         {
+            Random my_ramdom = new Random((Int32)DateTime.Now.Ticks);
+
             //Note(Marc): Sync point 0
    
             OSQLConnection my_connection = new OSQLConnection();
@@ -573,32 +575,52 @@ namespace LOG660_InsertionProgram
             }
             foreach (XMLPersonneData c_personne in xml_personne_data)
             {
-                my_connection.InsertPersonne(c_personne);
+             //   my_connection.InsertPersonne(c_personne);
             }
-            //int tempo_personne = personne_id_cpt;
-            //int tempo_credit_cart = 1;
-            //int tempo_address = 1;
-            //foreach (XMLClientData c_data in xml_clients_data)
-            //{
-            //    //Insert New personne
-            //    XMLPersonneData new_p = new XMLPersonneData();
-            //        new_p.name = c_data.first_name;
-            //        new_p.last_name = c_data.last_name;
-            //        new_p.naissance_info.data = c_data.aniversaire;
-            //        new_p.naissance_info.lieu = "";
-            //        new_p.biographie = "";
-            //        new_p.photo_link = "";
-            //    my_connection.InsertPersonne(new_p);
-            //    c_data.Ref_personne = tempo_personne;
-            //    tempo_personne++;
+            //   int tempo_personne = personne_id_cpt;
+            int tempo_personne = 1;
+            int tempo_credit_cart = 1;
+            int tempo_address = 1;
+            foreach (XMLClientData c_data in xml_clients_data)
+            {
+                //Insert New personne
+                XMLPersonneData new_p = new XMLPersonneData();
+                    new_p.name = c_data.first_name;
+                    new_p.last_name = c_data.last_name;
+                    new_p.naissance_info.data = c_data.aniversaire;
+                    new_p.naissance_info.lieu = "";
+                    new_p.biographie = "";
+                    new_p.photo_link = "";
+                my_connection.InsertPersonne(new_p);
+                c_data.Ref_personne = tempo_personne;// Store pk for fk later
+                tempo_personne++;
 
-            //    //Insert Adress
-            //    tempo_address++;
-            //    //Insert Credit card
-            //    tempo_credit_cart++;
-            //    //Insert New Client
+                string[] adress_split = c_data.address.Split(' ');
+                string street_name = "";
+                for(int i = 1; i < adress_split.Length; i++)
+                {
+                    street_name += adress_split[i];
+                }
+                //Insert Adress
+                my_connection.InserADress(Convert.ToInt32(adress_split[0]),
+                    street_name, c_data.ville, c_data.province, c_data.code_postal);
+                c_data.Ref_address = tempo_address;  // Store pk for fk later
+                tempo_address++;
 
-            //}
+                //Insert Credit card
+                my_connection.InsertCarteCredit(c_data.credit_carte_indo.carte_type,
+                                              /*Convert.ToInt32(c_data.credit_carte_indo.No.Trim(' '))*/123,
+                                              c_data.credit_carte_indo.exp_mount,
+                                              c_data.credit_carte_indo.exp_year,
+                                              /*Convert.ToInt32(my_ramdom.NextDouble()*999)*/123);
+                c_data.Ref_redit_cart = tempo_credit_cart;
+                tempo_credit_cart++;
+                //Insert New Client
+
+                my_connection.InsertClient(c_data);
+
+
+            }
             end_time_stamp = DateTime.Now.Millisecond;
             long insering_time = end_time_stamp - start_time_stamp;
 

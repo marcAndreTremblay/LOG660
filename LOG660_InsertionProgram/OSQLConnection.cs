@@ -14,10 +14,38 @@ namespace LOG660_InsertionProgram
     {
         OracleConnection m_connection;
 
+        public void InsertClient(XMLClientData c_data)
+        {
+            string cmd_string = @"insert into CLIENT ( PERSONNEID,FORFAITID,
+                                                      ADRESSEID,CARTECREDITID,
+                                                       NUMEROTEL,COURRIEL,PASSWORD) 
+                                             VALUES ("+c_data.Ref_personne+","+c_data.Ref_Forfait_id+","
+                                                     +c_data.Ref_address+","+c_data.Ref_redit_cart
+                                                     +",'"+ c_data.telephone+ "','"+c_data.courriel+"','"+c_data.mot_de_passe+"')";
+
+            OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
+
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();
+            cmd = null;
+
+        }
+        public void InsertCarteCredit(string carte_Type,int number,int exp_month,int exp_year,int csv)
+        {
+            string cmd_string = @"INSERT INTO CARTECREDIT (TYPECARTE,NUMERO,exp_month,exp_year,CVV)
+                                    VALUES ('"+ carte_Type + "',"+ number + ","+ exp_month + ","+ exp_year + ","+ csv + ")";
+
+            OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
+
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();
+            cmd = null;
+
+        }
         public void InserADress(int num_civic , string rue,string ville,string province,string code_postal)
         {
             string cmd_string = @"insert into EQUIPE4.ADRESSE ( NOCIVIQUE,RUE,VILLE,PROVINCE,CODEPOSTAL) 
-                                             values ("+ num_civic + ", '"+ rue + "','"+ ville + "','"+ province + "','"+ code_postal + "'); ";
+                                             values ("+ num_civic + ", '"+ rue + "','"+ ville + "','"+ province + "','"+ code_postal + "')";
 
             OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
 

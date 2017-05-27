@@ -621,6 +621,28 @@ namespace LOG660_InsertionProgram
 
 
             }
+
+            int nex_id = 1;
+            foreach(XMLFilmData c_data in xml_film_data)
+            {
+                //Add film 
+                my_connection.InsertFilm(c_data);
+                c_data.bd_id = nex_id;
+                nex_id++;
+                //Add Scenariste
+                foreach(string c_sceneriste in c_data.scenariste_list)
+                {
+
+                }
+                //Add role
+                foreach (XMLRoleData c_role in c_data.roles_list)
+                {
+
+                }
+                //Add Realisateur
+                //Add Inventaire
+            }
+
             end_time_stamp = DateTime.Now.Millisecond;
             long insering_time = end_time_stamp - start_time_stamp;
 

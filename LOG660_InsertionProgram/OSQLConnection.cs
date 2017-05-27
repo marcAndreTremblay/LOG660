@@ -14,6 +14,23 @@ namespace LOG660_InsertionProgram
     {
         OracleConnection m_connection;
 
+        public void InsertFilm(XMLFilmData c_data)
+        {
+            string genre_concatenation = "";
+            foreach(string c_s in c_data.genre_list)
+            {
+                genre_concatenation += c_s + ",";
+            }
+
+            string cmd_string = @"INSERT INTO FILM (ANNEE,TITRE,PAYS,LANGUEORIGINALE,GENRES,RESUMEFILM,DUREEMINUTES) 
+                                                VALUES("+ c_data.year+",'"+c_data.title+"','"+c_data.pays+"','"+c_data.langue+"')";
+
+            OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
+
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();
+            cmd = null;
+        }
         public void InsertClient(XMLClientData c_data)
         {
             string cmd_string = @"insert into CLIENT ( PERSONNEID,FORFAITID,

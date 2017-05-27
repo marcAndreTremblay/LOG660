@@ -5,21 +5,19 @@ PersonneID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
 prenom VARCHAR(50),
 nomFamille VARCHAR(50),
 dateNaissance DATE,
-PRIMARY KEY(PersonneID));
-
-CREATE TABLE Realisateur
-(RealisateurID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
- PersonneID INTEGER, 
  biographie VARCHAR(1000), 
  lieuNaissance VARCHAR(50),
-  PRIMARY KEY(RealisateurID));
+PRIMARY KEY(PersonneID));
 
-CREATE TABLE Acteur
-(ActeurID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
-PersonneID INTEGER, 
-biographie VARCHAR(1000), 
-lieuNaissance VARCHAR(50),
- PRIMARY KEY(ActeurID));
+CREATE TABLE Realisateur(
+ fk_FilmID INTEGER,
+ fk_PersonneID INTEGER);
+ 
+CREATE TABLE Scenariste(
+ fk_FilmID INTEGER,
+ nom VARCHAR(50));
+ 
+
 
 CREATE TABLE Client
 (ClientID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
@@ -60,11 +58,11 @@ locationMax INTEGER,
 dureeMax TIMESTAMP,  
 PRIMARY KEY(ForfaitID));
 
-CREATE TABLE Film_Acteur
-(ActeurID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
-FilmID INTEGER, 
+CREATE TABLE Film_Acteur(
+fk_personneID INTEGER, 
+fk_filmID INTEGER, 
 personnage VARCHAR(50),
-PRIMARY KEY(ActeurID, FilmID));
+PRIMARY KEY(fk_personneID, fk_filmID));
 
 CREATE TABLE Inventaire
 (CodeCopieID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
@@ -91,14 +89,12 @@ PRIMARY KEY(LocationID));
 
 CREATE TABLE Film
 (FilmID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
-RealisateurID INTEGER,
 annee INTEGER, 
 titre VARCHAR(100), 
 pays VARCHAR(50), 
 langueOriginale VARCHAR(50), 
 genres VARCHAR(1000), 
 resumeFilm VARCHAR(4000), 
-scenariste VARCHAR(1000), 
 dureeMinutes INTEGER,
 PRIMARY KEY(FilmID));
 
@@ -120,19 +116,24 @@ FOREIGN KEY (CarteCreditID) REFERENCES CarteCredit(CarteCreditID);
 
 ALTER TABLE Film_Acteur
 ADD CONSTRAINT FK_Acteur_ActeurFilm
-FOREIGN KEY (ActeurID) REFERENCES Acteur(ActeurID);
+FOREIGN KEY (fk_personneID) REFERENCES Personne(PersonneID);
 
 ALTER TABLE Film_Acteur
 ADD CONSTRAINT FK_Film_ActeurFilm
-FOREIGN KEY (FilmID) REFERENCES Film(FilmID);
+FOREIGN KEY (fk_filmID) REFERENCES Film(FilmID);
 
 ALTER TABLE Realisateur
-ADD CONSTRAINT FK_PersonneRealisateur
-FOREIGN KEY (PersonneID) REFERENCES Personne(PersonneID);
+ADD CONSTRAINT FK_RealisateurPersonne
+FOREIGN KEY (fk_PersonneID) REFERENCES Personne(PersonneID);
 
-ALTER TABLE Acteur
-ADD CONSTRAINT FK_PersonneActeur
-FOREIGN KEY (PersonneID) REFERENCES Personne(PersonneID);
+ALTER TABLE Realisateur
+ADD CONSTRAINT FK_RealisateurFilm
+FOREIGN KEY (fk_FilmID) REFERENCES Film(FilmID);
+
+ALTER TABLE Scenariste
+ADD CONSTRAINT FK_ScenaristeFilm
+FOREIGN KEY (fk_FilmID) REFERENCES Film(FilmID);
+
 
 ALTER TABLE Inventaire
 ADD CONSTRAINT FK_FilmInventaire
@@ -146,6 +147,4 @@ ALTER TABLE Location_Client
 ADD CONSTRAINT FK_ClientLocation_Client
 FOREIGN KEY (ClientID) REFERENCES Client(ClientID);
 
-ALTER TABLE FILM
-ADD CONSTRAINT FK_RealisateurFilm
-FOREIGN KEY (RealisateurID) REFERENCES Realisateur(RealisateurID);
+

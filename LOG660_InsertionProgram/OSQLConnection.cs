@@ -35,7 +35,7 @@ namespace LOG660_InsertionProgram
             //  conn.ConnectionString = @"Data Source=big-data-3.logti.etsmtl.ca;User Id=equipe39;Password=wkIrnP7g;"; 
             m_connection.Open();
 
-            Console.WriteLine("Connected to Oracle" + m_connection.ServerVersion);
+            //Console.WriteLine("Connected to Oracle" + m_connection.ServerVersion);
 
 
 

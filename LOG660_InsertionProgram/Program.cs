@@ -459,8 +459,8 @@ namespace LOG660_InsertionProgram
         {
             //Note(Marc): Sync point 0
    
-            // OSQLConnection my_connection = new OSQLConnection();
-
+            OSQLConnection my_connection = new OSQLConnection();
+            
 
             // Fetch personne data from the xml personnes_latin1.xml and store them into a list
             FileStream xml_clients_file = File.Open("./clients_latin1.xml", FileMode.Open);
@@ -482,10 +482,11 @@ namespace LOG660_InsertionProgram
 
            
 
-            int start_time_stamp = DateTime.Now.Millisecond;
+            long start_time_stamp = DateTime.Now.Millisecond;
+            long end_time_stamp = 0;
 
                 //Note(Marc): Sync point 1
-                t1_c.Start();
+            t1_c.Start();
                 t2_p.Start();
                 t3_f.Start();
 
@@ -495,15 +496,15 @@ namespace LOG660_InsertionProgram
                 t2_p.Join();
                 t3_f.Join();
 
-            int end_time_stamp = DateTime.Now.Millisecond;
-            int xml_load_time = end_time_stamp - start_time_stamp;
+            end_time_stamp = DateTime.Now.Millisecond;
+            long xml_load_time = end_time_stamp - start_time_stamp;
          
             //Order the by xml id
             Thread t1_s_c = new Thread(() => xml_clients_data.Sort(XMLClientData.GetComparer()));
             Thread t2_s_p = new Thread(() => xml_personne_data.Sort(XMLPersonneData.GetComparer()));
             Thread t3_s_f = new Thread(() => xml_film_data.Sort(XMLFilmData.GetComparer()));
 
-            int start_time_stamp2 = DateTime.Now.Millisecond;
+            start_time_stamp = DateTime.Now.Millisecond;
 
                 //Note(Marc): Sync point 2
                 t1_s_c.Start();
@@ -517,21 +518,34 @@ namespace LOG660_InsertionProgram
                 t2_s_p.Join();
                 t3_s_f.Join();
 
+            
             List<ForfaitData> forfait_list = new List<ForfaitData>();
 
             GenForfaitsFromClientData(xml_clients_data, forfait_list);
-           
-                
+            int tempo_c = 10;
+            int tempo_d = 2;
+            int tempo_l = 2;
+            foreach (ForfaitData c_data in forfait_list)
+            {
+                c_data.coupPerMount = tempo_c;
+                c_data.location_duree = tempo_d;
+                c_data.location_max = tempo_l;
+                tempo_c += 5;
+                tempo_d += 2;
+                tempo_l++;
+
+            }
+
                 //Build a relation id dictionnary for furtur look up
-                int id_cpt = 1;
+                int personne_id_cpt = 1;
                 int[,] dic_id_relation = new int[xml_personne_data.Count, 2];
                 int dic_next_free = 0;
                 foreach (XMLPersonneData c_personne in xml_personne_data)
                 {
-                    c_personne.db_id = id_cpt;
+                    c_personne.db_id = personne_id_cpt;
                     dic_id_relation[dic_next_free, 0] = c_personne.xml_id;
                     dic_id_relation[dic_next_free, 1] = c_personne.db_id;
-                    id_cpt++;
+                    personne_id_cpt++;
                     dic_next_free++;
                 }
 
@@ -548,17 +562,49 @@ namespace LOG660_InsertionProgram
                         }
                 }
                 }
-            
-            int end_time_stamp2 = DateTime.Now.Millisecond;
-            int data_preprocess_time = end_time_stamp2 - start_time_stamp2;
 
+            end_time_stamp = DateTime.Now.Millisecond;
+            long data_preprocess_time = end_time_stamp - start_time_stamp;
 
+            long start_time_stamp3 = DateTime.Now.Ticks;
+            foreach (ForfaitData c_data in forfait_list)
+            {
+                my_connection.InsertForfait(c_data);
+            }
+            foreach (XMLPersonneData c_personne in xml_personne_data)
+            {
+                my_connection.InsertPersonne(c_personne);
+            }
+            //int tempo_personne = personne_id_cpt;
+            //int tempo_credit_cart = 1;
+            //int tempo_address = 1;
+            //foreach (XMLClientData c_data in xml_clients_data)
+            //{
+            //    //Insert New personne
+            //    XMLPersonneData new_p = new XMLPersonneData();
+            //        new_p.name = c_data.first_name;
+            //        new_p.last_name = c_data.last_name;
+            //        new_p.naissance_info.data = c_data.aniversaire;
+            //        new_p.naissance_info.lieu = "";
+            //        new_p.biographie = "";
+            //        new_p.photo_link = "";
+            //    my_connection.InsertPersonne(new_p);
+            //    c_data.Ref_personne = tempo_personne;
+            //    tempo_personne++;
 
-            
-          
+            //    //Insert Adress
+            //    tempo_address++;
+            //    //Insert Credit card
+            //    tempo_credit_cart++;
+            //    //Insert New Client
+
+            //}
+            end_time_stamp = DateTime.Now.Millisecond;
+            long insering_time = end_time_stamp - start_time_stamp;
 
             System.Console.WriteLine("XML Read count : Time ( " + xml_load_time + "  Millisecond )");
             System.Console.WriteLine("Data pre-process : Time ( " + data_preprocess_time + "  Millisecond )");
+            System.Console.WriteLine("Data insertion : Time ( " + insering_time + "  Millisecond )");
 
             System.Console.WriteLine("\tFilm : " + xml_film_data.Count());
             System.Console.WriteLine("\tPersonne : " + xml_personne_data.Count());

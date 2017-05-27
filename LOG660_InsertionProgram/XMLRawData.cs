@@ -16,6 +16,9 @@ namespace LOG660_InsertionProgram
     {
         public int id_bd;
         public char Nom;
+        public int coupPerMount;
+        public int location_max;
+        public int location_duree;
 
         public ForfaitData()
         {
@@ -120,6 +123,10 @@ namespace LOG660_InsertionProgram
 
         //Generated data on runtime
         public int Ref_Forfait_id;
+        public int Ref_personne;
+        public int Ref_redit_cart;
+        public int Ref_address;
+
 
         public XMLClientData()
         {
@@ -156,7 +163,8 @@ namespace LOG660_InsertionProgram
         public string lieu; // city, state, country
         public XMLNaissanceData()
         {
-
+            data = "";
+            lieu = "";
         }
     }
 
@@ -173,7 +181,12 @@ namespace LOG660_InsertionProgram
 
         public XMLPersonneData()
         {
+            name = "";
+            last_name = "";
             naissance_info = new XMLNaissanceData();
+            biographie = "";
+            photo_link = "";
+
         }
         static public PersonneComparer GetComparer()
         {

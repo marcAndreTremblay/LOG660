@@ -1,12 +1,10 @@
-
-
 CREATE TABLE PERSONNE(
 PersonneID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
-prenom VARCHAR(50),
-nomFamille VARCHAR(50),
+prenom VARCHAR(100),
+nomFamille VARCHAR(100),
 dateNaissance DATE,
- biographie VARCHAR(1000), 
- lieuNaissance VARCHAR(50),
+ biographie VARCHAR(2000), 
+ lieuNaissance VARCHAR(100),
 PRIMARY KEY(PersonneID));
 
 CREATE TABLE Realisateur(
@@ -148,9 +146,6 @@ ADD CONSTRAINT FK_ClientLocation_Client
 FOREIGN KEY (ClientID) REFERENCES Client(ClientID);
 
 
-ALTER TABLE FILM
-ADD CONSTRAINT FK_RealisateurFilm
-FOREIGN KEY (RealisateurID) REFERENCES Realisateur(RealisateurID);
 
 
 /*

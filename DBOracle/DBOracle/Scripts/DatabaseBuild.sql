@@ -206,3 +206,53 @@ BEGIN
 		RAISE_APPLICATION_ERROR('-20000', 'Le client ne peut pas avoir plus de location que son forfait lui permet');
 	END IF;
 END;
+
+create or replace PROCEDURE pCreerClient
+    (prenom_in IN VARCHAR2, nomFamille_in IN VARCHAR2, dateNaissance_in IN DATE, numeroTel_in IN VARCHAR2, courriel_in IN VARCHAR2, password_in IN VARCHAR2, 
+    noCivique_in IN VARCHAR2, rue_in IN VARCHAR2, ville_in IN VARCHAR2, province_in IN VARCHAR2, codePostal_in IN VARCHAR2, typeCarte_in IN VARCHAR2, numero_in IN NUMBER, 
+    exp_month_in IN NUMBER, exp_year_in IN NUMBER, cvv_in IN NUMBER, forfaitID_in IN NUMBER)
+IS
+    adresseID NUMBER;
+    personneID NUMBER;
+    carteCreditID NUMBER;
+BEGIN
+    INSERT INTO Adresse (noCivique, rue, ville, province, codePostal)
+    VALUES (noCivique_in, rue_in, ville_in, province_in, codePostal_in)
+    RETURNING adresseID INTO adresseID;
+    
+    INSERT INTO CarteCredit (typeCarte, numero, exp_month, exp_year, cvv)
+    VALUES (typeCarte_in, numero_in, exp_month_in, exp_year_in, cvv_in)
+    RETURNING carteCreditID INTO carteCreditID;
+    
+    INSERT INTO Personne (prenom, nomFamille, dateNaissance)
+    VALUES (prenom_in, nomFamille_in, dateNaissance_in)
+    RETURNING personneID INTO personneID;
+
+    INSERT INTO Client (adresseID, carteCreditID, personneID, forfaitID, courriel, numeroTel, password)
+    VALUES (adresseID, carteCreditID, personneID, forfaitID_in, courriel_in, numeroTel_in, password_in);
+    
+    dbms_output.put_line(adresseID);
+EXCEPTION 
+WHEN OTHERS THEN raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END pCreerClient;
+
+/
+/* TEST
+BEGIN
+  pCreerClient(
+  'Alexandre', 
+  'Godard', 
+  TO_DATE('10101995','DDMMYYYY'), 
+  '514 570-0531', 
+  'alexandre@godard.me', 
+  '^[a-zA-Z0-9]{5,}$', 
+  '1045', 
+  'rue Ottawa', 
+  'Montreal', 
+  'QC', 
+  'H3C 5X6', 
+  'VISA', 
+  4111111111111111, 4, 18, 333, 8);
+END;
+
+/*/

@@ -246,13 +246,13 @@ create or replace PROCEDURE pLouerFilm
 IS
     copieALouer NUMBER;
 BEGIN
-    SELECT codeCopie INTO copieALouer
+    SELECT codeCopieID INTO copieALouer
     FROM (
         SELECT *
         FROM Location_Client
         WHERE 
-            codeCopie = (
-                SELECT codeCopie
+            codeCopieID = (
+                SELECT codeCopieID
                 FROM Inventaire
                 WHERE filmID = filmID_in
             )

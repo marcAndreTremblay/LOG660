@@ -173,7 +173,7 @@ DECLARE
 	DateNaissanceClient date;
 BEGIN
 	SELECT DateNaissance INTO DateNaissanceClient FROM Personne WHERE PersonneID = :NEW.PersonneID;
-	IF  DateNaissanceClient < ADD_MONTHS(SYSDATE,-216) THEN
+	IF  DateNaissanceClient > ADD_MONTHS(SYSDATE,-216) THEN
 		DELETE FROM Personne WHERE PersonneID = :NEW.PersonneID;
 		RAISE_APPLICATION_ERROR('-20000', 'Le client doit avoir au moins 18 ans');
 	END IF;

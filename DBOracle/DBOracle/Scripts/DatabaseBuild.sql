@@ -235,23 +235,29 @@ EXCEPTION
 WHEN OTHERS THEN raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
 END pCreerClient;
 
-/
-/* TEST
+/* Not tested */
+create or replace PROCEDURE pLouerFilm
+    (filmID_in IN NUMBER, clientID_in IN NUMBER)
+IS
+    copieALouer NUMBER;
 BEGIN
-  pCreerClient(
-  'Alexandre', 
-  'Godard', 
-  TO_DATE('10101995','DDMMYYYY'), 
-  '514 570-0531', 
-  'alexandre@godard.me', 
-  '^[a-zA-Z0-9]{5,}$', 
-  '1045', 
-  'rue Ottawa', 
-  'Montreal', 
-  'QC', 
-  'H3C 5X6', 
-  'VISA', 
-  4111111111111111, 4, 18, 333, 8);
-END;
-
-/*/
+    SELECT codeCopie INTO copieALouer
+    FROM (
+        SELECT *
+        FROM Location_Client
+        WHERE 
+            codeCopie = (
+                SELECT codeCopie
+                FROM Inventaire
+                WHERE filmID = filmID_in
+            )
+            AND dateRetour IS NOT NULL
+        ORDER BY dateLocation DESC
+    )
+    WHERE ROWNUM = 1;
+    
+    INSERT INTO Location_Client (codeCopieID, clientID, dateLocation)
+    VALUES (copieALouer, clientID_in, TO_CHAR(SYSDATE, 'YYYY-MM-DD'));
+EXCEPTION 
+WHEN OTHERS THEN raise_application_error(-20001,'Erreur lors de la location du film ' || filmID_in);
+END pLouerFilm;

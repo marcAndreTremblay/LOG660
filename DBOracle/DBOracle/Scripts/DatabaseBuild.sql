@@ -27,7 +27,7 @@ numeroTel VARCHAR(20) UNIQUE,
 courriel VARCHAR(50), 
 password VARCHAR(100),  
 PRIMARY KEY(ClientID),
-CHECK (REGEXP_LIKE(password, '^[a-zA-Z0-9]{5,}$')))
+CHECK (REGEXP_LIKE(password, '^[a-zA-Z0-9]{5,}$')));
 
 CREATE TABLE Employe
 (EmployeID iNTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
@@ -38,7 +38,7 @@ courriel VARCHAR(50) UNIQUE,
 password VARCHAR(100), 
 matricule VARCHAR(7),  
 PRIMARY KEY(EmployeID),
-CHECK (REGEXP_LIKE(password, '^[a-zA-Z0-9]{5,}$')))
+CHECK (REGEXP_LIKE(password, '^[a-zA-Z0-9]{5,}$')));
 
 CREATE TABLE CarteCredit
 (CarteCreditID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 

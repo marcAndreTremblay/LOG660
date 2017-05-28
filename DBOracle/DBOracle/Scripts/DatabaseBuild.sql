@@ -81,7 +81,6 @@ CREATE TABLE Location_Client
 (LocationID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
 CodeCopieID INTEGER, 
 ClientID INTEGER, 
-EmployeID INTEGER, 
 dateLocation TIMESTAMP, 
 dateRetour TIMESTAMP,  
 PRIMARY KEY(LocationID));
@@ -150,16 +149,16 @@ FOREIGN KEY (ClientID) REFERENCES Client(ClientID);
 
 /* Note(Marc) : Je construit deja les forfaits a partir des information dans la BD
 
-INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (5, 'Débutant', 1, 10);
-INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (10, 'Intermédiaire', 5, 30);
-INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (15, 'Avencé', 10, NULL);
+INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (5, 'DÃ©butant', 1, 10);
+INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (10, 'IntermÃ©diaire', 5, 30);
+INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (15, 'AvencÃ©', 10, NULL);
 */
 CREATE OR REPLACE TRIGGER VerifierDateExpirationCarte
 BEFORE INSERT ON CarteCredit
 FOR EACH ROW
 BEGIN
 	IF :NEW.EXP_YEAR < EXTRACT(YEAR FROM SYSDATE) OR :NEW.EXP_YEAR = EXTRACT(YEAR FROM SYSDATE) AND :NEW.EXP_MONTH < EXTRACT(MONTH FROM SYSDATE) THEN
-		RAISE_APPLICATION_ERROR('-20000', 'Carte de crédit expiré');
+		RAISE_APPLICATION_ERROR('-20000', 'Carte de crÃ©dit expirÃ©');
 	END IF;
 END;
 
@@ -188,7 +187,7 @@ DECLARE
 BEGIN
 	SELECT COUNT(*) INTO EstLoue FROM Location_Client WHERE CodeCopieID = :NEW.CodeCopieID AND dateRetour IS NOT NULL;
 	IF EstLoue <> 0 THEN
-		RAISE_APPLICATION_ERROR('-20000', 'La copie doit être disponible pour pouvoir la louer');
+		RAISE_APPLICATION_ERROR('-20000', 'La copie doit Ãªtre disponible pour pouvoir la louer');
 	END IF;
 END;
 

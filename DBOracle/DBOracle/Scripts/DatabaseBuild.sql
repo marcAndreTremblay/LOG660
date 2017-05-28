@@ -149,27 +149,31 @@ FOREIGN KEY (ClientID) REFERENCES Client(ClientID);
 
 
 
-/*
+
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (5, 'Débutant', 1, 10);
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (10, 'Intermédiaire', 5, 30);
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (15, 'Avencé', 10, NULL);
 
-CREATE OR REPLACE TRIGGER VerifierDateExpirationCarte --testé
+CREATE OR REPLACE TRIGGER VerifierDateExpirationCarte
 BEFORE INSERT ON CarteCredit
 FOR EACH ROW
 BEGIN
-	IF :NEW.DateExpiration <= trunc(sysdate) THEN
+	IF :NEW.EXP_YEAR < EXTRACT(YEAR FROM SYSDATE) OR :NEW.EXP_YEAR = EXTRACT(YEAR FROM SYSDATE) AND :NEW.EXP_MONTH < EXTRACT(MONTH FROM SYSDATE) THEN
 		RAISE_APPLICATION_ERROR('-20000', 'Carte de crédit expiré');
 	END IF;
 END;
 
 
 
+
 CREATE OR REPLACE TRIGGER VerifierAgeClient
 BEFORE INSERT ON Client
 FOR EACH ROW
+DECLARE
+	DateNaissanceClient date;
 BEGIN
-	IF (SELECT DateNaissance FROM Personne WHERE PersonneID = :NEW.PersonneID) < ADD_MONTH(SYSDATE, -216) THEN --le select marche pas
+	SELECT DateNaissance INTO DateNaissanceClient FROM Personne WHERE PersonneID = :NEW.PersonneID;
+	IF  DateNaissanceClient < ADD_MONTHS(SYSDATE,-216) THEN
 		DELETE FROM Personne WHERE PersonneID = :NEW.PersonneID;
 		RAISE_APPLICATION_ERROR('-20000', 'Le client doit avoir au moins 18 ans');
 	END IF;
@@ -179,8 +183,11 @@ END;
 CREATE OR REPLACE TRIGGER VerifierSiLocationDisponible
 BEFORE INSERT ON Location_Client
 FOR EACH ROW
+DECLARE
+	EstLoue INTEGER;
 BEGIN
-	IF (SELECT * FROM Location_Client WHERE CodeCopieID = :NEW.CodeCopieID AND dateRetour IS NOT NULL) EXISTS THEN
+	SELECT COUNT(*) INTO EstLoue FROM Location_Client WHERE CodeCopieID = :NEW.CodeCopieID AND dateRetour IS NOT NULL;
+	IF EstLoue <> 0 THEN
 		RAISE_APPLICATION_ERROR('-20000', 'La copie doit être disponible pour pouvoir la louer');
 	END IF;
 END;
@@ -189,9 +196,13 @@ END;
 CREATE OR REPLACE TRIGGER VerifierSiClientLouePlusQueMax
 BEFORE INSERT ON Location_Client
 FOR EACH ROW
+DECLARE
+	NBFilm INTEGER;
+	NBFilmMax INTEGER;
 BEGIN
-	IF (SELECT COUNT(*) FROM Location_Client WHERE CLIENTID = :NEW.CLIENTID AND dateRetour IS NOT NULL) > (SELECT LocationMax FROM Client INNER JOIN forfait ON Client.FORFAITID = Forfait.FORFAITID) THEN
+	SELECT COUNT(*) INTO NBFilm FROM Location_Client WHERE CLIENTID = :NEW.CLIENTID AND dateRetour IS NOT NULL;
+	SELECT LocationMax INTO NBFilmMax FROM Client INNER JOIN forfait ON Client.FORFAITID = Forfait.FORFAITID WHERE Client.CLIENTID = :NEW.CLIENTID;
+	IF NBFilm > NBFilmMax THEN
 		RAISE_APPLICATION_ERROR('-20000', 'Le client ne peut pas avoir plus de location que son forfait lui permet');
 	END IF;
 END;
-*/

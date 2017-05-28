@@ -1,4 +1,4 @@
-CREATE TABLE PERSONNE(
+CREATE TABLE  PERSONNE(
 PersonneID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
 prenom VARCHAR(100),
 nomFamille VARCHAR(100),
@@ -26,8 +26,8 @@ CarteCreditID INTEGER,
 numeroTel VARCHAR(20) UNIQUE, 
 courriel VARCHAR(50), 
 password VARCHAR(100),  
-PRIMARY KEY(ClientID),
-CHECK(password like '^[a-zA-Z0-9]{5,}$'));
+PRIMARY KEY(ClientID)/*,
+CHECK(password like '^[a-zA-Z0-9]{5,}$')*/);
 
 CREATE TABLE Employe
 (EmployeID iNTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
@@ -37,8 +37,8 @@ numeroTel VARCHAR(20),
 courriel VARCHAR(50) UNIQUE, 
 password VARCHAR(100), 
 matricule VARCHAR(7),  
-PRIMARY KEY(EmployeID),
-CHECK(password like '^[a-zA-Z0-9]{5,}$'));
+PRIMARY KEY(EmployeID)/*,
+CHECK(password like '^[a-zA-Z0-9]{5,}$')*/);
 
 CREATE TABLE CarteCredit
 (CarteCreditID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
@@ -148,12 +148,12 @@ FOREIGN KEY (ClientID) REFERENCES Client(ClientID);
 
 
 
-
+/* Note(Marc) : Je construit deja les forfaits a partir des information dans la BD
 
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (5, 'Débutant', 1, 10);
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (10, 'Intermédiaire', 5, 30);
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (15, 'Avencé', 10, NULL);
-
+*/
 CREATE OR REPLACE TRIGGER VerifierDateExpirationCarte
 BEFORE INSERT ON CarteCredit
 FOR EACH ROW
@@ -173,7 +173,7 @@ DECLARE
 	DateNaissanceClient date;
 BEGIN
 	SELECT DateNaissance INTO DateNaissanceClient FROM Personne WHERE PersonneID = :NEW.PersonneID;
-	IF  DateNaissanceClient > ADD_MONTHS(SYSDATE,-216) THEN
+	IF  DateNaissanceClient > ADD_MONTHS(SYSDATE,-216) THEN /* Should remove days not month could have some probleme when the birthday very soon*/
 		DELETE FROM Personne WHERE PersonneID = :NEW.PersonneID;
 		RAISE_APPLICATION_ERROR('-20000', 'Le client doit avoir au moins 18 ans');
 	END IF;

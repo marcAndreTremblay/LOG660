@@ -13,7 +13,54 @@ namespace LOG660_InsertionProgram
     public class OSQLConnection
     {
         OracleConnection m_connection;
+       
+        public void InsertRealisateur(int ref_personne_id, int ref_film_id)
+        {
+            string cmd_string = @"INSERT INTO REALISATEUR(fk_FilmID,fk_PersonneID)
+                                                VALUES(" + ref_film_id + ","+ ref_personne_id + ")";
 
+            OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
+
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();
+            cmd = null;
+        }
+
+        public void InsertInvetaireCopy(int  ref_film_id)
+        {
+
+            string cmd_string = @"INSERT INTO INVENTAIRE(FILMID)
+                                                VALUES(" + ref_film_id + ")";
+
+            OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
+
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();
+            cmd = null;
+        }
+        public void InsertRole(int fk_ref_film,XMLRoleData role)
+        {
+            string cmd_string = @"INSERT INTO SCENARISTE (FK_PERSONNEID,FK_FILMID,PERSONNAGE) 
+                                                VALUES("+role.ref_personne_bd_id+"," + fk_ref_film + ",'" + role.personnage_name + "')";
+
+            OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
+
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();
+            cmd = null;
+        }
+        public void InsertSceneriste(int fk_ref_film, string scenariste_name)
+        {
+
+            string cmd_string = @"INSERT INTO SCENARISTE (FK_FILMID,NOM) 
+                                                VALUES("+ fk_ref_film + ",'"+scenariste_name+"')";
+
+            OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
+
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();
+            cmd = null;
+        }
         public void InsertFilm(XMLFilmData c_data)
         {
             string genre_concatenation = "";
@@ -23,7 +70,9 @@ namespace LOG660_InsertionProgram
             }
 
             string cmd_string = @"INSERT INTO FILM (ANNEE,TITRE,PAYS,LANGUEORIGINALE,GENRES,RESUMEFILM,DUREEMINUTES) 
-                                                VALUES("+ c_data.year+",'"+c_data.title+"','"+c_data.pays+"','"+c_data.langue+"')";
+                                                VALUES("+ c_data.year + ",'" + c_data.title + "','"
+                                                        + c_data.pays + "','" + c_data.langue + "','"
+                                                        + genre_concatenation+"','"+c_data.resumer+"',"+c_data.duree+")";
 
             OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
 
@@ -33,12 +82,13 @@ namespace LOG660_InsertionProgram
         }
         public void InsertClient(XMLClientData c_data)
         {
+            //,PASSWORD
             string cmd_string = @"insert into CLIENT ( PERSONNEID,FORFAITID,
                                                       ADRESSEID,CARTECREDITID,
-                                                       NUMEROTEL,COURRIEL,PASSWORD) 
+                                                       NUMEROTEL,COURRIEL)  
                                              VALUES ("+c_data.Ref_personne+","+c_data.Ref_Forfait_id+","
                                                      +c_data.Ref_address+","+c_data.Ref_redit_cart
-                                                     +",'"+ c_data.telephone+ "','"+c_data.courriel+"','"+c_data.mot_de_passe+"')";
+                                                     +",'"+ c_data.telephone+ "','"+c_data.courriel+"')";
 
             OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
 

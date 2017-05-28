@@ -26,8 +26,8 @@ CarteCreditID INTEGER,
 numeroTel VARCHAR(20) UNIQUE, 
 courriel VARCHAR(50), 
 password VARCHAR(100),  
-PRIMARY KEY(ClientID),
-CHECK(password like '^[a-zA-Z0-9]{5,}$'));
+PRIMARY KEY(ClientID)/*,
+CHECK(password like '^[a-zA-Z0-9]{5,}$')*/);
 
 CREATE TABLE Employe
 (EmployeID iNTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 

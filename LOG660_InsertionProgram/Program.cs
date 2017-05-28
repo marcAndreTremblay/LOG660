@@ -621,7 +621,7 @@ namespace LOG660_InsertionProgram
 
 
             }
-
+            int inv_cpt = 1;
             int nex_id = 1;
             foreach(XMLFilmData c_data in xml_film_data)
             {
@@ -632,15 +632,24 @@ namespace LOG660_InsertionProgram
                 //Add Scenariste
                 foreach(string c_sceneriste in c_data.scenariste_list)
                 {
-
+                    my_connection.InsertSceneriste(c_data.bd_id, c_sceneriste);
                 }
                 //Add role
                 foreach (XMLRoleData c_role in c_data.roles_list)
                 {
-
+                    my_connection.InsertRole(c_data.bd_id,c_role);
                 }
                 //Add Realisateur
+                int ref_reali_id = SeachKey(dic_id_relation, c_data.realisateur_xml_id, xml_personne_data.Count);
+                my_connection.InsertRealisateur(ref_reali_id, c_data.bd_id);
                 //Add Inventaire
+                for (int i = 0;i< (int)(my_ramdom.NextDouble() * 99); i++)
+                {
+                    my_connection.InsertInvetaireCopy(c_data.bd_id);
+                }
+              
+
+
             }
 
             end_time_stamp = DateTime.Now.Millisecond;

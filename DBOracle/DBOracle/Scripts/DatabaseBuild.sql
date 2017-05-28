@@ -26,8 +26,8 @@ CarteCreditID INTEGER,
 numeroTel VARCHAR(20) UNIQUE, 
 courriel VARCHAR(50), 
 password VARCHAR(100),  
-PRIMARY KEY(ClientID)/*,
-CHECK(password like '^[a-zA-Z0-9]{5,}$')*/);
+PRIMARY KEY(ClientID),
+CHECK (REGEXP_LIKE(password, '^[a-zA-Z0-9]{5,}$')))
 
 CREATE TABLE Employe
 (EmployeID iNTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
@@ -37,8 +37,8 @@ numeroTel VARCHAR(20),
 courriel VARCHAR(50) UNIQUE, 
 password VARCHAR(100), 
 matricule VARCHAR(7),  
-PRIMARY KEY(EmployeID)/*,
-CHECK(password like '^[a-zA-Z0-9]{5,}$')*/);
+PRIMARY KEY(EmployeID),
+CHECK (REGEXP_LIKE(password, '^[a-zA-Z0-9]{5,}$')))
 
 CREATE TABLE CarteCredit
 (CarteCreditID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
@@ -162,8 +162,7 @@ BEGIN
 	END IF;
 END;
 
-
-
+/
 
 CREATE OR REPLACE TRIGGER VerifierAgeClient
 BEFORE INSERT ON Client
@@ -178,6 +177,7 @@ BEGIN
 	END IF;
 END;
 
+/
 
 CREATE OR REPLACE TRIGGER VerifierSiLocationDisponible
 BEFORE INSERT ON Location_Client
@@ -191,6 +191,7 @@ BEGIN
 	END IF;
 END;
 
+/
 
 CREATE OR REPLACE TRIGGER VerifierSiClientLouePlusQueMax
 BEFORE INSERT ON Location_Client
@@ -205,6 +206,8 @@ BEGIN
 		RAISE_APPLICATION_ERROR('-20000', 'Le client ne peut pas avoir plus de location que son forfait lui permet');
 	END IF;
 END;
+
+/
 
 create or replace PROCEDURE pCreerClient
     (prenom_in IN VARCHAR2, nomFamille_in IN VARCHAR2, dateNaissance_in IN DATE, numeroTel_in IN VARCHAR2, courriel_in IN VARCHAR2, password_in IN VARCHAR2, 
@@ -235,6 +238,8 @@ EXCEPTION
 WHEN OTHERS THEN raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
 END pCreerClient;
 
+/
+
 /* Not tested */
 create or replace PROCEDURE pLouerFilm
     (filmID_in IN NUMBER, clientID_in IN NUMBER)
@@ -261,3 +266,4 @@ BEGIN
 EXCEPTION 
 WHEN OTHERS THEN raise_application_error(-20001,'Erreur lors de la location du film ' || filmID_in);
 END pLouerFilm;
+/

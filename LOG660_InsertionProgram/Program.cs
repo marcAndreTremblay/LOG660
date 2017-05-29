@@ -468,8 +468,8 @@ namespace LOG660_InsertionProgram
             //Note(Marc): Sync point 0
 
             OSQLConnection my_connection = new OSQLConnection();
+     
 
-            
             // Fetch personne data from the xml personnes_latin1.xml and store them into a list
             FileStream xml_clients_file = File.Open("./clients_latin1.xml", FileMode.Open);
             List<XMLClientData> xml_clients_data = new List<XMLClientData>();
@@ -508,10 +508,6 @@ namespace LOG660_InsertionProgram
             xml_personne_file.Close();
             xml_film_file.Close();
 
-            XMLClientData data = (xml_clients_data.ElementAt(1));
-            string sssss = data.credit_carte_indo.No.Replace(" ", ""); 
-           UInt64 test_cart = Convert.ToUInt64(sssss);
-            int c2o = Convert.ToInt32(my_ramdom.NextDouble() * 999);
 
             end_time_stamp = DateTime.Now.Millisecond;
             long xml_load_time = end_time_stamp - start_time_stamp;
@@ -624,9 +620,9 @@ namespace LOG660_InsertionProgram
 
                 //Insert Credit card
                 int co = Convert.ToInt32(my_ramdom.NextDouble() * 999);
-                int numbcart = Convert.ToInt32(c_data.credit_carte_indo.No.Trim(' '));
+
                 my_connection.InsertCarteCredit(c_data.credit_carte_indo.carte_type,
-                                              123,
+                                              c_data.credit_carte_indo.No,
                                               c_data.credit_carte_indo.exp_mount,
                                               c_data.credit_carte_indo.exp_year,
                                               co);

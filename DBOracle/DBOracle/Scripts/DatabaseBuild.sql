@@ -154,7 +154,7 @@ INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (15, 'Avencé', 10, NULL);
 */
 
-CREATE OR REPLACE TRIGGER BI_VerifierDateExpirationCarte
+CREATE OR REPLACE TRIGGER VerifierDateExpirationCarte
 BEFORE INSERT ON CarteCredit
 FOR EACH ROW
 BEGIN
@@ -165,7 +165,7 @@ END;
 
 /
 
-CREATE OR REPLACE TRIGGER BI_VerifierAgeClient
+CREATE OR REPLACE TRIGGER VerifierAgeClient
 BEFORE INSERT ON Client
 FOR EACH ROW
 DECLARE
@@ -180,7 +180,7 @@ END;
 
 /
 
-CREATE OR REPLACE TRIGGER BI_VerifierSiLocationDisponible
+CREATE OR REPLACE TRIGGER VerifierSiLocationDisponible
 BEFORE INSERT ON Location_Client
 FOR EACH ROW
 DECLARE
@@ -194,7 +194,7 @@ END;
 
 /
 
-CREATE OR REPLACE TRIGGER BI_VerifierSiClientLouePlusQueMax
+CREATE OR REPLACE TRIGGER VerifierSiClientLouePlusQueMax
 BEFORE INSERT ON Location_Client
 FOR EACH ROW
 DECLARE

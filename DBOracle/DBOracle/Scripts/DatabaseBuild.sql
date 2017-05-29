@@ -186,7 +186,7 @@ FOR EACH ROW
 DECLARE
 	EstLoue INTEGER;
 BEGIN
-	SELECT COUNT(*) INTO EstLoue FROM Location_Client WHERE CodeCopieID = :NEW.CodeCopieID AND dateRetour IS NOT NULL;
+	SELECT COUNT(*) INTO EstLoue FROM Location_Client WHERE CodeCopieID = :NEW.CodeCopieID AND dateRetour IS NULL;
 	IF EstLoue <> 0 THEN
 		RAISE_APPLICATION_ERROR('-20000', 'La copie doit être disponible pour pouvoir la louer');
 	END IF;

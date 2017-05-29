@@ -244,27 +244,45 @@ END pCreerClient;
 
 create or replace PROCEDURE pLouerFilm
     (filmID_in IN NUMBER, clientID_in IN NUMBER)
-IS
+IS 
     copieALouer NUMBER;
 BEGIN
-    SELECT codeCopieID INTO copieALouer
-    FROM (
-        SELECT *
-        FROM Location_Client
-        WHERE 
-            codeCopieID = (
-                SELECT codeCopieID
-                FROM Inventaire
-                WHERE filmID = filmID_in
-            )
-            AND dateRetour IS NOT NULL
-        ORDER BY dateLocation DESC
-    )
-    WHERE ROWNUM = 1;
-    
-    INSERT INTO Location_Client (codeCopieID, clientID, dateLocation)
-    VALUES (copieALouer, clientID_in, TO_CHAR(SYSDATE, 'YYYY-MM-DD'));
-EXCEPTION 
-WHEN OTHERS THEN raise_application_error(-20001,'Erreur lors de la location du film ' || filmID_in);
+    BEGIN
+        /* Check for copies that have never been rented */
+        SELECT inv.codeCopieID INTO copieALouer
+        FROM Inventaire inv
+        LEFT JOIN Location_Client lc ON lc.codeCopieID = inv.codeCopieID
+        WHERE filmID = filmID_in
+            AND lc.LOCATIONID IS NULL
+            AND ROWNUM = 1;
+            
+        INSERT INTO Location_Client (codeCopieID, clientID, dateLocation)
+        VALUES (copieALouer, clientID_in, SYSDATE); 
+        
+    EXCEPTION WHEN NO_DATA_FOUND THEN
+        SELECT codeCopieID INTO copieALouer /* Copy for this movie that has been returned and not yet rented*/
+        FROM Inventaire
+        WHERE filmID = filmID_in 
+            AND codeCopieID NOT IN 
+            (
+                SELECT codeCopieID   /* Rented copies */
+                FROM Location_Client
+                WHERE 
+                    codeCopieID = ANY ( 
+                        SELECT codeCopieID
+                        FROM Inventaire
+                        WHERE filmID = filmID_in
+                    )
+                AND dateRetour IS NULL
+             )
+            AND ROWNUM = 1;
+        
+        INSERT INTO Location_Client (codeCopieID, clientID, dateLocation)
+        VALUES (copieALouer, clientID_in, SYSDATE); 
+    END;
+EXCEPTION WHEN NO_DATA_FOUND THEN
+    raise_application_error(-20001,'Plus de copies disponibles pour le film ' || filmID_in);
 END pLouerFilm;
+
+/
 /

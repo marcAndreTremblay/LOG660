@@ -23,8 +23,8 @@ PersonneID INTEGER,
 ForfaitID INTEGER, 
 AdresseID INTEGER,
 CarteCreditID INTEGER, 
-numeroTel VARCHAR(20) UNIQUE, 
-courriel VARCHAR(50), 
+numeroTel VARCHAR(20),
+courriel VARCHAR(50) UNIQUE, 
 password VARCHAR(100),  
 PRIMARY KEY(ClientID),
 CHECK (REGEXP_LIKE(password, '^[a-zA-Z0-9]{5,}$')));
@@ -81,8 +81,8 @@ CREATE TABLE Location_Client
 (LocationID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
 CodeCopieID INTEGER, 
 ClientID INTEGER, 
-dateLocation TIMESTAMP, 
-dateRetour TIMESTAMP,  
+dateLocation DATE, 
+dateRetour DATE,  
 PRIMARY KEY(LocationID));
 
 CREATE TABLE Film

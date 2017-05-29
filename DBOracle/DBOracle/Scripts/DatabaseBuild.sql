@@ -201,9 +201,9 @@ DECLARE
 	NBFilm INTEGER;
 	NBFilmMax INTEGER;
 BEGIN
-	SELECT COUNT(*) INTO NBFilm FROM Location_Client WHERE CLIENTID = :NEW.CLIENTID AND dateRetour IS NOT NULL;
+	SELECT COUNT(*) INTO NBFilm FROM Location_Client WHERE CLIENTID = :NEW.CLIENTID AND dateRetour IS NULL;
 	SELECT LocationMax INTO NBFilmMax FROM Client INNER JOIN forfait ON Client.FORFAITID = Forfait.FORFAITID WHERE Client.CLIENTID = :NEW.CLIENTID;
-	IF NBFilm > NBFilmMax THEN
+	IF NBFilm >= NBFilmMax THEN
 		RAISE_APPLICATION_ERROR('-20000', 'Le client ne peut pas avoir plus de location que son forfait lui permet');
 	END IF;
 END;

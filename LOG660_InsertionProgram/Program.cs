@@ -575,29 +575,29 @@ namespace LOG660_InsertionProgram
             }
             foreach (XMLPersonneData c_personne in xml_personne_data)
             {
-             //   my_connection.InsertPersonne(c_personne);
+                my_connection.InsertPersonne(c_personne);
             }
-            //   int tempo_personne = personne_id_cpt;
-            int tempo_personne = 1;
+            int tempo_personne = personne_id_cpt;
+           
             int tempo_credit_cart = 1;
             int tempo_address = 1;
             foreach (XMLClientData c_data in xml_clients_data)
             {
                 //Insert New personne
                 XMLPersonneData new_p = new XMLPersonneData();
-                    new_p.name = c_data.first_name;
-                    new_p.last_name = c_data.last_name;
-                    new_p.naissance_info.data = c_data.aniversaire;
-                    new_p.naissance_info.lieu = "";
-                    new_p.biographie = "";
-                    new_p.photo_link = "";
+                new_p.name = c_data.first_name;
+                new_p.last_name = c_data.last_name;
+                new_p.naissance_info.data = c_data.aniversaire;
+                new_p.naissance_info.lieu = "";
+                new_p.biographie = "";
+                new_p.photo_link = "";
                 my_connection.InsertPersonne(new_p);
                 c_data.Ref_personne = tempo_personne;// Store pk for fk later
                 tempo_personne++;
 
                 string[] adress_split = c_data.address.Split(' ');
                 string street_name = "";
-                for(int i = 1; i < adress_split.Length; i++)
+                for (int i = 1; i < adress_split.Length; i++)
                 {
                     street_name += adress_split[i];
                 }
@@ -640,8 +640,19 @@ namespace LOG660_InsertionProgram
                     my_connection.InsertRole(c_data.bd_id,c_role);
                 }
                 //Add Realisateur
+
                 int ref_reali_id = SeachKey(dic_id_relation, c_data.realisateur_xml_id, xml_personne_data.Count);
-                my_connection.InsertRealisateur(ref_reali_id, c_data.bd_id);
+                if(ref_reali_id <= 0)
+                {
+                    Console.WriteLine(c_data.xml_id);
+                }
+                else
+                {
+                    my_connection.InsertRealisateur(ref_reali_id, c_data.bd_id);
+
+                }
+
+               
                 //Add Inventaire
                 for (int i = 0;i< (int)(my_ramdom.NextDouble() * 99); i++)
                 {

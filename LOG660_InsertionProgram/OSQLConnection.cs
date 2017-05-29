@@ -40,8 +40,8 @@ namespace LOG660_InsertionProgram
         }
         public void InsertRole(int fk_ref_film,XMLRoleData role)
         {
-            string cmd_string = @"INSERT INTO SCENARISTE (FK_PERSONNEID,FK_FILMID,PERSONNAGE) 
-                                                VALUES("+role.ref_personne_bd_id+"," + fk_ref_film + ",'" + role.personnage_name + "')";
+            string cmd_string = @"INSERT INTO FILM_ACTEUR (FK_PERSONNEID,FK_FILMID,PERSONNAGE) 
+                                                VALUES(" + role.ref_personne_bd_id+"," + fk_ref_film + ",'" + role.personnage_name + "')";
 
             OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
 

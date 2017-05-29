@@ -60,7 +60,7 @@ PRIMARY KEY(ForfaitID));
 CREATE TABLE Film_Acteur(
 fk_personneID INTEGER, 
 fk_filmID INTEGER, 
-personnage VARCHAR(50),
+personnage VARCHAR(100),
 PRIMARY KEY(fk_personneID, fk_filmID));
 
 CREATE TABLE Inventaire
@@ -153,6 +153,7 @@ INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (10, 'Intermédiaire', 5, 30);
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (15, 'Avencé', 10, NULL);
 */
+
 CREATE OR REPLACE TRIGGER VerifierDateExpirationCarte
 BEFORE INSERT ON CarteCredit
 FOR EACH ROW
@@ -240,7 +241,7 @@ END pCreerClient;
 
 /
 
-/* Not tested */
+
 create or replace PROCEDURE pLouerFilm
     (filmID_in IN NUMBER, clientID_in IN NUMBER)
 IS

@@ -97,10 +97,10 @@ namespace LOG660_InsertionProgram
             cmd = null;
 
         }
-        public void InsertCarteCredit(string carte_Type,int number,int exp_month,int exp_year,int csv)
+        public void InsertCarteCredit(string carte_Type,string number,int exp_month,int exp_year,int csv)
         {
             string cmd_string = @"INSERT INTO CARTECREDIT (TYPECARTE,NUMERO,exp_month,exp_year,CVV)
-                                    VALUES ('"+ carte_Type + "',"+ number + ","+ exp_month + ","+ exp_year + ","+ csv + ")";
+                                    VALUES ('"+ carte_Type + "','"+ number + "',"+ exp_month + ","+ exp_year + ","+ csv + ")";
 
             OracleCommand cmd = new OracleCommand(cmd_string, m_connection);
 

@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+    Author : Marc-André Tremblay
+    Created : 2017/05/15
+    Last edited : 2017/05/29
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -458,24 +464,24 @@ namespace LOG660_InsertionProgram
         static void Main(string[] args)
         {
             Random my_ramdom = new Random((Int32)DateTime.Now.Ticks);
-
+          
             //Note(Marc): Sync point 0
-   
-            OSQLConnection my_connection = new OSQLConnection();
-            
 
+            OSQLConnection my_connection = new OSQLConnection();
+
+            
             // Fetch personne data from the xml personnes_latin1.xml and store them into a list
             FileStream xml_clients_file = File.Open("./clients_latin1.xml", FileMode.Open);
             List<XMLClientData> xml_clients_data = new List<XMLClientData>();
-            Thread t1_c = new Thread(() => FetchClientData(xml_clients_file, xml_clients_data));            
+            Thread t1_c = new Thread(() => FetchClientData(xml_clients_file, xml_clients_data));
             //  End personnes data fetch
-
+          
             // Fetch personne data from the xml personnes_latin1.xml and store them into a list
             FileStream xml_personne_file = File.Open("./personnes_latin1.xml", FileMode.Open);
             List<XMLPersonneData> xml_personne_data = new List<XMLPersonneData>();
             Thread t2_p = new Thread(() => FetchPresonneData(xml_personne_file, xml_personne_data));
             //End personnes data fetch
-
+           
             // Fetch personne data from the xml personnes_latin1.xml and store them into a list
             FileStream xml_film_file = File.Open("./films_latin1.xml", FileMode.Open);
             List<XMLFilmData> xml_film_data = new List<XMLFilmData>();
@@ -497,6 +503,15 @@ namespace LOG660_InsertionProgram
                 t1_c.Join();
                 t2_p.Join();
                 t3_f.Join();
+
+            xml_clients_file.Close();
+            xml_personne_file.Close();
+            xml_film_file.Close();
+
+            XMLClientData data = (xml_clients_data.ElementAt(1));
+            string sssss = data.credit_carte_indo.No.Replace(" ", ""); 
+           UInt64 test_cart = Convert.ToUInt64(sssss);
+            int c2o = Convert.ToInt32(my_ramdom.NextDouble() * 999);
 
             end_time_stamp = DateTime.Now.Millisecond;
             long xml_load_time = end_time_stamp - start_time_stamp;
@@ -608,11 +623,13 @@ namespace LOG660_InsertionProgram
                 tempo_address++;
 
                 //Insert Credit card
+                int co = Convert.ToInt32(my_ramdom.NextDouble() * 999);
+                int numbcart = Convert.ToInt32(c_data.credit_carte_indo.No.Trim(' '));
                 my_connection.InsertCarteCredit(c_data.credit_carte_indo.carte_type,
-                                              /*Convert.ToInt32(c_data.credit_carte_indo.No.Trim(' '))*/123,
+                                              123,
                                               c_data.credit_carte_indo.exp_mount,
                                               c_data.credit_carte_indo.exp_year,
-                                              /*Convert.ToInt32(my_ramdom.NextDouble()*999)*/123);
+                                              co);
                 c_data.Ref_redit_cart = tempo_credit_cart;
                 tempo_credit_cart++;
                 //Insert New Client

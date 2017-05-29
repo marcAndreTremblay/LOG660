@@ -43,7 +43,7 @@ CHECK (REGEXP_LIKE(password, '^[a-zA-Z0-9]{5,}$')));
 CREATE TABLE CarteCredit
 (CarteCreditID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
 typeCarte VARCHAR(10), 
-numero INTEGER, 
+numero VARCHAR(20), 
 exp_month INTEGER, 
 exp_year INTEGER, 
 cvv INTEGER,  

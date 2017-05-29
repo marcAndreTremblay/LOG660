@@ -154,7 +154,7 @@ INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES
 INSERT INTO Forfait (coutParMois, typeForfait, locationMax, dureeMaxJour) VALUES (15, 'Avencé', 10, NULL);
 */
 
-CREATE OR REPLACE TRIGGER VerifierDateExpirationCarte
+CREATE OR REPLACE TRIGGER BI_VerifierDateExpirationCarte
 BEFORE INSERT ON CarteCredit
 FOR EACH ROW
 BEGIN
@@ -165,7 +165,7 @@ END;
 
 /
 
-CREATE OR REPLACE TRIGGER VerifierAgeClient
+CREATE OR REPLACE TRIGGER BI_VerifierAgeClient
 BEFORE INSERT ON Client
 FOR EACH ROW
 DECLARE
@@ -180,7 +180,7 @@ END;
 
 /
 
-CREATE OR REPLACE TRIGGER VerifierSiLocationDisponible
+CREATE OR REPLACE TRIGGER BI_VerifierSiLocationDisponible
 BEFORE INSERT ON Location_Client
 FOR EACH ROW
 DECLARE
@@ -194,7 +194,7 @@ END;
 
 /
 
-CREATE OR REPLACE TRIGGER VerifierSiClientLouePlusQueMax
+CREATE OR REPLACE TRIGGER BI_VerifierSiClientLouePlusQueMax
 BEFORE INSERT ON Location_Client
 FOR EACH ROW
 DECLARE
@@ -233,10 +233,9 @@ BEGIN
 
     INSERT INTO Client (adresseID, carteCreditID, personneID, forfaitID, courriel, numeroTel, password)
     VALUES (adresseID, carteCreditID, personneID, forfaitID_in, courriel_in, numeroTel_in, password_in);
-    
-    dbms_output.put_line(adresseID);
+
 EXCEPTION 
-WHEN OTHERS THEN raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+WHEN OTHERS THEN raise_application_error(-20001,'Erreur dans la procédure pCreerClient - '||SQLCODE||' -ERROR- '||SQLERRM);
 END pCreerClient;
 
 /
@@ -284,3 +283,4 @@ EXCEPTION WHEN NO_DATA_FOUND THEN
     raise_application_error(-20001,'Plus de copies disponibles pour le film ' || filmID_in);
 END pLouerFilm;
 
+/

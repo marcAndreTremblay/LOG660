@@ -1,0 +1,28 @@
+C:\Users\marc\Dropbox\University\Hiver_2017\LOG320 - Strcuture de données et algorithme\Lab 1\LOG660_InsertionProgram\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+C:\Users\Samuel\Desktop\session 7\SQLDB LOG660\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+C:\Users\Samuel\Source\Repos\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+C:\Users\Samuel\Source\Repos\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
+C:\Users\Samuel\Source\Repos\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb
+C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe
+C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.pdb
+C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\Oracle.DataAccess.dll
+C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
+C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb
+<<<<<<< HEAD
+=======
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.pdb
+D:\Desktop\LOG660\LOG660_InsertionProgram\bin\Debug\Oracle.DataAccess.dll
+D:\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
+D:\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb
+>>>>>>> 010b6ee6d069c8f191ba186eea1a5ef68bfba8dd
+C:\Users\marc\Desktop\LOG660\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.csprojResolveAssemblyReference.cache
+C:\Users\marc\Desktop\LOG660\log660-labo1-equipe4\CodeSource\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe.config
+C:\Users\marc\Desktop\LOG660\log660-labo1-equipe4\CodeSource\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.exe
+C:\Users\marc\Desktop\LOG660\log660-labo1-equipe4\CodeSource\LOG660_InsertionProgram\bin\Debug\LOG660_InsertionProgram.pdb
+C:\Users\marc\Desktop\LOG660\log660-labo1-equipe4\CodeSource\LOG660_InsertionProgram\bin\Debug\Oracle.DataAccess.dll
+C:\Users\marc\Desktop\LOG660\log660-labo1-equipe4\CodeSource\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.csprojResolveAssemblyReference.cache
+C:\Users\marc\Desktop\LOG660\log660-labo1-equipe4\CodeSource\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.exe
+C:\Users\marc\Desktop\LOG660\log660-labo1-equipe4\CodeSource\LOG660_InsertionProgram\obj\Debug\LOG660_InsertionProgram.pdb

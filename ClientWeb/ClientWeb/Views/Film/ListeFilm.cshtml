@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ClientWeb.Models.Film>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnneeDeSortie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LangueOriginale)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DureeMinute)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NomRealisateur)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Senariste)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resume)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AnneeDeSortie)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LangueOriginale)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DureeMinute)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomRealisateur)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Senariste)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resume)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "DetailsFilm", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

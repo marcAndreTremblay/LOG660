@@ -1,0 +1,9 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Recherche";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Label("Rechercher")
+@Html.TextBox("Rechercher", null, new { @class = "form-control", placeholder = "Rechercher"})

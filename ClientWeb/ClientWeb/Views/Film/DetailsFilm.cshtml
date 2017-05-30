@@ -1,0 +1,73 @@
+﻿@model ClientWeb.Models.Film
+
+@{
+    ViewBag.Title = "DetailsFilm";
+}
+
+<h2>DetailsFilm</h2>
+
+<div>
+    <h4>Film</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Titre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AnneeDeSortie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnneeDeSortie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LangueOriginale)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LangueOriginale)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DureeMinute)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DureeMinute)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomRealisateur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomRealisateur)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Senariste)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Senariste)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Resume)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Resume)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Recherche")
+</p>

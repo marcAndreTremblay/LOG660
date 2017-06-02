@@ -300,3 +300,6 @@ __pycache__/
 # End of https://www.gitignore.io/api/visualstudio
 
 ClientWeb/packages
+ClientWeb/Scripts
+ClientWeb/fonts
+ClientWeb/Content/bootstrap*

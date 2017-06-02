@@ -13,7 +13,7 @@ namespace ClientWeb.Models
         public List<string> Genres { get; set; }
         public List<Realisateur> Realisateurs { get; set; }
         public Scenariste Scenariste { get; set; }
-        public List<Acteur> Acteurs { get; set; }
+        public List<Personne> Acteurs { get; set; }
         public string Resume { get; set; }
     }
 }

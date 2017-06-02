@@ -39,13 +39,13 @@ namespace ClientWeb.Tests.Controllers
         }
 
         [TestMethod]
-        public void Contact()
+        public void Connexion()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Contact() as ViewResult;
+            ViewResult result = controller.Connexion() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

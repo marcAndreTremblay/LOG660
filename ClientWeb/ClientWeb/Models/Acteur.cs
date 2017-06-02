@@ -1,8 +1,9 @@
 ﻿namespace ClientWeb.Models
 {
-    public class Acteur
+    public class FilmActeur
     {
-        public string Nom { get; set; }
-        public string NomPersonnage { get; set; }
+        public Personne Personne { get; set; }
+        public Film Film { get; set; }
+        public string Personnage { get; set; }
     }
 }

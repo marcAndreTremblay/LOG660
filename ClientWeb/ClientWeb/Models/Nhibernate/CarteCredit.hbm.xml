@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="ClientWeb"
+                   namespace="ClientWeb.Models">
+
+  <class name="CarteCredit" table="CarteCredit" dynamic-update="true">
+    <cache usage="read-write"/>
+    <id name="Id" column="CarteCreditId" type="int">
+      <generator class="native" />
+    </id>
+    <property name="TypeCarte" />
+    <property name="Numero" />
+    <property name="ExpMonth" column="EXP_MONTH"/>
+    <property name="ExpYear" column="EXP_YEAR"/>
+    <property name="Cvv" />
+  </class>
+</hibernate-mapping>

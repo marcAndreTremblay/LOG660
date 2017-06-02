@@ -1,4 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using ClientWeb.Models;
+using NHibernate;
+using NHibernate.Linq;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace ClientWeb.Controllers
 {
@@ -11,9 +15,14 @@ namespace ClientWeb.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            using (ISession session = NHibernateSession.OpenSession())
+            {
+                int id = 607;
+                var creditCard = session.Get<CarteCredit>(id);
 
-            return View();
+                return View(creditCard);
+            }
+            
         }
 
         public ActionResult Connexion()

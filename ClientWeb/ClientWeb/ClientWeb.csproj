@@ -84,6 +84,9 @@
     <Reference Include="NHibernate, Version=4.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.4.1.1.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -140,6 +143,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\NHibernateSession.cs" />
     <Compile Include="Models\Inventaire.cs" />
     <Compile Include="Models\LocationClient.cs" />
     <Compile Include="Models\Forfait.cs" />
@@ -176,6 +180,10 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <EmbeddedResource Include="Models\Nhibernate\CarteCredit.hbm.xml" />
+    <Content Include="Models\Nhibernate\hibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -209,6 +217,9 @@
     <Content Include="Views\Film\Recherche.cshtml" />
     <Content Include="Views\Film\ListeFilm.cshtml" />
     <Content Include="Views\Film\DetailsFilm.cshtml" />
+    <None Include="SharedLibs\nhibernate-mapping.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,9 +1,19 @@
-﻿@model dynamic
+﻿@model ClientWeb.ViewModel.FilmActionViewModel
 
 @{
     ViewBag.Title = "Recherche";
 }
 
 <h2>@ViewBag.Title</h2>
-@Html.Label("Rechercher")
-@Html.TextBox("Rechercher", null, new { @class = "form-control", placeholder = "Rechercher"})
+@using(Html.BeginForm("ListeFilm", "Film", FormMethod.Post))
+{
+    <div class="col-lg-2">
+        @Html.LabelFor(model => model.LaRecherche)
+    </div>
+    <div class="col-lg-6">
+        @Html.TextBoxFor(model => model.LaRecherche, new { @style = "width:100%" })
+    </div>
+    <div class="col-lg-4">
+        <button class="btn" type="submit">Envoyer</button>
+    </div>
+}

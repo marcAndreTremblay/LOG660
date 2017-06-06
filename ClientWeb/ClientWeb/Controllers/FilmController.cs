@@ -1,4 +1,5 @@
 ﻿using ClientWeb.Models;
+using ClientWeb.ViewModel;
 using System.Web.Mvc;
 
 namespace ClientWeb.Controllers
@@ -8,20 +9,20 @@ namespace ClientWeb.Controllers
         // GET: /Film/Recherche
         public ActionResult Recherche()
         {
-            return View();
+            return View(new FilmActionViewModel());
         }
 
         // GET: /Film/DetailsFilm
-        public ActionResult DetailsFilm(int index)
+        public ActionResult DetailsFilm(int id)
         {
-
+            // requête pour get le film
             return View(new Film());
         }
 
         // GET: /Film/ListeFilm
-        public ActionResult ListeFilm()
+        public ActionResult ListeFilm(FilmActionViewModel vm)
         {
-            return View();
+            return View(vm);
         }
     }
 }

@@ -58,6 +58,33 @@
             @Html.DisplayFor(model => model.Scenariste)
         </dd>
 
+        @if (Model.Acteurs != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Acteurs[0])
+            </dt>
+
+            foreach (var item in Model.Acteurs)
+            {
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Prenom)
+                </dd>
+            }
+        }
+
+        @if (Model.Realisateurs != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Realisateurs[0])
+            </dt>
+
+            foreach (var item in Model.Realisateurs)
+            {
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Personne.Prenom)
+                </dd>
+            }
+        }
         <dt>
             @Html.DisplayNameFor(model => model.Resume)
         </dt>
@@ -65,7 +92,6 @@
         <dd>
             @Html.DisplayFor(model => model.Resume)
         </dd>
-
     </dl>
 </div>
 <p>

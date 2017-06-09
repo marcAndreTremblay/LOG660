@@ -468,7 +468,7 @@
 			</xs:choice>
 			<xs:attribute name="name" use="required" type="xs:string" />
 			<xs:attribute name="condition" type="xs:string" />
-			<xs:attribute name="use-many-to-one" default="true" type="xs:boolean"/>
+			<xs:attribute name="use-many-to-one" default="true" type="xs:boolean" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="filter-param">
@@ -747,7 +747,7 @@
 			<xs:attribute name="foreign-key" type="xs:string" />
 			<xs:attribute name="lazy" type="restrictedLaziness">
 			</xs:attribute>
-			<xs:attribute name="not-found" default="exception" type="notFoundMode"/>
+			<xs:attribute name="not-found" default="exception" type="notFoundMode" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="key-property">

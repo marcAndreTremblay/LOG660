@@ -2,7 +2,7 @@
 {
     public class Inventaire
     {
-        public Inventaire Id { get; set; }
         public Film Film { get; set; }
+        public Inventaire Id { get; set; }
     }
 }

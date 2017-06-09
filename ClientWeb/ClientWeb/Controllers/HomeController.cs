@@ -1,8 +1,6 @@
 ﻿using ClientWeb.Models;
 using ClientWeb.ViewModel;
 using NHibernate;
-using NHibernate.Linq;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace ClientWeb.Controllers

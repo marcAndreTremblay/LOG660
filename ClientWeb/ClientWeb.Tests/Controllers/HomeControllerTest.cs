@@ -1,30 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using ClientWeb.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ClientWeb;
-using ClientWeb.Controllers;
+using System.Web.Mvc;
 
 namespace ClientWeb.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest
     {
-        [TestMethod]
-        public void Index()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
-
         [TestMethod]
         public void About()
         {
@@ -46,6 +28,19 @@ namespace ClientWeb.Tests.Controllers
 
             // Act
             ViewResult result = controller.Connexion() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void Index()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+            ViewResult result = controller.Index() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

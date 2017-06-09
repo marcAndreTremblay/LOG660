@@ -1,6 +1,6 @@
-﻿using System.Web;
-using NHibernate;
+﻿using NHibernate;
 using NHibernate.Cfg;
+using System.Web;
 
 namespace ClientWeb.Models
 {

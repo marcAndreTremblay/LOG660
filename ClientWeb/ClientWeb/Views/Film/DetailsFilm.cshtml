@@ -1,5 +1,4 @@
-﻿@model ClientWeb.Models.Film
-
+﻿@model ClientWeb.ViewModel.FilmViewModel
 @{
     ViewBag.Title = "DetailsFilm";
 }
@@ -11,60 +10,75 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Titre)
+            @Html.DisplayNameFor(model => model.film.Titre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Titre)
+            @Html.DisplayFor(model => model.film.Titre)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AnneeDeSortie)
+            @Html.DisplayNameFor(model => model.film.AnneeDeSortie)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AnneeDeSortie)
+            @Html.DisplayFor(model => model.film.AnneeDeSortie)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LangueOriginale)
+            @Html.DisplayNameFor(model => model.film.LangueOriginale)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LangueOriginale)
+            @Html.DisplayFor(model => model.film.LangueOriginale)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DureeMinutes)
+            @Html.DisplayNameFor(model => model.film.DureeMinutes)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DureeMinutes)
+            @Html.DisplayFor(model => model.film.DureeMinutes)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Realisateurs)
+            @Html.DisplayNameFor(model => model.film.Realisateurs)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Realisateurs)
+            @Html.DisplayFor(model => model.film.Realisateurs)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Scenariste)
+            @Html.DisplayNameFor(model => model.film.Scenariste)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Scenariste)
+            @Html.DisplayFor(model => model.film.Scenariste)
         </dd>
 
-        @if (Model.Acteurs != null)
-        {
+        <dt>
+            @Html.DisplayNameFor(model => model.film.Pays)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.film.Pays)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.film.Genres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.film.Genres)
+        </dd>
+        @if (Model.film.Acteurs != null)
+            {
             <dt>
-                @Html.DisplayNameFor(model => model.Acteurs[0])
+                @Html.DisplayNameFor(model => model.film.Acteurs[0])
             </dt>
 
-            foreach (var item in Model.Acteurs)
+            foreach (var item in Model.film.Acteurs)
             {
                 <dd>
                     @Html.DisplayFor(modelItem => item.Prenom)
@@ -72,13 +86,13 @@
             }
         }
 
-        @if (Model.Realisateurs != null)
-        {
+        @if (Model.film.Realisateurs != null)
+            {
             <dt>
-                @Html.DisplayNameFor(model => model.Realisateurs[0])
+                @Html.DisplayNameFor(model => model.film.Realisateurs[0])
             </dt>
 
-            foreach (var item in Model.Realisateurs)
+            foreach (var item in Model.film.Realisateurs)
             {
                 <dd>
                     @Html.DisplayFor(modelItem => item.Personne.Prenom)
@@ -86,14 +100,35 @@
             }
         }
         <dt>
-            @Html.DisplayNameFor(model => model.Resume)
+            @Html.DisplayNameFor(model => model.film.Resume)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Resume)
+            @Html.DisplayFor(model => model.film.Resume)
+        </dd>
+
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.film.NbCopieRestante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.film.NbCopieRestante)
         </dd>
     </dl>
+    @if (Model.client.Forfait.LocationMax >= Model.client.GetNbLocationsEnCours())
+    {
+        <p>Impossible de louer le film, car on possède deja @Model.client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.client.Forfait.LocationMax</p>
+    }
+    else if (Model.film.NbCopieRestante < 1)
+    {
+        <p>Impossible de louer le film car il n'en reste plus</p>
+    }
+    else
+    {
+        <p>Impossible de louer le film, car on possède deja @Model.client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.client.Forfait.LocationMax</p>
+    }
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Recherche")
+    @Html.ActionLink("Revenir à la recherche", "Recherche")
 </p>

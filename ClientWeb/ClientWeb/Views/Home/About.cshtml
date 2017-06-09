@@ -1,14 +1,21 @@
 ﻿@model ClientWeb.Models.CarteCredit
 
 @{
-    ViewBag.Title = "About";
-    ViewBag.Message = "Ceci est un teste de NHibernate";
+    ViewBag.Title = "Test";
+    ViewBag.Message = "Ceci est un test de NHibernate";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 @Html.DisplayNameFor(model => model.TypeCarte);
+@Html.DisplayFor(model => model.TypeCarte);
+<br />
 @Html.DisplayNameFor(model => model.ExpMonth);
+@Html.DisplayFor(model => model.ExpMonth);
+<br />
 @Html.DisplayNameFor(model => model.Numero);
+@Html.DisplayFor(model => model.Numero);
+<br />
 @Html.DisplayNameFor(model => model.ExpYear);
+@Html.DisplayFor(model => model.ExpYear);
+<br />
 <p>Ceci est un magnifique projet</p>
-

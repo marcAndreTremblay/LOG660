@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="ClientWeb"
+                   namespace="ClientWeb.Models"
+                   default-lazy="false">
+
+  <class name="Employe" table="Employe" dynamic-update="true">
+    <cache usage="read-write" />
+    <id name="Id" column="EmployeID" type="int">
+      <generator class="native" />
+    </id>
+    <property name="Matricule" />
+    <property name="Password" />
+    <many-to-one name="Personne" column="PersonneID" unique="true" />
+  </class>
+</hibernate-mapping>

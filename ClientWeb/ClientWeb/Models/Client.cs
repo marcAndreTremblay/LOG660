@@ -1,25 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using NHibernate;
+using NHibernate.Criterion;
+using System.Collections.Generic;
 
 namespace ClientWeb.Models
 {
     public class Client
     {
-        public Adresse Adresse { get; set; }
-        public CarteCredit CarteCredit { get; set; }
-        public string Courriel { get; set; }
-        public Forfait Forfait { get; set; }
-        public int Id { get; set; }
-        public List<LocationClient> locations { get; set; }
-        public string NumeroTel { get; set; }
-        public string Password { get; set; }
-        public Personne Personne { get; set; }
+        public virtual Adresse Adresse { get; set; }
+        public virtual CarteCredit CarteCredit { get; set; }
+        public virtual string Courriel { get; set; }
+        public virtual Forfait Forfait { get; set; }
+        public virtual int Id { get; set; }
+        public virtual List<LocationClient> locations { get; set; }
+        public virtual string NumeroTel { get; set; }
+        public virtual string Password { get; set; }
+        public virtual Personne Personne { get; set; }
 
-        public static bool SeConnecter(string email, string mdp)// a faire
+        public static Client TrouverClientParCourrielEtMotDePasse(string email, string mdp)// a faire
         {
-            return email == "test" && mdp == "test";
+            using (ISession session = NHibernateSession.OpenSession())
+            {
+                Client UnClient = null;
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        UnClient = session.CreateCriteria<Client>()
+                           .Add(Restrictions.Eq("Courriel", email))
+                           .Add(Restrictions.Eq("Password", mdp))
+                           .UniqueResult<Client>();
+
+                        tx.Commit();
+                    }
+                    catch (NonUniqueResultException)
+                    {
+                        return null;
+                    }
+                }
+
+                return UnClient;
+            }
         }
 
-        public int GetNbLocationsEnCours()
+        public virtual int GetNbLocationsEnCours()
         {
             int nb = 0;
             foreach (LocationClient l in locations)

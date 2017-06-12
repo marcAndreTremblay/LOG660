@@ -4,10 +4,17 @@ namespace ClientWeb.ViewModel
 {
     public class ConnexionViewModel
     {
-        public bool AfficherErreur { get; set; }
-        public string Email { get; set; }
+        public string Erreur { get; set; }
+
+        [Display(Name = "Courriel ou matricule")]
+        public string EmailOuMatricule { get; set; }
 
         [Display(Name = "Mot de passe")]
         public string MotDePasse { get; set; }
+
+        public ConnexionViewModel()
+        {
+            Erreur = "";
+        }
     }
 }

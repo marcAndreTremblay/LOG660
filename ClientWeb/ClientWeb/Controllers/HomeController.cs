@@ -22,24 +22,49 @@ namespace ClientWeb.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult Connexion(ConnexionViewModel vm)
         {
-            vm.AfficherErreur = false;
-            if (Employe.SeConnecter(vm.Email, vm.MotDePasse) || Client.SeConnecter(vm.Email, vm.MotDePasse))
+            using (ISession session = NHibernateSession.OpenSession())
             {
-                System.Web.HttpContext.Current.Session["EstConnecté"] = true;
-                return RedirectToAction("Index");
+                if (vm.EmailOuMatricule == null || vm.MotDePasse == null)
+                {
+                    vm.Erreur = "Veuillez entrer tous les informations demandées";
+                    return View(vm);
+                }
+
+                Client Client = Client.TrouverClientParCourrielEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
+                Employe Employe = Employe.TrouverEmployeParMatriculeEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
+
+                if (Client != null)
+                {
+                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = Client;
+                    return RedirectToAction("Index");
+                }
+                else if (Employe != null)
+                {
+                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = Employe;
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    vm.Erreur = "Courriel/Matricule ou mot de passe invalide. Veuillez réessayer";
+                }
+
+                return View(vm);
             }
-            if (vm.Email != null)
-                vm.AfficherErreur = true;
-            return View(vm);
+        }
+
+        [HttpGet]
+        public ActionResult Connexion()
+        {
+            return View(new ConnexionViewModel());
         }
 
         public ActionResult Deconnexion(ConnexionViewModel vm)
         {
-            System.Web.HttpContext.Current.Session["EstConnecté"] = false;
+            System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = null;
             return RedirectToAction("Index");
-        
         }
 
         public ActionResult Index()

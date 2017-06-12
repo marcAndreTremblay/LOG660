@@ -1,18 +1,42 @@
-﻿namespace ClientWeb.Models
+﻿using NHibernate;
+using NHibernate.Criterion;
+
+namespace ClientWeb.Models
 {
     public class Employe
     {
-        public Adresse Adresse { get; set; }
-        public string Courriel { get; set; }
-        public int Id { get; set; }
-        public string Matricule { get; set; }
-        public string NumeroTel { get; set; }
-        public string Password { get; set; }
-        public Personne Personne { get; set; }
+        public virtual Adresse Adresse { get; set; }
+        public virtual string Courriel { get; set; }
+        public virtual int Id { get; set; }
+        public virtual string Matricule { get; set; }
+        public virtual string NumeroTel { get; set; }
+        public virtual string Password { get; set; }
+        public virtual Personne Personne { get; set; }
 
-        public static bool SeConnecter(string email, string mdp)// a faire
+        public static Employe TrouverEmployeParMatriculeEtMotDePasse(string matricule, string mdp)// a faire
         {
-            return email == "test" && mdp == "test";
+            using (ISession session = NHibernateSession.OpenSession())
+            {
+                Employe UnEmploye = null;
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        UnEmploye = session.CreateCriteria<Employe>()
+                           .Add(Restrictions.Eq("Matricule", matricule))
+                           .Add(Restrictions.Eq("Password", mdp))
+                           .UniqueResult<Employe>();
+
+                        tx.Commit();
+                    }
+                    catch (NonUniqueResultException)
+                    {
+                        return null;
+                    }
+                }
+
+                return UnEmploye;
+            }
         }
     }
 }

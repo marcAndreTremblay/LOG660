@@ -1,10 +1,11 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    ViewBag.UtilisateurConnecté = System.Web.HttpContext.Current.Session["UtilisateurConnecté"];
 }
-@if ((bool)System.Web.HttpContext.Current.Session["EstConnecté"])
+@if (ViewBag.UtilisateurConnecté != null)
 {
     <div class="jumbotron">
-        <h1>Bienvenue</h1>
+        <h1>Bienvenue @ViewBag.UtilisateurConnecté.Personne.Prenom @ViewBag.UtilisateurConnecté.Personne.NomFamille</h1>
     </div>
 }
 else

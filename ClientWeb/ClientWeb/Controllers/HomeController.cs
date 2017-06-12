@@ -35,6 +35,13 @@ namespace ClientWeb.Controllers
             return View(vm);
         }
 
+        public ActionResult Deconnexion(ConnexionViewModel vm)
+        {
+            System.Web.HttpContext.Current.Session["EstConnecté"] = false;
+            return RedirectToAction("Index");
+        
+        }
+
         public ActionResult Index()
         {
             GestionConnexion.estConnecte();

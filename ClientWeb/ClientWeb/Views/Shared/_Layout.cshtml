@@ -23,7 +23,15 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Recherche de film", "Recherche", "Film")</li>
-                    <li>@Html.ActionLink("Connexion", "Connexion", "Home")</li>
+                    @if (!(bool)System.Web.HttpContext.Current.Session["EstConnecté"])
+                    {
+                        <li>@Html.ActionLink("Connexion", "Connexion", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Deconnexion", "Deconnexion", "Home")</li>
+
+                    }
                 </ul>
             </div>
         </div>

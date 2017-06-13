@@ -21,5 +21,6 @@ namespace ClientWeb.ViewModel
         public string Genre { get; set; }
         public string Realisateur { get; set; }
         public string Acteur { get; set; }
+        public string DureeMinutes { get; set; }
     }
 }

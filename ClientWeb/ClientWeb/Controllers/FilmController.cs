@@ -3,6 +3,7 @@ using ClientWeb.ViewModel;
 using NHibernate;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace ClientWeb.Controllers
 {
@@ -20,33 +21,36 @@ namespace ClientWeb.Controllers
                 var film = session.Get<Film>(id);
                 FilmViewModel vm = new FilmViewModel();
                 vm.film = film;
-                return View(film);
+                return View(vm);
             }
         }
 
         // GET: /Film/ListeFilm
-        public ActionResult ListeFilm(FilmActionViewModel vm)
+        public ActionResult ListeFilm(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeDeSortie, string acteur, int limit = 10, int offset = 0)
         {
             if (!GestionConnexion.estConnecte())
             {
                 return RedirectToAction("Index", "Home");
             }
-            Film film = new Film();
-            film.Id = 146;
-            vm.Films = new List<Film>();
-            vm.Films.Add(film);
 
-            //
-            return View(vm);
+            Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeDeSortie, acteur,
+                limit, offset);
+            ViewBag.Films = new List<Film>();
+            ViewBag.Films.AddRange(Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeDeSortie, acteur,
+                limit, offset));
+
+            return View();
         }
 
         // GET: /Film/Recherche
-        public ActionResult Recherche()
+        public ActionResult Recherche(string keyword, int limit, int offset)
         {
             if (!GestionConnexion.estConnecte())
             {
                 return RedirectToAction("Index", "Home");
             }
+
+
             return View(new FilmActionViewModel());
         }
     }

@@ -16,9 +16,12 @@ namespace ClientWeb.Models
         public int NbCopieRestante { get; set; }
 
         public string Pays { get; set; }
-        public List<Realisateur> Realisateurs { get; set; }
+
+        [Display(Name = "Réalisateur")]
+        public Realisateur realisateur { get; set; }
+
         public string Resume { get; set; }
-        public Scenariste Scenariste { get; set; }
+        public List<Scenariste> Scenaristes { get; set; }
         public string Titre { get; set; }
     }
 }

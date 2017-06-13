@@ -10,6 +10,5 @@ namespace ClientWeb.Models
         public virtual string LieuNaissance { get; set; }
         public virtual string NomFamille { get; set; }
         public virtual string Prenom { get; set; }
-
     }
 }

@@ -41,21 +41,19 @@
             @Html.DisplayFor(model => model.film.DureeMinutes)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.film.Realisateurs)
-        </dt>
+        @if (Model.film.Scenaristes != null)
+            {
+            <dt>
+                @Html.DisplayNameFor(model => model.film.Scenaristes[0])
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.film.Realisateurs)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.film.Scenariste)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.film.Scenariste)
-        </dd>
+            foreach (var item in Model.film.Scenaristes)
+            {
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </dd>
+            }
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.film.Pays)
@@ -72,6 +70,15 @@
         <dd>
             @Html.DisplayFor(model => model.film.Genres)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.film.realisateur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.film.realisateur.Personne.Prenom) @Html.DisplayFor(model => model.film.realisateur.Personne.NomFamille)
+        </dd>
+
         @if (Model.film.Acteurs != null)
             {
             <dt>
@@ -81,21 +88,7 @@
             foreach (var item in Model.film.Acteurs)
             {
                 <dd>
-                    @Html.DisplayFor(modelItem => item.Prenom)
-                </dd>
-            }
-        }
-
-        @if (Model.film.Realisateurs != null)
-            {
-            <dt>
-                @Html.DisplayNameFor(model => model.film.Realisateurs[0])
-            </dt>
-
-            foreach (var item in Model.film.Realisateurs)
-            {
-                <dd>
-                    @Html.DisplayFor(modelItem => item.Personne.Prenom)
+                    @Html.DisplayFor(modelItem => item.Prenom) @Html.DisplayFor(modelItem => item.NomFamille)
                 </dd>
             }
         }

@@ -8,8 +8,18 @@ namespace ClientWeb.ViewModel
     {
         public List<Film> Films { get; set; }
 
-        [Display(Name = "Rechercher")]
-        [Required]
-        public string LaRecherche { get; set; }
+        public string Titre { get; set; }
+
+        [Display(Name = "Annee de sortie")]
+        public string AnneeSortie { get; set; }
+
+        public string Pays { get; set; }
+
+        [Display(Name = "Langue Originale")]
+        public string LangueOriginale { get; set; }
+
+        public string Genre { get; set; }
+        public string Realisateur { get; set; }
+        public string Acteur { get; set; }
     }
 }

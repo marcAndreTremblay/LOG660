@@ -6,13 +6,28 @@
 
 @using (Html.BeginForm("ListeFilm", "Film", FormMethod.Post))
 {
-    <div class="col-lg-2">
-        @Html.LabelFor(model => model.LaRecherche)
+    <div class="col-lg-3">
+        @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.Titre) })
     </div>
-    <div class="col-lg-6">
-        @Html.TextBoxFor(model => model.LaRecherche, new { @style = "width:100%" })
+    <div class="col-lg-3">
+        @Html.TextBoxFor(m => m.Realisateur, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.Realisateur) })
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-3">
+        @Html.TextBoxFor(m => m.Pays, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.Pays) })
+    </div>
+    <div class="col-lg-3">
+        @Html.TextBoxFor(m => m.LangueOriginale, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.LangueOriginale) })
+    </div>
+    <div class="col-lg-3">
+        @Html.TextBoxFor(m => m.Genre, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.Genre) })
+    </div>
+    <div class="col-lg-3">
+        @Html.TextBoxFor(m => m.AnneeSortie, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.AnneeSortie) })
+    </div>
+    <div class="col-lg-3">
+        @Html.TextBoxFor(m => m.Acteur, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.Acteur) })
+    </div>
+    <div class="col-lg-3">
         <button class="btn" type="submit">Envoyer</button>
     </div>
 }

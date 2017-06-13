@@ -17,7 +17,8 @@ namespace ClientWeb.Controllers
             using (ISession session = NHibernateSession.OpenSession())// get le film avec cet id j'ai essayé mais il manque quelque chose
             {
                 var film = session.Get<Film>(id);
-
+                FilmViewModel vm = new FilmViewModel();
+                vm.film = film;
                 return View(film);
             }
         }

@@ -1,4 +1,4 @@
-﻿using NHibernate;
+﻿ using NHibernate;
 using NHibernate.Cfg;
 using System.Web;
 
@@ -15,6 +15,22 @@ namespace ClientWeb.Models
             var clientConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Client.hbm.xml");
             var employeConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Employe.hbm.xml");
             var personneConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Personne.hbm.xml");
+            configuration.AddFile(carteCreditConfigurationFile);
+            configuration.AddFile(clientConfigurationFile);
+            configuration.AddFile(employeConfigurationFile);
+            configuration.AddFile(personneConfigurationFile);
+            ISessionFactory sessionFactory = configuration.BuildSessionFactory();
+            return sessionFactory.OpenSession();
+        }
+        public static ISession OpenSessionNoServer()
+        {
+            var configuration = new Configuration();
+            var configurationPath = @"Nhibernate\hibernate.cfg.xml";
+            configuration.Configure(configurationPath);
+            var carteCreditConfigurationFile = @"Nhibernate\CarteCredit.hbm.xml";
+            var clientConfigurationFile = @"Nhibernate\Client.hbm.xml"; 
+            var employeConfigurationFile = @"Nhibernate\Employe.hbm.xml";  
+            var personneConfigurationFile = @"Nhibernate\Personne.hbm.xml";
             configuration.AddFile(carteCreditConfigurationFile);
             configuration.AddFile(clientConfigurationFile);
             configuration.AddFile(employeConfigurationFile);

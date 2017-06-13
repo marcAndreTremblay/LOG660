@@ -1,6 +1,7 @@
 ﻿using ClientWeb.Models;
 using ClientWeb.ViewModel;
 using NHibernate;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace ClientWeb.Controllers
@@ -30,7 +31,11 @@ namespace ClientWeb.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            //vm.Films = les films selon la requête:
+            Film film = new Film();
+            film.Id = 146;
+            vm.Films = new List<Film>();
+            vm.Films.Add(film);
+
             //
             return View(vm);
         }

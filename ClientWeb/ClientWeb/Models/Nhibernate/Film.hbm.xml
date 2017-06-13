@@ -11,7 +11,7 @@
     <property name="AnneeDeSortie" column="annee" />
     <property name="Pays" />
     <property name="LangueOriginale" />
-    <property name="genres" />
+    <property name="Genres" />
     <property name="Resume" column="ResumeFilm" />
     <property name="DureeMinutes" />
   </class>

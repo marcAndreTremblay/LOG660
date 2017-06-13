@@ -15,10 +15,13 @@ namespace ClientWeb.Models
             var clientConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Client.hbm.xml");
             var employeConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Employe.hbm.xml");
             var personneConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Personne.hbm.xml");
+            var filmConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Film.hbm.xml");
             configuration.AddFile(carteCreditConfigurationFile);
             configuration.AddFile(clientConfigurationFile);
             configuration.AddFile(employeConfigurationFile);
             configuration.AddFile(personneConfigurationFile);
+            configuration.AddFile(filmConfigurationFile);
+
             ISessionFactory sessionFactory = configuration.BuildSessionFactory();
             return sessionFactory.OpenSession();
         }

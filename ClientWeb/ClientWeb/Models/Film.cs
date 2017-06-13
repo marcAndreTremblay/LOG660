@@ -5,23 +5,22 @@ namespace ClientWeb.Models
 {
     public class Film
     {
-        public List<Personne> Acteurs { get; set; }
-        public int AnneeDeSortie { get; set; }
-        public int DureeMinutes { get; set; }
-        public string Genres { get; set; }
-        public int Id { get; set; }
-        public string LangueOriginale { get; set; }
+        public virtual List<Personne> Acteurs { get; set; }
+        public virtual int AnneeDeSortie { get; set; }
+        public virtual int DureeMinutes { get; set; }
+        public virtual string Genres { get; set; }
+        public virtual int Id { get; set; }
+        public virtual string LangueOriginale { get; set; }
 
         [Display(Name = "Nombre de copies restantes")]
-        public int NbCopieRestante { get; set; }
+        public virtual int NbCopieRestante { get; set; }
 
-        public string Pays { get; set; }
+        public virtual string Pays { get; set; }
 
         [Display(Name = "Réalisateur")]
-        public Realisateur realisateur { get; set; }
-
-        public string Resume { get; set; }
-        public List<Scenariste> Scenaristes { get; set; }
-        public string Titre { get; set; }
+        public virtual Realisateur Realisateur { get; set; }
+        public virtual string Resume { get; set; }
+        public virtual List<Scenariste> Scenaristes { get; set; }
+        public virtual string Titre { get; set; }
     }
 }

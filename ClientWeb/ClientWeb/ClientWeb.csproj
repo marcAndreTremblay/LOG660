@@ -184,6 +184,9 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <EmbeddedResource Include="Models\Nhibernate\Film.hbm.xml" />
+    <Content Include="Models\Nhibernate\Client.hbm.xml" />
+    <Content Include="Models\Nhibernate\Employe.hbm.xml" />
+    <Content Include="Models\Nhibernate\Personne.hbm.xml" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <EmbeddedResource Include="Models\Nhibernate\CarteCredit.hbm.xml" />

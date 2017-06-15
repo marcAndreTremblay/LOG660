@@ -18,6 +18,7 @@ namespace ClientWeb.Models
             var filmConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Film.hbm.xml");
             //var acteurConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Acteur.hbm.xml");
             var filmActeurConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\FilmActeur.hbm.xml");
+            var realisateurConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Realisateur.hbm.xml");
             configuration.AddFile(carteCreditConfigurationFile);
             configuration.AddFile(clientConfigurationFile);
             configuration.AddFile(employeConfigurationFile);
@@ -25,6 +26,7 @@ namespace ClientWeb.Models
             configuration.AddFile(filmConfigurationFile);
             //configuration.AddFile(acteurConfigurationFile);
             configuration.AddFile(filmActeurConfigurationFile);
+            configuration.AddFile(realisateurConfigurationFile);
 
             ISessionFactory sessionFactory = configuration.BuildSessionFactory();
             return sessionFactory.OpenSession();

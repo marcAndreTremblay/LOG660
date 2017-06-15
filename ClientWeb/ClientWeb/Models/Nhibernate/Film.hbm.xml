@@ -20,5 +20,10 @@
       <key column="FilmID"></key>
       <one-to-many class="FilmActeur"/>
     </set>
+
+    <set name="Realisateurs" inverse="true" fetch="join">
+      <key column="FK_FilmID"></key>
+      <one-to-many class="Realisateur"/>
+    </set>
   </class>
 </hibernate-mapping>

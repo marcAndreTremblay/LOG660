@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="ClientWeb"
+                   namespace="ClientWeb.Models">
+
+  <class name="Realisateur" table="Realisateur" dynamic-update="true">
+    <cache usage="read-write" />
+    <composite-id>
+      <key-many-to-one name="Film" column="FK_FilmID" />
+      <key-many-to-one name="Personne" column="FK_PersonneID" />
+    </composite-id>
+  </class>
+</hibernate-mapping>

@@ -21,7 +21,7 @@ namespace ClientWeb.Models
         public virtual string Pays { get; set; }
 
         [Display(Name = "Réalisateur")]
-        public virtual Realisateur Realisateur { get; set; }
+        public virtual ICollection<Realisateur> Realisateurs { get; set; }
         public virtual string Resume { get; set; }
         public virtual List<Scenariste> Scenaristes { get; set; }
         public virtual string Titre { get; set; }

@@ -215,14 +215,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <EmbeddedResource Include="Models\Nhibernate\Film.hbm.xml" />
     <EmbeddedResource Include="Models\Nhibernate\FilmActeur.hbm.xml" />
     <EmbeddedResource Include="Models\Nhibernate\Forfait.hbm.xml" />
@@ -232,21 +224,29 @@
     <EmbeddedResource Include="Models\Nhibernate\Realisateur.hbm.xml" />
     <EmbeddedResource Include="Models\Nhibernate\Inventaire.hbm.xml" />
     <Content Include="Models\Nhibernate\Personne.hbm.xml" />
-    <Content Include="packages.config" />
-    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <EmbeddedResource Include="Models\Nhibernate\Scenariste.hbm.xml" />
     <EmbeddedResource Include="Models\Nhibernate\CarteCredit.hbm.xml" />
     <Content Include="Models\Nhibernate\hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -273,6 +273,9 @@
     <Content Include="Views\Film\Recherche.cshtml" />
     <Content Include="Views\Film\ListeFilm.cshtml" />
     <Content Include="Views\Film\DetailsFilm.cshtml" />
+    <Content Include="packages.config" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="SharedLibs\nhibernate-mapping.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -282,8 +285,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

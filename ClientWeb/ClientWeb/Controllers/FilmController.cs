@@ -1,4 +1,5 @@
-﻿using ClientWeb.Models;
+﻿using System;
+using ClientWeb.Models;
 using ClientWeb.ViewModel;
 using NHibernate;
 using System.Collections.Generic;
@@ -19,9 +20,11 @@ namespace ClientWeb.Controllers
             using (ISession session = NHibernateSession.OpenSession())
             {
                 var film = Film.ChercherFilmParId(id);
-                FilmViewModel vm = new FilmViewModel();
-                vm.Film = film;
-                vm.Client = (Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"];
+                FilmViewModel vm = new FilmViewModel
+                {
+                    Film = film,
+                    Client = (Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"]
+                };
                 return View(vm);
             }
         }
@@ -34,14 +37,41 @@ namespace ClientWeb.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            FilmActionViewModel vm = new FilmActionViewModel();
-            vm.NbTotalPages = 10;//mettre le vrai nombre ceiling(nb film/limit)
-            vm.NoPageActuelle = page;
-            vm.Films = new List<Film>();
+            FilmActionViewModel vm = new FilmActionViewModel
+            {
+                NbTotalPages = 10,//mettre le vrai nombre ceiling(nb film/limit)
+                NoPageActuelle = page,
+                Films = new List<Film>()
+            };
+            
             vm.Films.AddRange(Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur,
                 limit, offset));
 
             return View(vm);
         }
+
+        /*public ActionResult LouerCopie(int id)
+        {
+            if (!GestionConnexion.estConnecte())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                LocationClient lc = Film.LouerCopie(id, ((Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Film", "DetailsFilm");
+            }
+                Film.LouerCopie(id, ((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id);
+                FilmViewModel vm = new FilmViewModel
+                {
+                    Film = film,
+                    Client = (Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]
+                };
+                return View(vm);
+        }*/
     }
 }

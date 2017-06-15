@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.WebPages;
 using NHibernate;
@@ -33,7 +34,7 @@ namespace ClientWeb.Models
         [Display(Name = "Résumé")]
         public virtual string Resume { get; set; }
 
-        public virtual List<Scenariste> Scenaristes { get; set; }
+        public virtual ICollection<Scenariste> Scenaristes { get; set; }
         public virtual string Titre { get; set; }
 
         public static IList<Film> RechercherFilmParKeyword(string keyword, int limit, int offset)
@@ -121,6 +122,59 @@ namespace ClientWeb.Models
                 }
 
                 return film;
+            }
+        }
+
+        public static int GetNbCopiesRestantes(int id)
+        {
+            using (ISession session = NHibernateSession.OpenSession())
+            {
+                int nbCopiesAuTotal = 0;
+                int nbCopiesLouees = 0;
+
+                using (var tx = session.BeginTransaction())
+                {
+                    
+                    ICollection<Inventaire> copies = session.CreateCriteria<Inventaire>().Add(Restrictions.Eq("Film.Id", id)).List<Inventaire>();
+                    nbCopiesAuTotal = (int) session.CreateQuery(
+                        "SELECT COUNT(*) FROM Inventaire WHERE filmID = " + id).UniqueResult();
+
+                    nbCopiesLouees = (int) session.CreateQuery(
+                        "SELECT * " +
+                        "FROM Location_Client " +
+                        "WHERE dateRetour = null " +
+                        "AND codeCopieID = ANY (" +
+                            "SELECT codeCopieID " +
+                            "FROM Inventaire " +
+                            "WHERE filmID = " + id +
+                        ")"
+                    ).UniqueResult();
+
+                    tx.Commit();
+                }
+
+                return nbCopiesAuTotal - nbCopiesLouees;
+            }
+        }
+
+        public static LocationClient LouerCopie(int filmId, int clientId)
+        {
+            using (ISession session = NHibernateSession.OpenSession())
+            {
+                int nbCopiesAuTotal = 0;
+                int nbCopiesLouees = 0;
+
+                using (var tx = session.BeginTransaction())
+                {
+                    IQuery query = session.CreateSQLQuery("exec pLouerFilm @filmID_in =:filmID, @clientID_in=:clientID");
+                    query.SetInt32("filmID", filmId);
+                    query.SetInt32("clientID", clientId);
+                    query.ExecuteUpdate();
+
+                    tx.Commit();
+                }
+
+                return null;
             }
         }
     }

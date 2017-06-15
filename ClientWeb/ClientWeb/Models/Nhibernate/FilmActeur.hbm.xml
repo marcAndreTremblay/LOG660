@@ -6,8 +6,8 @@
   <class name="FilmActeur" table="Film_Acteur" dynamic-update="true">
     <cache usage="read-write" />
     <composite-id>
-      <key-many-to-one name="Film" column="FK_FILMID" />
-      <key-many-to-one name="Personne" column="FK_PERSONNEID" />
+      <key-many-to-one name="Film" column="FK_FilmID" />
+      <key-many-to-one name="Personne" column="FK_PersonneID" />
     </composite-id>
     <property name="Personnage" column="PERSONNAGE"/>
   </class>

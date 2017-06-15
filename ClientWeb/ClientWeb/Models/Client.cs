@@ -11,7 +11,7 @@ namespace ClientWeb.Models
         public virtual string Courriel { get; set; }
         public virtual Forfait Forfait { get; set; }
         public virtual int Id { get; set; }
-        public virtual List<LocationClient> locations { get; set; }
+        public virtual List<LocationClient> Locations { get; set; }
         public virtual string NumeroTel { get; set; }
         public virtual string Password { get; set; }
         public virtual Personne Personne { get; set; }

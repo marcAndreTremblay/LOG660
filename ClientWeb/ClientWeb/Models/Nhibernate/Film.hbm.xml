@@ -8,13 +8,13 @@
     <id name="Id" column="FilmId" type="int">
       <generator class="native" />
     </id>
-    <property name="Titre" />
+    <property name="Titre" column="titre"/>
     <property name="AnneeSortie" column="annee" />
-    <property name="Pays" />
-    <property name="LangueOriginale" />
-    <property name="Genres" />
-    <property name="Resume" column="ResumeFilm" />
-    <property name="DureeMinutes" />
+    <property name="Pays" column="pays"/>
+    <property name="LangueOriginale" column="langueOriginale"/>
+    <property name="Genres" column="genres"/>
+    <property name="Resume" column="resumeFilm" />
+    <property name="DureeMinutes" column="dureeMinutes" />
 
     <set name="FilmActeurs" inverse="true" fetch="join">
       <key column="FilmID"></key>

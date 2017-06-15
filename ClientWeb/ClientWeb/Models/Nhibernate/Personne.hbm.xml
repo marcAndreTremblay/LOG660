@@ -9,10 +9,10 @@
     <id name="Id" column="PersonneID" type="int">
       <generator class="native" />
     </id>
-    <property name="Prenom" />
-    <property name="NomFamille" />
-    <property name="Biographie" />
-    <property name="DateNaissance" />
-    <property name="LieuNaissance" />
+    <property name="Prenom" column="prenom"/>
+    <property name="NomFamille" column="nomFamille"/>
+    <property name="Biographie" column="biographie"/>
+    <property name="DateNaissance" column="dateNaissance"/>
+    <property name="LieuNaissance" column="lieuNaissance"/>
   </class>
 </hibernate-mapping>

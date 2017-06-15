@@ -21,20 +21,22 @@ namespace ClientWeb.Controllers
                 var film = Film.ChercherFilmParId(id);
                 FilmViewModel vm = new FilmViewModel();
                 vm.Film = film;
-                vm.Client = (Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"];
+                vm.Client = (Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"];
                 return View(vm);
             }
         }
 
         // GET: /Film/ListeFilm
-        public ActionResult ListeFilm(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeSortie, string acteur, int limit = 10, int offset = 0)
+        public ActionResult ListeFilm(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeSortie, string acteur, int limit = 10, int page = 1)
         {
+            int offset = (page - 1) * limit;
             if (!GestionConnexion.estConnecte())
             {
                 return RedirectToAction("Index", "Home");
             }
             FilmActionViewModel vm = new FilmActionViewModel();
-
+            vm.NbTotalPages = 10;//mettre le vrai nombre ceiling(nb film/limit)
+            vm.NoPageActuelle = page;
             vm.Films = new List<Film>();
             vm.Films.AddRange(Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur,
                 limit, offset));

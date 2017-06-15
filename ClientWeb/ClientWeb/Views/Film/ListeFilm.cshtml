@@ -2,9 +2,20 @@
 @{
     ViewBag.Title = "Recherche";
 }
+
+
+<script>
+  $( function() {
+      $(".page-link").on("click", function () {
+          $("#page").val($(this).attr("name"));
+          $("#Form").submit();
+    });
+  } );
+</script>
+
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("ListeFilm", "Film", FormMethod.Post))
+@using (Html.BeginForm("ListeFilm", "Film", FormMethod.Post, new { @id="Form"}))
 {
     <div class="col-lg-3">
         @Html.TextBoxFor(m => m.Titre, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.Titre) })
@@ -30,52 +41,75 @@
     <div class="col-lg-3">
         <button class="btn" type="submit">Envoyer</button>
     </div>
-}
-@if (Model.Films != null && Model.Films.Any())
-{
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Films[0].Titre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Films[0].AnneeSortie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Films[0].LangueOriginale)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Films[0].DureeMinutes)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model.Films)
-        {
+    if (Model.Films != null && Model.Films.Any())
+    {
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Titre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AnneeSortie)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LangueOriginale)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DureeMinutes)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "DetailsFilm", new { id = item.Id })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Films[0].Titre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Films[0].AnneeSortie)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Films[0].LangueOriginale)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Films[0].DureeMinutes)
+                </th>
+                <th></th>
             </tr>
-        }
-    </table>
-}
-else
-{
-    <br />
-    <div class="col-lg-12">
-        <p class="bg-danger">Aucun Résultat pour votre recherche</p>
-    </div>
+
+            @foreach (var item in Model.Films)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AnneeSortie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LangueOriginale)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DureeMinutes)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "DetailsFilm", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <br />
+        <div class="col-lg-12">
+            <p class="bg-danger">Aucun Résultat pour votre recherche</p>
+        </div>
+    }
+    if (Model.NbTotalPages > 1)
+    {
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item"><span class="page-link" name="@(Model.NoPageActuelle==1?1: Model.NoPageActuelle-1)">Précédent</span></li>
+                @for (int i = 1; i <= Model.NbTotalPages; i++)
+                {
+                    if (i == Model.NoPageActuelle)
+                    {
+                        <li class="page-item active"><span class="page-link">@i<span class="sr-only">(current)</span></span></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" name="@i">@i</a></li>
+                    }
+
+                }
+                <li class="page-item"><a class="page-link" name="@(Model.NoPageActuelle==Model.NbTotalPages?Model.NbTotalPages: Model.NoPageActuelle+1)">Suivant</a></li>
+            </ul>
+        </nav>
+        <input id="page" name="page" type="hidden"/>
+    }
 }

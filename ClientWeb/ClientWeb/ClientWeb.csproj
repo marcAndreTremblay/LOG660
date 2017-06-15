@@ -186,9 +186,11 @@
     <EmbeddedResource Include="Models\Nhibernate\Film.hbm.xml" />
     <EmbeddedResource Include="Models\Nhibernate\FilmActeur.hbm.xml" />
     <EmbeddedResource Include="Models\Nhibernate\Forfait.hbm.xml" />
+    <EmbeddedResource Include="Models\Nhibernate\LocationClient.hbm.xml" />
     <Content Include="Models\Nhibernate\Client.hbm.xml" />
     <Content Include="Models\Nhibernate\Employe.hbm.xml" />
     <EmbeddedResource Include="Models\Nhibernate\Realisateur.hbm.xml" />
+    <EmbeddedResource Include="Models\Nhibernate\Inventaire.hbm.xml" />
     <Content Include="Models\Nhibernate\Personne.hbm.xml" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />

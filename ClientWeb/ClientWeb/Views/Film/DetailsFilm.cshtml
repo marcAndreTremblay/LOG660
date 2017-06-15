@@ -72,7 +72,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Film.Realisateurs.ToArray()[0])
+            Réalisateur
         </dt>
 
         <dd>
@@ -88,7 +88,7 @@
             foreach (var item in Model.Film.FilmActeurs)
             {
                 <dd>
-                    @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.NomFamille), jouant @Html.DisplayFor(modelItem => item.Personnage)
+                    @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.NomFamille)- jouant @Html.DisplayFor(modelItem => item.Personnage)
                 </dd>
             }
         }

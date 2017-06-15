@@ -401,11 +401,11 @@ namespace LOG660_InsertionProgram
                                         {
                                             string[] name_split = r.Value.Split(' ');
                                             c_p_data.name = name_split[0];
-                                            if (name_split.Length == 1)
+                                            if (name_split.Length == 2)
                                             {
                                                 c_p_data.last_name = name_split[1];
                                             }
-                                            if (name_split.Length == 2)
+                                            if (name_split.Length == 3)
                                             {
                                                 c_p_data.last_name = name_split[1] + " " + name_split[2];
                                             }

@@ -135,7 +135,10 @@ namespace LOG660_InsertionProgram
         }
         public void InsertPersonne(XMLPersonneData data)
         {
-
+            if (data.biographie.Length > 3000)
+            {
+                data.biographie = data.biographie.Substring(0, 3000);
+            }
             string cmd_string = @"insert into EQUIPE4.PERSONNE (PRENOM,NOMFAMILLE,DATENAISSANCE,BIOGRAPHIE,LIEUNAISSANCE) 
                   values ( '" + data.name + "', '" + data.last_name + "','" + data.naissance_info.data + "','" + data.biographie + "','" + data.naissance_info.lieu + "')";
 

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="ClientWeb"
+                   namespace="ClientWeb.Models">
+
+  <class name="Inventaire" table="Inventaire" dynamic-update="true">
+    <cache usage="read-write" />
+    <id name="Id" column="CodeCopieId" type="int">
+      <generator class="native" />
+    </id>
+    <many-to-one name="Film" column="FilmID" unique="true" />
+  </class>
+</hibernate-mapping>

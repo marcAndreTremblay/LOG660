@@ -12,5 +12,6 @@
     <property name="Password" column="password"/>
     <property name="Courriel" column="courriel"/>
     <many-to-one name="Personne" column="PersonneID" unique="true" />
+    <many-to-one name="Forfait" column="ForfaitID" not-null="true" />
   </class>
 </hibernate-mapping>

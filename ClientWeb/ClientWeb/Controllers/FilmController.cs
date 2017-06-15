@@ -18,9 +18,10 @@ namespace ClientWeb.Controllers
             }
             using (ISession session = NHibernateSession.OpenSession())// get le film avec cet id j'ai essayé mais il manque quelque chose
             {
-                var film = session.Get<Film>(id);
+                var film = Film.ChercherFilmParId(id);
                 FilmViewModel vm = new FilmViewModel();
-                vm.film = film;
+                vm.Film = film;
+                vm.Client = (Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"];
                 return View(vm);
             }
         }
@@ -39,18 +40,6 @@ namespace ClientWeb.Controllers
                 limit, offset));
 
             return View(vm);
-        }
-
-        // GET: /Film/Recherche
-        public ActionResult Recherche(string keyword, int limit, int offset)
-        {
-            if (!GestionConnexion.estConnecte())
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-
-            return View(new FilmActionViewModel());
         }
     }
 }

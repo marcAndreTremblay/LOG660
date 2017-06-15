@@ -185,6 +185,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <EmbeddedResource Include="Models\Nhibernate\Film.hbm.xml" />
     <EmbeddedResource Include="Models\Nhibernate\FilmActeur.hbm.xml" />
+    <EmbeddedResource Include="Models\Nhibernate\Forfait.hbm.xml" />
     <Content Include="Models\Nhibernate\Client.hbm.xml" />
     <Content Include="Models\Nhibernate\Employe.hbm.xml" />
     <EmbeddedResource Include="Models\Nhibernate\Realisateur.hbm.xml" />

@@ -4,7 +4,7 @@ namespace ClientWeb.ViewModel
 {
     public class FilmViewModel
     {
-        public Client client { get; set; }
-        public Film film { get; set; }
+        public Client Client { get; set; }
+        public Film Film { get; set; }
     }
 }

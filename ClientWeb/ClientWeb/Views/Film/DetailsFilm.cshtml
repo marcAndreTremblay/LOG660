@@ -10,44 +10,44 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.film.Titre)
+            @Html.DisplayNameFor(model => model.Film.Titre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.Titre)
+            @Html.DisplayFor(model => model.Film.Titre)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.film.AnneeSortie)
+            @Html.DisplayNameFor(model => model.Film.AnneeSortie)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.AnneeSortie)
+            @Html.DisplayFor(model => model.Film.AnneeSortie)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.film.LangueOriginale)
+            @Html.DisplayNameFor(model => model.Film.LangueOriginale)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.LangueOriginale)
+            @Html.DisplayFor(model => model.Film.LangueOriginale)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.film.DureeMinutes)
+            @Html.DisplayNameFor(model => model.Film.DureeMinutes)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.DureeMinutes)
+            @Html.DisplayFor(model => model.Film.DureeMinutes)
         </dd>
 
-        @if (Model.film.Scenaristes != null)
+        @if (Model.Film.Scenaristes != null)
             {
             <dt>
-                @Html.DisplayNameFor(model => model.film.Scenaristes[0])
+                @Html.DisplayNameFor(model => model.Film.Scenaristes[0])
             </dt>
 
-            foreach (var item in Model.film.Scenaristes)
+            foreach (var item in Model.Film.Scenaristes)
             {
                 <dd>
                     @Html.DisplayFor(modelItem => item.Nom)
@@ -56,72 +56,72 @@
         }
 
         <dt>
-            @Html.DisplayNameFor(model => model.film.Pays)
+            @Html.DisplayNameFor(model => model.Film.Pays)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.Pays)
+            @Html.DisplayFor(model => model.Film.Pays)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.film.Genres)
+            @Html.DisplayNameFor(model => model.Film.Genres)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.Genres)
+            @Html.DisplayFor(model => model.Film.Genres)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.film.Realisateur)
+            @Html.DisplayNameFor(model => model.Film.Realisateurs.ToArray()[0])
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.Realisateur.Personne.Prenom) @Html.DisplayFor(model => model.film.Realisateur.Personne.NomFamille)
+            @Html.DisplayFor(model => model.Film.Realisateurs.ToArray()[0].Personne.Prenom) @Html.DisplayFor(model => model.Film.Realisateurs.ToArray()[0].Personne.NomFamille)
         </dd>
 
-        @if (Model.film.FilmActeurs != null)
+        @if (Model.Film.FilmActeurs != null)
             {
             <dt>
-                Acteur
+                Acteurs
             </dt>
 
-            foreach (var item in Model.film.FilmActeurs)
+            foreach (var item in Model.Film.FilmActeurs)
             {
                 <dd>
-                    @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.Prenom)
+                    @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.NomFamille), jouant @Html.DisplayFor(modelItem => item.Personnage)
                 </dd>
             }
         }
         <dt>
-            @Html.DisplayNameFor(model => model.film.Resume)
+            @Html.DisplayNameFor(model => model.Film.Resume)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.Resume)
+            @Html.DisplayFor(model => model.Film.Resume)
         </dd>
 
-        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.film.NbCopieRestante)
+            @Html.DisplayNameFor(model => model.Film.NbCopieRestante)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.NbCopieRestante)
+            @Html.DisplayFor(model => model.Film.NbCopieRestante)
         </dd>
     </dl>
-    @if (Model.client.Forfait.LocationMax >= Model.client.GetNbLocationsEnCours())
+    @* TODO: IMPLEMENT THIS
+    @if (Model.Client.Forfait.LocationMax >= Model.Client.GetNbLocationsEnCours())
     {
-        <p>Impossible de louer le film, car on possède deja @Model.client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.client.Forfait.LocationMax</p>
+        <p>Impossible de louer le film, car on possède deja @Model.Client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.Client.Forfait.LocationMax</p>
     }
-    else if (Model.film.NbCopieRestante < 1)
+    else if (Model.Film.NbCopieRestante < 1)
     {
         <p>Impossible de louer le film car il n'en reste plus</p>
     }
     else
     {
-        <p>Impossible de louer le film, car on possède deja @Model.client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.client.Forfait.LocationMax</p>
-    }
+        <p>Impossible de louer le film, car on possède deja @Model.Client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.Client.Forfait.LocationMax</p>
+    }*@
 </div>
 <p>
-    @Html.ActionLink("Revenir à la recherche", "Recherche")
+    @Html.ActionLink("Revenir à la recherche", "ListeFilm")
 </p>

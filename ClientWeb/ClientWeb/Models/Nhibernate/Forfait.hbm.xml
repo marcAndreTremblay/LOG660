@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="ClientWeb"
+                   namespace="ClientWeb.Models"
+                   default-lazy="false">
+
+  <class name="Forfait" table="Forfait" dynamic-update="true">
+    <cache usage="read-write" />
+    <id name="Id" column="ForfaitId" type="int">
+      <generator class="native" />
+    </id>
+    <property name="CoutParMois" />
+    <property name="DureeMaxJour" />
+    <property name="LocationMax" />
+    <property name="TypeForfait" />
+  </class>
+</hibernate-mapping>

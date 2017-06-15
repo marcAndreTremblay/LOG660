@@ -96,5 +96,23 @@ namespace ClientWeb.Models
                 return films;
             }
         }
+
+        public static Film ChercherFilmParId(int id)
+        {
+            using (ISession session = NHibernateSession.OpenSession())
+            {
+                Film film = null;
+
+                using (var tx = session.BeginTransaction())
+                {
+
+                    film = session.Get<Film>(id);
+
+                    tx.Commit();
+                }
+
+                return film;
+            }
+        }
     }
 }

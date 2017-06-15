@@ -2,7 +2,34 @@
 @{
     ViewBag.Title = "DetailsFilm";
 }
+<script>
+    $(function () {
+        //$(("#dialog").dialog({ height: 'auto', width: 'auto' });
+        $("#dialog").dialog({
+            modal: true,
+            width: 'auto',
+            autoResize: true,
+            resizable: true,
 
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 100
+            },
+            hide: {
+                effect: "explode",
+                duration: 100
+            }
+        });
+
+        $(".opener").on("click", function () {
+            $(".ui-dialog-title").text($(this).attr("titre").valueOf());
+            $("#dialog").dialog("option", "maxHeight", 1000);
+            $("#dialog").html("Date de naissance: " + $(this).attr("dateNaissance").valueOf() + "<br />Lieu de naissance: " + $(this).attr("lieuNaissance").valueOf() + "<br />Biographie: " + $(this).attr("biographie").valueOf());
+            $("#dialog").dialog("open");
+        });
+    });
+</script>
 <h2>DetailsFilm</h2>
 
 <div>
@@ -42,7 +69,7 @@
         </dd>
 
         @if (Model.Film.Scenaristes != null)
-            {
+        {
             <dt>
                 @Html.DisplayNameFor(model => model.Film.Scenaristes[0])
             </dt>
@@ -53,6 +80,13 @@
                     @Html.DisplayFor(modelItem => item.Nom)
                 </dd>
             }
+        }
+        else
+        {
+            <dt>
+                Aucun Scénariste
+            </dt>
+            <dd></dd>
         }
 
         <dt>
@@ -75,7 +109,7 @@
             Réalisateur
         </dt>
 
-        <dd>
+        <dd class="opener" titre="@Model.Film.Realisateurs.ToArray()[0].Personne.Prenom @Model.Film.Realisateurs.ToArray()[0].Personne.NomFamille - Réalisateur" dateNaissance="@Model.Film.Realisateurs.ToArray()[0].Personne.DateNaissance.ToString("dddd le dd MMMM yyyy")" lieuNaissance="@Model.Film.Realisateurs.ToArray()[0].Personne.LieuNaissance" biographie="@Model.Film.Realisateurs.ToArray()[0].Personne.Biographie">
             @Html.DisplayFor(model => model.Film.Realisateurs.ToArray()[0].Personne.Prenom) @Html.DisplayFor(model => model.Film.Realisateurs.ToArray()[0].Personne.NomFamille)
         </dd>
 
@@ -87,10 +121,17 @@
 
             foreach (var item in Model.Film.FilmActeurs)
             {
-                <dd>
+                <dd class="opener" titre="@item.Personne.Prenom @item.Personne.NomFamille - Acteur" dateNaissance="@item.Personne.DateNaissance.ToString("dddd le dd MMMM yyyy")" lieuNaissance="@item.Personne.LieuNaissance" biographie="@item.Personne.Biographie">
                     @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.NomFamille)- jouant @Html.DisplayFor(modelItem => item.Personnage)
                 </dd>
             }
+        }
+        else
+        {
+            <dt>
+                Aucun Acteur
+            </dt>
+        <dd></dd>
         }
         <dt>
             @Html.DisplayNameFor(model => model.Film.Resume)
@@ -108,7 +149,7 @@
             @Html.DisplayFor(model => model.Film.NbCopieRestante)
         </dd>
     </dl>
-    
+
     @if (Model.Client.Forfait.LocationMax <= Model.Client.GetNbLocationsEnCours())
     {
         <p>Impossible de louer le film, car on possède deja @Model.Client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.Client.Forfait.LocationMax</p>
@@ -125,3 +166,6 @@
 <p>
     @Html.ActionLink("Revenir à la recherche", "ListeFilm")
 </p>
+<div id="dialog" title="Erreur">
+    <p>Il y a probablement une erreur</p>
+</div>

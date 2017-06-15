@@ -9,10 +9,17 @@ namespace ClientWeb.Models
     public class Film
     {
         public virtual ICollection<FilmActeur> FilmActeurs { get; set; }
+
+        [Display(Name = "Année de sortie")]
         public virtual int AnneeSortie { get; set; }
+
+        [Display(Name = "Durée du film")]
         public virtual int DureeMinutes { get; set; }
+
         public virtual string Genres { get; set; }
         public virtual int Id { get; set; }
+
+        [Display(Name = "Langue originale")]
         public virtual string LangueOriginale { get; set; }
 
         [Display(Name = "Nombre de copies restantes")]
@@ -22,7 +29,10 @@ namespace ClientWeb.Models
 
         [Display(Name = "Réalisateur")]
         public virtual ICollection<Realisateur> Realisateurs { get; set; }
+
+        [Display(Name = "Résumé")]
         public virtual string Resume { get; set; }
+
         public virtual List<Scenariste> Scenaristes { get; set; }
         public virtual string Titre { get; set; }
 
@@ -40,7 +50,7 @@ namespace ClientWeb.Models
                         .SetFirstResult(offset)
                         .List<Film>();
 
-                        tx.Commit();
+                    tx.Commit();
                 }
 
                 return films;
@@ -105,7 +115,6 @@ namespace ClientWeb.Models
 
                 using (var tx = session.BeginTransaction())
                 {
-
                     film = session.Get<Film>(id);
 
                     tx.Commit();

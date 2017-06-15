@@ -144,6 +144,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FilmActeur.cs" />
     <Compile Include="Models\GestionConnexion.cs" />
     <Compile Include="Models\NHibernateSession.cs" />
     <Compile Include="Models\Inventaire.cs" />
@@ -156,7 +157,6 @@
     <Compile Include="Models\Personne.cs" />
     <Compile Include="Models\Scenariste.cs" />
     <Compile Include="Models\Realisateur.cs" />
-    <Compile Include="Models\Acteur.cs" />
     <Compile Include="Models\Film.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ConnexionViewModel.cs" />
@@ -184,8 +184,10 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <EmbeddedResource Include="Models\Nhibernate\Film.hbm.xml" />
+    <EmbeddedResource Include="Models\Nhibernate\FilmActeur.hbm.xml" />
     <Content Include="Models\Nhibernate\Client.hbm.xml" />
     <Content Include="Models\Nhibernate\Employe.hbm.xml" />
+    <EmbeddedResource Include="Models\Nhibernate\Acteur.hbm.xml" />
     <Content Include="Models\Nhibernate\Personne.hbm.xml" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />

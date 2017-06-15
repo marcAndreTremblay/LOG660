@@ -8,8 +8,8 @@ namespace ClientWeb.Models
 {
     public class Film
     {
-        public virtual List<Personne> Acteurs { get; set; }
-        public virtual int AnneeDeSortie { get; set; }
+        public virtual ICollection<FilmActeur> FilmActeurs { get; set; }
+        public virtual int AnneeSortie { get; set; }
         public virtual int DureeMinutes { get; set; }
         public virtual string Genres { get; set; }
         public virtual int Id { get; set; }
@@ -38,7 +38,7 @@ namespace ClientWeb.Models
                         .Add(Restrictions.InsensitiveLike("Titre", keyword, MatchMode.Anywhere))
                         .SetMaxResults(limit)
                         .SetFirstResult(offset)
-                        .List<Film>(); ;
+                        .List<Film>();
 
                         tx.Commit();
                 }
@@ -47,7 +47,7 @@ namespace ClientWeb.Models
             }
         }
 
-        public static IList<Film> RechercherFilmsParCriteres(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeDeSortie, string acteur, int limit, int offset)
+        public static IList<Film> RechercherFilmsParCriteres(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeSortie, string acteur, int limit, int offset)
         {
             using (ISession session = NHibernateSession.OpenSession())
             {
@@ -77,13 +77,13 @@ namespace ClientWeb.Models
                     {
                         criteria.Add(Restrictions.InsensitiveLike("Genre", genre, MatchMode.Anywhere));
                     }
-                    if (!anneeDeSortie.IsEmpty())
+                    if (!anneeSortie.IsEmpty())
                     {
-                        criteria.Add(Restrictions.InsensitiveLike("AnneeDeSortie", anneeDeSortie, MatchMode.Anywhere));
+                        criteria.Add(Restrictions.InsensitiveLike("Annee", anneeSortie, MatchMode.Anywhere));
                     }
                     if (!acteur.IsEmpty())
                     {
-                        criteria.Add(Restrictions.InsensitiveLike("Acteur", acteur, MatchMode.Anywhere));
+                        criteria.Add(Restrictions.InsensitiveLike("FilmActeur.Personne.Prenom", acteur, MatchMode.Anywhere));
                     }
                     films = criteria
                         .SetMaxResults(limit)

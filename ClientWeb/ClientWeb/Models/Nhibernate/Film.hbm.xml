@@ -9,11 +9,16 @@
       <generator class="native" />
     </id>
     <property name="Titre" />
-    <property name="AnneeDeSortie" column="annee" />
+    <property name="AnneeSortie" column="annee" />
     <property name="Pays" />
     <property name="LangueOriginale" />
     <property name="Genres" />
     <property name="Resume" column="ResumeFilm" />
     <property name="DureeMinutes" />
+
+    <set name="FilmActeurs" inverse="true" fetch="join">
+      <key column="FilmID"></key>
+      <one-to-many class="FilmActeur"/>
+    </set>
   </class>
 </hibernate-mapping>

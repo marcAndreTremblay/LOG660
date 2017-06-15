@@ -26,20 +26,19 @@ namespace ClientWeb.Controllers
         }
 
         // GET: /Film/ListeFilm
-        public ActionResult ListeFilm(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeDeSortie, string acteur, int limit = 10, int offset = 0)
+        public ActionResult ListeFilm(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeSortie, string acteur, int limit = 10, int offset = 0)
         {
             if (!GestionConnexion.estConnecte())
             {
                 return RedirectToAction("Index", "Home");
             }
+            FilmActionViewModel vm = new FilmActionViewModel();
 
-            Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeDeSortie, acteur,
-                limit, offset);
-            ViewBag.Films = new List<Film>();
-            ViewBag.Films.AddRange(Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeDeSortie, acteur,
+            vm.Films = new List<Film>();
+            vm.Films.AddRange(Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur,
                 limit, offset));
 
-            return View();
+            return View(vm);
         }
 
         // GET: /Film/Recherche

@@ -18,11 +18,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.film.AnneeDeSortie)
+            @Html.DisplayNameFor(model => model.film.AnneeSortie)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.film.AnneeDeSortie)
+            @Html.DisplayFor(model => model.film.AnneeSortie)
         </dd>
 
         <dt>
@@ -79,16 +79,16 @@
             @Html.DisplayFor(model => model.film.Realisateur.Personne.Prenom) @Html.DisplayFor(model => model.film.Realisateur.Personne.NomFamille)
         </dd>
 
-        @if (Model.film.Acteurs != null)
+        @if (Model.film.FilmActeurs != null)
             {
             <dt>
-                @Html.DisplayNameFor(model => model.film.Acteurs[0])
+                Acteur
             </dt>
 
-            foreach (var item in Model.film.Acteurs)
+            foreach (var item in Model.film.FilmActeurs)
             {
                 <dd>
-                    @Html.DisplayFor(modelItem => item.Prenom) @Html.DisplayFor(modelItem => item.NomFamille)
+                    @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.Prenom)
                 </dd>
             }
         }

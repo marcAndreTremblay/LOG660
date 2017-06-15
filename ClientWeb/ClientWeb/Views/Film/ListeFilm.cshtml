@@ -1,5 +1,4 @@
-﻿@using ClientWeb.Models
-@model ClientWeb.ViewModel.FilmActionViewModel
+﻿@model ClientWeb.ViewModel.FilmActionViewModel
 @{
     ViewBag.Title = "Recherche";
 }
@@ -32,7 +31,7 @@
         <button class="btn" type="submit">Envoyer</button>
     </div>
 }
-@if (((IList<Film>) ViewBag.Films).Count > 0)
+@if (Model.Films != null && Model.Films.Any())
 {
     <table class="table">
         <tr>
@@ -40,7 +39,7 @@
                 @Html.DisplayNameFor(model => model.Films[0].Titre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Films[0].AnneeDeSortie)
+                @Html.DisplayNameFor(model => model.Films[0].AnneeSortie)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Films[0].LangueOriginale)
@@ -51,20 +50,20 @@
             <th></th>
         </tr>
 
-        @foreach (var item in ViewBag.Films)
+        @foreach (var item in Model.Films)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => modelItem.Titre)
+                    @Html.DisplayFor(modelItem => item.Titre)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => modelItem.AnneeSortie)
+                    @Html.DisplayFor(modelItem => item.AnneeSortie)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => modelItem.LangueOriginale)
+                    @Html.DisplayFor(modelItem => item.LangueOriginale)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => modelItem.DureeMinutes)
+                    @Html.DisplayFor(modelItem => item.DureeMinutes)
                 </td>
                 <td>
                     @Html.ActionLink("Details", "DetailsFilm", new { id = item.Id })

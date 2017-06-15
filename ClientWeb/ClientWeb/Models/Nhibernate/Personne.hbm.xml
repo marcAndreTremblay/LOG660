@@ -11,5 +11,8 @@
     </id>
     <property name="Prenom" />
     <property name="NomFamille" />
+    <property name="Biographie" />
+    <property name="DateNaissance" />
+    <property name="LieuNaissance" />
   </class>
 </hibernate-mapping>

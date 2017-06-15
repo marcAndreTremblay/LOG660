@@ -16,7 +16,7 @@ using System.Xml;
 using System.IO;
 using System.Text;
 
-using System.Threading; 
+using System.Threading;
 
 namespace LOG660_InsertionProgram
 {
@@ -42,12 +42,12 @@ namespace LOG660_InsertionProgram
 
     class Program
     {
-        static int SeachKey(int[,] dic,int key , int size)
+        static int SeachKey(int[,] dic, int key, int size)
         {
             int row_size = dic.Length / 2;
             for (int i = 0; i < row_size; i++)
             {
-                if(dic[i,0] == key)
+                if (dic[i, 0] == key)
                 {
                     return dic[i, 1];
                 }
@@ -71,14 +71,15 @@ namespace LOG660_InsertionProgram
                     c_node_name = r.Name;
                     switch (c_node_name)
                     {
-                        case "client": {
+                        case "client":
+                            {
                                 //Console.WriteLine("<" + c_node_name + ">");
                                 if (c_c_data != null)
                                 {
                                     list_data.Add(c_c_data);
                                     c_c_data = null;
                                     c_c_data = new XMLClientData();
-                                   
+
                                 }
                                 else
                                 {
@@ -91,8 +92,10 @@ namespace LOG660_InsertionProgram
                                     //Console.WriteLine("\t Xml Id : " + r.GetAttribute(0));
 
                                 }
-                                break; }
-                        default: {
+                                break;
+                            }
+                        default:
+                            {
 
                                 //Console.WriteLine("<" + c_node_name + ">");
 
@@ -164,7 +167,7 @@ namespace LOG660_InsertionProgram
                                         }
                                         if (c_node_name == "mot-de-passe")
                                         {
-                                            c_c_data.mot_de_passe =r.Value;
+                                            c_c_data.mot_de_passe = r.Value;
                                             //Console.WriteLine("\tVALUE: " + r.Value);
                                         }
                                         if (c_node_name == "forfait")
@@ -178,7 +181,8 @@ namespace LOG660_InsertionProgram
                                 {
                                     r.Read();
                                 }
-                                break; }
+                                break;
+                            }
                     }
                 }
             }
@@ -199,7 +203,7 @@ namespace LOG660_InsertionProgram
             XMLRoleData curren_role = null;
 
             String c_node_name = "";
-          
+
             while (r.Read())
             {
                 if (r.NodeType == XmlNodeType.Element)
@@ -207,7 +211,8 @@ namespace LOG660_InsertionProgram
                     c_node_name = r.Name;
                     switch (c_node_name)
                     {
-                        case "acteur": {
+                        case "acteur":
+                            {
                                 if (r.HasAttributes)
                                 {
                                     curren_role.xml_personne_id = System.Convert.ToInt32(r.GetAttribute(0));
@@ -215,8 +220,10 @@ namespace LOG660_InsertionProgram
 
                                 //Console.WriteLine("\t Attribute: " + c_f_data.realisateur_xml_id);
 
-                                break; }
-                        case "role": {
+                                break;
+                            }
+                        case "role":
+                            {
                                 if (curren_role == null)
                                 {
                                     curren_role = new XMLRoleData();
@@ -228,15 +235,16 @@ namespace LOG660_InsertionProgram
                                     curren_role = new XMLRoleData();
                                 }
 
-                                break; }
+                                break;
+                            }
                         case "realisateur":
                             {
-                                    if (r.HasAttributes)
-                                    {
-                                        c_f_data.realisateur_xml_id = System.Convert.ToInt32(r.GetAttribute(0));
-                                    }
+                                if (r.HasAttributes)
+                                {
+                                    c_f_data.realisateur_xml_id = System.Convert.ToInt32(r.GetAttribute(0));
+                                }
 
-                                    //Console.WriteLine("\t Attribute: " + c_f_data.realisateur_xml_id);  
+                                //Console.WriteLine("\t Attribute: " + c_f_data.realisateur_xml_id);  
                                 break;
                             }
                         case "film":
@@ -314,7 +322,7 @@ namespace LOG660_InsertionProgram
                                             curren_role.personnage_name = r.Value;
                                             //Console.WriteLine("\tVALUE: " + r.Value);
                                         }
-                                       
+
                                     }
 
                                 }
@@ -322,9 +330,10 @@ namespace LOG660_InsertionProgram
                                 {
                                     r.Read();
                                 }
-                                break; }
+                                break;
+                            }
                     }
-                   
+
 
                 }
             }
@@ -341,7 +350,7 @@ namespace LOG660_InsertionProgram
             Console.WriteLine("Fetching film data completed");
         }
 
-       
+
         static void FetchPresonneData(FileStream xml_personne_film,
                                         List<XMLPersonneData> xml_personne_data)
         {
@@ -387,9 +396,25 @@ namespace LOG660_InsertionProgram
                                 {
                                     if (r.NodeType == XmlNodeType.Text)
                                     {
+
                                         if (c_node_name == "nom")
                                         {
-                                            c_p_data.name = r.Value;
+                                            string[] name_split = r.Value.Split(' ');
+                                            c_p_data.name = name_split[0];
+                                            if (name_split.Length == 1)
+                                            {
+                                                c_p_data.last_name = name_split[1];
+                                            }
+                                            if (name_split.Length == 2)
+                                            {
+                                                c_p_data.last_name = name_split[1] + " " + name_split[2];
+                                            }
+
+                                            //Console.WriteLine("\tVALUE: " + r.Value);
+                                        }
+                                        if (c_node_name == "last_name")
+                                        {
+                                            c_p_data.last_name = r.Value;
                                             //Console.WriteLine("\tVALUE: " + r.Value);
                                         }
                                         if (c_node_name == "bio")
@@ -464,45 +489,45 @@ namespace LOG660_InsertionProgram
         static void Main(string[] args)
         {
             Random my_ramdom = new Random((Int32)DateTime.Now.Ticks);
-          
+
             //Note(Marc): Sync point 0
 
             OSQLConnection my_connection = new OSQLConnection();
-     
+
 
             // Fetch personne data from the xml personnes_latin1.xml and store them into a list
             FileStream xml_clients_file = File.Open("./clients_latin1.xml", FileMode.Open);
             List<XMLClientData> xml_clients_data = new List<XMLClientData>();
             Thread t1_c = new Thread(() => FetchClientData(xml_clients_file, xml_clients_data));
             //  End personnes data fetch
-          
+
             // Fetch personne data from the xml personnes_latin1.xml and store them into a list
             FileStream xml_personne_file = File.Open("./personnes_latin1.xml", FileMode.Open);
             List<XMLPersonneData> xml_personne_data = new List<XMLPersonneData>();
             Thread t2_p = new Thread(() => FetchPresonneData(xml_personne_file, xml_personne_data));
             //End personnes data fetch
-           
+
             // Fetch personne data from the xml personnes_latin1.xml and store them into a list
             FileStream xml_film_file = File.Open("./films_latin1.xml", FileMode.Open);
             List<XMLFilmData> xml_film_data = new List<XMLFilmData>();
             Thread t3_f = new Thread(() => FetchFilmData(xml_film_file, xml_film_data));
             //End film fetch
 
-           
+
 
             long start_time_stamp = DateTime.Now.Millisecond;
             long end_time_stamp = 0;
 
-                //Note(Marc): Sync point 1
+            //Note(Marc): Sync point 1
             t1_c.Start();
-                t2_p.Start();
-                t3_f.Start();
+            t2_p.Start();
+            t3_f.Start();
 
 
-                //Note(Marc): Sync point 2
-                t1_c.Join();
-                t2_p.Join();
-                t3_f.Join();
+            //Note(Marc): Sync point 2
+            t1_c.Join();
+            t2_p.Join();
+            t3_f.Join();
 
             xml_clients_file.Close();
             xml_personne_file.Close();
@@ -511,7 +536,7 @@ namespace LOG660_InsertionProgram
 
             end_time_stamp = DateTime.Now.Millisecond;
             long xml_load_time = end_time_stamp - start_time_stamp;
-         
+
             //Order the by xml id
             Thread t1_s_c = new Thread(() => xml_clients_data.Sort(XMLClientData.GetComparer()));
             Thread t2_s_p = new Thread(() => xml_personne_data.Sort(XMLPersonneData.GetComparer()));
@@ -519,19 +544,19 @@ namespace LOG660_InsertionProgram
 
             start_time_stamp = DateTime.Now.Millisecond;
 
-                //Note(Marc): Sync point 2
-                t1_s_c.Start();
-                t2_s_p.Start();
-                t3_s_f.Start();
+            //Note(Marc): Sync point 2
+            t1_s_c.Start();
+            t2_s_p.Start();
+            t3_s_f.Start();
 
 
 
-                //Note(Marc): Sync point 3
-                t1_s_c.Join();
-                t2_s_p.Join();
-                t3_s_f.Join();
+            //Note(Marc): Sync point 3
+            t1_s_c.Join();
+            t2_s_p.Join();
+            t3_s_f.Join();
 
-            
+
             List<ForfaitData> forfait_list = new List<ForfaitData>();
 
             GenForfaitsFromClientData(xml_clients_data, forfait_list);
@@ -549,32 +574,32 @@ namespace LOG660_InsertionProgram
 
             }
 
-                //Build a relation id dictionnary for furtur look up
-                int personne_id_cpt = 1;
-                int[,] dic_id_relation = new int[xml_personne_data.Count, 2];
-                int dic_next_free = 0;
-                foreach (XMLPersonneData c_personne in xml_personne_data)
-                {
-                    c_personne.db_id = personne_id_cpt;
-                    dic_id_relation[dic_next_free, 0] = c_personne.xml_id;
-                    dic_id_relation[dic_next_free, 1] = c_personne.db_id;
-                    personne_id_cpt++;
-                    dic_next_free++;
-                }
+            //Build a relation id dictionnary for furtur look up
+            int personne_id_cpt = 1;
+            int[,] dic_id_relation = new int[xml_personne_data.Count, 2];
+            int dic_next_free = 0;
+            foreach (XMLPersonneData c_personne in xml_personne_data)
+            {
+                c_personne.db_id = personne_id_cpt;
+                dic_id_relation[dic_next_free, 0] = c_personne.xml_id;
+                dic_id_relation[dic_next_free, 1] = c_personne.db_id;
+                personne_id_cpt++;
+                dic_next_free++;
+            }
 
-                 
-                foreach(XMLFilmData c_f_data in xml_film_data)
+
+            foreach (XMLFilmData c_f_data in xml_film_data)
+            {
+                foreach (XMLRoleData c_r_data in c_f_data.roles_list)
                 {
-                    foreach(XMLRoleData c_r_data in c_f_data.roles_list)
+                    c_r_data.ref_personne_bd_id = SeachKey(dic_id_relation, c_r_data.xml_personne_id, xml_personne_data.Count);
+                    if (c_r_data.ref_personne_bd_id == -1)
                     {
-                        c_r_data.ref_personne_bd_id = SeachKey(dic_id_relation,c_r_data.xml_personne_id, xml_personne_data.Count);
-                        if(c_r_data.ref_personne_bd_id == -1)
-                        {
-                            System.Console.WriteLine("\tFilm : " + c_f_data.xml_id);
+                        System.Console.WriteLine("\tFilm : " + c_f_data.xml_id);
 
-                        }
+                    }
                 }
-                }
+            }
 
             end_time_stamp = DateTime.Now.Millisecond;
             long data_preprocess_time = end_time_stamp - start_time_stamp;
@@ -589,7 +614,7 @@ namespace LOG660_InsertionProgram
                 my_connection.InsertPersonne(c_personne);
             }
             int tempo_personne = personne_id_cpt;
-           
+
             int tempo_credit_cart = 1;
             int tempo_address = 1;
             foreach (XMLClientData c_data in xml_clients_data)
@@ -636,26 +661,26 @@ namespace LOG660_InsertionProgram
             }
             int inv_cpt = 1;
             int nex_id = 1;
-            foreach(XMLFilmData c_data in xml_film_data)
+            foreach (XMLFilmData c_data in xml_film_data)
             {
                 //Add film 
                 my_connection.InsertFilm(c_data);
                 c_data.bd_id = nex_id;
                 nex_id++;
                 //Add Scenariste
-                foreach(string c_sceneriste in c_data.scenariste_list)
+                foreach (string c_sceneriste in c_data.scenariste_list)
                 {
                     my_connection.InsertSceneriste(c_data.bd_id, c_sceneriste);
                 }
                 //Add role
                 foreach (XMLRoleData c_role in c_data.roles_list)
                 {
-                    my_connection.InsertRole(c_data.bd_id,c_role);
+                    my_connection.InsertRole(c_data.bd_id, c_role);
                 }
                 //Add Realisateur
 
                 int ref_reali_id = SeachKey(dic_id_relation, c_data.realisateur_xml_id, xml_personne_data.Count);
-                if(ref_reali_id <= 0)
+                if (ref_reali_id <= 0)
                 {
                     Console.WriteLine(c_data.xml_id);
                 }
@@ -665,13 +690,13 @@ namespace LOG660_InsertionProgram
 
                 }
 
-               
+
                 //Add Inventaire
-                for (int i = 0;i< (int)(my_ramdom.NextDouble() * 99); i++)
+                for (int i = 0; i < (int)(my_ramdom.NextDouble() * 99); i++)
                 {
                     my_connection.InsertInvetaireCopy(c_data.bd_id);
                 }
-              
+
 
 
             }

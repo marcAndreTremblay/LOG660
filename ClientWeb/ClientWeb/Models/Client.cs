@@ -44,13 +44,22 @@ namespace ClientWeb.Models
 
         public virtual int GetNbLocationsEnCours()
         {
-            int nb = 0;
-            foreach (LocationClient l in locations)
+            using (ISession session = NHibernateSession.OpenSession())
             {
-                if (l.DateRetour == null)
-                    nb++;
+                int nbCopiesLouees = 0;
+                using (var tx = session.BeginTransaction())
+                {
+                    nbCopiesLouees = (int) session.CreateCriteria<LocationClient>()
+                        .Add(Restrictions.Eq("Client.Id", Id))
+                        .Add(Restrictions.IsNull("DateRetour"))
+                        .SetProjection(Projections.CountDistinct("Id"))
+                        .UniqueResult();
+
+                    tx.Commit();
+                }
+
+                return nbCopiesLouees;
             }
-            return nb;
         }
     }
 }

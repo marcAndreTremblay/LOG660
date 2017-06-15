@@ -19,6 +19,8 @@ namespace ClientWeb.Models
             var forfaitConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Forfait.hbm.xml");
             var filmActeurConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\FilmActeur.hbm.xml");
             var realisateurConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Realisateur.hbm.xml");
+            var locationClientConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\LocationClient.hbm.xml");
+            var inventaireConfigurationFile = HttpContext.Current.Server.MapPath(@"~\Models\Nhibernate\Inventaire.hbm.xml");
             configuration.AddFile(carteCreditConfigurationFile);
             configuration.AddFile(clientConfigurationFile);
             configuration.AddFile(employeConfigurationFile);
@@ -27,6 +29,8 @@ namespace ClientWeb.Models
             configuration.AddFile(forfaitConfigurationFile);
             configuration.AddFile(filmActeurConfigurationFile);
             configuration.AddFile(realisateurConfigurationFile);
+            configuration.AddFile(locationClientConfigurationFile);
+            configuration.AddFile(inventaireConfigurationFile);
 
             ISessionFactory sessionFactory = configuration.BuildSessionFactory();
             return sessionFactory.OpenSession();

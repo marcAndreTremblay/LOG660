@@ -16,7 +16,7 @@ namespace ClientWeb.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            using (ISession session = NHibernateSession.OpenSession())// get le film avec cet id j'ai essayé mais il manque quelque chose
+            using (ISession session = NHibernateSession.OpenSession())
             {
                 var film = Film.ChercherFilmParId(id);
                 FilmViewModel vm = new FilmViewModel();

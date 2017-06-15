@@ -72,7 +72,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Film.Realisateurs.ToArray()[0])
+            Réalisateur
         </dt>
 
         <dd>
@@ -88,7 +88,7 @@
             foreach (var item in Model.Film.FilmActeurs)
             {
                 <dd>
-                    @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.NomFamille), jouant @Html.DisplayFor(modelItem => item.Personnage)
+                    @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.NomFamille)- jouant @Html.DisplayFor(modelItem => item.Personnage)
                 </dd>
             }
         }
@@ -108,8 +108,8 @@
             @Html.DisplayFor(model => model.Film.NbCopieRestante)
         </dd>
     </dl>
-    @* TODO: IMPLEMENT THIS
-    @if (Model.Client.Forfait.LocationMax >= Model.Client.GetNbLocationsEnCours())
+    
+    @if (Model.Client.Forfait.LocationMax <= Model.Client.GetNbLocationsEnCours())
     {
         <p>Impossible de louer le film, car on possède deja @Model.Client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.Client.Forfait.LocationMax</p>
     }
@@ -119,8 +119,8 @@
     }
     else
     {
-        <p>Impossible de louer le film, car on possède deja @Model.Client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.Client.Forfait.LocationMax</p>
-    }*@
+        @Html.ActionLink("Louer le film", "ListeFilm")
+    }
 </div>
 <p>
     @Html.ActionLink("Revenir à la recherche", "ListeFilm")

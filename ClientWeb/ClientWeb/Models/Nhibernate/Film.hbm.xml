@@ -17,7 +17,7 @@
     <property name="DureeMinutes" column="dureeMinutes" />
 
     <set name="FilmActeurs" inverse="true" fetch="join">
-      <key column="FilmID"></key>
+      <key column="FK_FilmID"></key>
       <one-to-many class="FilmActeur"/>
     </set>
 

@@ -6,10 +6,9 @@
   <class name="FilmActeur" table="Film_Acteur" dynamic-update="true">
     <cache usage="read-write" />
     <composite-id>
-      <key-many-to-one name="Film" column="FilmID" />
-      <key-many-to-one name="Personne" column="ActeurID" />
+      <key-many-to-one name="Film" column="FK_FILMID" />
+      <key-many-to-one name="Personne" column="FK_PERSONNEID" />
     </composite-id>
-    
-    <property name="Personnage" />
+    <property name="Personnage" column="PERSONNAGE"/>
   </class>
 </hibernate-mapping>

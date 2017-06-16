@@ -29,13 +29,27 @@ namespace ClientWeb.Tests
              Assert.IsNotNull(sut_session);
         }
 
-
+            
 
         [Test]
-        public void Hibernate_Get_All_Client()
+        public void Hibernate_Integrity_Test_Client()
         {
-            IList<Client> results = sut_session.QueryOver<Client>().List<Client>();        
+            Client results = sut_session.Get<Client>(1);
             Assert.IsNotNull(results);
         }
+        [Test]
+        public void Hibernate_Integrity_Test_Film()
+        { 
+            IList<Film> results = sut_session.QueryOver<Film>().List<Film>();
+
+            Assert.IsNotNull(results);
+        }
+        [Test]
+        public void Hibernate_Integrity_Test_Film_Acteur()
+        {
+            IList<FilmActeur> results = sut_session.QueryOver<FilmActeur>().List<FilmActeur>();
+            Assert.IsNotNull(results);
+        }
+        
     }
 }

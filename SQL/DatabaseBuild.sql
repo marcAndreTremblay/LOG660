@@ -14,7 +14,8 @@ CREATE TABLE Realisateur(
 CREATE TABLE Scenariste(
  ScenaristeID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
  fk_FilmID INTEGER,
- nom VARCHAR(50));
+ nom VARCHAR(50),
+ PRIMARY KEY(ScenaristeID));
  
 
 

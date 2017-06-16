@@ -119,6 +119,10 @@ namespace LOG660_InsertionProgram
                                             c_c_data.courriel = r.Value;
                                             //Console.WriteLine("\tVALUE: " + r.Value);
                                         }
+                                        if (c_node_name == "tel")
+                                        {
+                                            c_c_data.telephone = r.Value;
+                                        }
                                         if (c_node_name == "anniversaire")
                                         {
                                             c_c_data.aniversaire = r.Value;

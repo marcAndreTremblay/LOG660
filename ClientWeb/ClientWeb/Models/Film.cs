@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.WebPages;
@@ -125,22 +126,22 @@ namespace ClientWeb.Models
             }
         }
 
-        public static int GetNbCopiesRestantes(int id)
+        public virtual int GetNbCopiesRestantes(int id)
         {
             using (ISession session = NHibernateSession.OpenSession())
             {
-                int nbCopiesAuTotal = 0;
-                int nbCopiesLouees = 0;
+                decimal nbCopiesAuTotal = 0;
+                decimal nbCopiesLouees = 0;
 
                 using (var tx = session.BeginTransaction())
                 {
                     
-                    ICollection<Inventaire> copies = session.CreateCriteria<Inventaire>().Add(Restrictions.Eq("Film.Id", id)).List<Inventaire>();
-                    nbCopiesAuTotal = (int) session.CreateQuery(
+                    //ICollection<Inventaire> copies = session.CreateCriteria<Inventaire>().Add(Restrictions.Eq("Film.Id", id)).List<Inventaire>();
+                    nbCopiesAuTotal = (decimal) session.CreateSQLQuery(
                         "SELECT COUNT(*) FROM Inventaire WHERE filmID = " + id).UniqueResult();
 
-                    nbCopiesLouees = (int) session.CreateQuery(
-                        "SELECT * " +
+                    nbCopiesLouees = (decimal) session.CreateSQLQuery(
+                        "SELECT COUNT(*) " +
                         "FROM Location_Client " +
                         "WHERE dateRetour = null " +
                         "AND codeCopieID = ANY (" +
@@ -153,11 +154,11 @@ namespace ClientWeb.Models
                     tx.Commit();
                 }
 
-                return nbCopiesAuTotal - nbCopiesLouees;
+                return (int) (nbCopiesAuTotal - nbCopiesLouees);
             }
         }
 
-        public static LocationClient LouerCopie(int filmId, int clientId)
+        public static void LouerCopie(int filmId, int clientId)
         {
             using (ISession session = NHibernateSession.OpenSession())
             {
@@ -166,15 +167,13 @@ namespace ClientWeb.Models
 
                 using (var tx = session.BeginTransaction())
                 {
-                    IQuery query = session.CreateSQLQuery("exec pLouerFilm @filmID_in =:filmID, @clientID_in=:clientID");
-                    query.SetInt32("filmID", filmId);
+                    IQuery query = session.GetNamedQuery("PLOUERFILM");
+                   query.SetInt32("filmID", filmId);
                     query.SetInt32("clientID", clientId);
-                    query.ExecuteUpdate();
+                    query.UniqueResult();
 
                     tx.Commit();
                 }
-
-                return null;
             }
         }
     }

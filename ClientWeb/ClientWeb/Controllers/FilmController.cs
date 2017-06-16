@@ -17,16 +17,17 @@ namespace ClientWeb.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            using (ISession session = NHibernateSession.OpenSession())
+
+            var film = Film.ChercherFilmParId(id);
+            var location = LocationClient.GetLocationByClientIdAndFilmId(((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id, id);
+
+            FilmViewModel vm = new FilmViewModel
             {
-                var film = Film.ChercherFilmParId(id);
-                FilmViewModel vm = new FilmViewModel
-                {
-                    Film = film,
-                    Client = (Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"]
-                };
-                return View(vm);
-            }
+                Film = film,
+                Client = (Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"],
+                Message = location != null ? "Vous avez présentement une copie de ce film de loué" : ""
+            };
+            return View(vm);
         }
 
         // GET: /Film/ListeFilm
@@ -50,28 +51,16 @@ namespace ClientWeb.Controllers
             return View(vm);
         }
 
-        /*public ActionResult LouerCopie(int id)
+        public ActionResult LouerCopie(int id)
         {
             if (!GestionConnexion.estConnecte())
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            try
-            {
-                LocationClient lc = Film.LouerCopie(id, ((Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id);
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Film", "DetailsFilm");
-            }
-                Film.LouerCopie(id, ((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id);
-                FilmViewModel vm = new FilmViewModel
-                {
-                    Film = film,
-                    Client = (Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]
-                };
-                return View(vm);
-        }*/
+            Film.LouerCopie(id, ((Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id);
+
+            return RedirectToAction("DetailsFilm", "Film", new { id });
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace ClientWeb.ViewModel
     {
         public Client Client { get; set; }
         public Film Film { get; set; }
+        public string Message { get; set; }
     }
 }

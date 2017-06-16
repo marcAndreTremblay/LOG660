@@ -31,4 +31,9 @@
       <one-to-many class="Realisateur"/>
     </set>
   </class>
+
+  <sql-query name="PLOUERFILM">
+    call pLouerFilm(:filmID, :clientID)
+  </sql-query>
+  
 </hibernate-mapping>

@@ -150,17 +150,21 @@
         </dd>
     </dl>
 
-    @if (Model.Client.Forfait.LocationMax <= Model.Client.GetNbLocationsEnCours())
+    @if (!Model.Message.IsEmpty())
+    {
+        <strong>@Model.Message</strong>
+    }
+    else if (Model.Client.Forfait.LocationMax <= Model.Client.GetNbLocationsEnCours())
     {
         <p>Impossible de louer le film, car on possède deja @Model.Client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.Client.Forfait.LocationMax</p>
     }
-    else if (Model.Film.NbCopieRestante < 1)
+    else if (Model.Film.GetNbCopiesRestantes(Model.Film.Id) < 1)
     {
         <p>Impossible de louer le film car il n'en reste plus</p>
     }
     else
     {
-        @Html.ActionLink("Louer le film", "ListeFilm")
+        @Html.ActionLink("Louer le film", "LouerCopie", new { id = Model.Film.Id })
     }
 </div>
 <p>

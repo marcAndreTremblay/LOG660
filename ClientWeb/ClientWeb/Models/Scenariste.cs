@@ -5,7 +5,7 @@
         public virtual int Id { get; set; }
         public virtual Film Film { get; set; }
         public virtual string Nom { get; set; }
-        public override int GetHashCode()
+        /*public override int GetHashCode()
         {
             int hashCode = 0;
             hashCode = hashCode ^ Film.GetHashCode() ^ Nom.GetHashCode();
@@ -20,6 +20,6 @@
                 return false;
             }
             return (this.GetHashCode() != toCompare.GetHashCode());
-        }
+        }*/
     }
 }

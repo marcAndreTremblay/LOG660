@@ -3,12 +3,12 @@
                    assembly="ClientWeb"
                    namespace="ClientWeb.Models">
 
-  <class name="Scenariste" table="Scenariste" dynamic-update="true">
+  <class name="Scenariste" table="Scenariste" dynamic-update="true" lazy="true">
     <cache usage="read-write" />
       <id name="Id" column="ScenaristeID" type="int">
         <generator class="native" />
       </id>
-      <many-to-one name="Film" column="FK_FilmID" />
+      <many-to-one not-null="true" name="Film" column="FK_FilmID"  />
       <property name="Nom" column="Nom" />
   </class>
 </hibernate-mapping>

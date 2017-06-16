@@ -38,32 +38,19 @@ namespace ClientWeb.Models
         public static ISession OpenSessionNoServer()
         {
             var configuration = new Configuration();
-            var configurationPath = @".\ClientWeb\Models\Nhibernate\hibernate.cfg.xml";
-
-            configuration.Configure(configurationPath);
-
-            var carteCreditConfigurationFile = @".\ClientWeb\Models\Nhibernate\CarteCredit.hbm.xml";
-            var clientConfigurationFile = @".\ClientWeb\Models\Nhibernate\Client.hbm.xml";
-            var employeConfigurationFile = @".\ClientWeb\Models\Nhibernate\Employe.hbm.xml";
-            var personneConfigurationFile = @".\ClientWeb\Models\Nhibernate\Personne.hbm.xml";
-            var filmConfigurationFile =  @".\ClientWeb\Models\Nhibernate\Film.hbm.xml";
-            var forfaitConfigurationFile = @".\ClientWeb\Models\Nhibernate\Forfait.hbm.xml";
-            var filmActeurConfigurationFile = @".\ClientWeb\Models\Nhibernate\FilmActeur.hbm.xml";
-            var realisateurConfigurationFile =@".\ClientWeb\Models\Nhibernate\Realisateur.hbm.xml";
-            var locationClientConfigurationFile =@".\ClientWeb\Models\Nhibernate\LocationClient.hbm.xml";
-
-            configuration.AddFile(carteCreditConfigurationFile);
-            configuration.AddFile(clientConfigurationFile);
-            configuration.AddFile(employeConfigurationFile);
-            configuration.AddFile(personneConfigurationFile);
+            configuration.Configure(@".\ClientWeb\Models\Nhibernate\hibernate.cfg.xml");
 
 
-              configuration.AddFile(filmConfigurationFile);
-            configuration.AddFile(forfaitConfigurationFile);
-            configuration.AddFile(filmActeurConfigurationFile);
-            configuration.AddFile(realisateurConfigurationFile);
-            configuration.AddFile(locationClientConfigurationFile);
-            configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Inventaire.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\CarteCredit.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Client.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Employe.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Personne.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Film.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Forfait.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\FilmActeur.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Realisateur.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\LocationClient.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Inventaire.hbm.xml");
 
             ISessionFactory sessionFactory = configuration.BuildSessionFactory();
             return sessionFactory.OpenSession();

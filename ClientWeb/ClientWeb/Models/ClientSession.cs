@@ -49,20 +49,20 @@ namespace ClientWeb.Models
             }
             catch (Exception e) {
                 this.configuration = new Configuration();
-                this.configuration.Configure(@".\ClientWeb\Models\Nhibernate\hibernate.cfg.xml");
+                this.configuration.Configure(@".\ClientWeb\ClientWeb\Models\Nhibernate\hibernate.cfg.xml");
 
 
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\CarteCredit.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Client.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Employe.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Personne.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Film.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Forfait.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\FilmActeur.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Realisateur.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\LocationClient.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Inventaire.hbm.xml");
-                configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Scenariste.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\CarteCredit.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\Client.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\Employe.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\Personne.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\Film.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\Forfait.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\FilmActeur.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\Realisateur.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\LocationClient.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\Inventaire.hbm.xml");
+                configuration.AddFile(@".\ClientWeb\ClientWeb\Models\Nhibernate\Scenariste.hbm.xml");
 
                this.sessionFactory = configuration.BuildSessionFactory();
             };

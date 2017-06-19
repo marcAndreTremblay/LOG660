@@ -154,7 +154,6 @@
     <Compile Include="Models\ClientSession.cs" />
     <Compile Include="Models\FilmActeur.cs" />
     <Compile Include="Models\GestionConnexion.cs" />
-    <Compile Include="Models\NHibernateSession.cs" />
     <Compile Include="Models\Inventaire.cs" />
     <Compile Include="Models\LocationClient.cs" />
     <Compile Include="Models\Forfait.cs" />

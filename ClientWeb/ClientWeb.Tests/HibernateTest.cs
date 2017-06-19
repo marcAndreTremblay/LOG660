@@ -19,20 +19,16 @@ namespace ClientWeb.Tests
     public class HibernateTest
       {
         ClientSession session;
-
-         ISession sut_session;
         [SetUp]
         public void Init()
         {
             session = ClientSession.GetClientSession();
-
-            sut_session = NHibernateSession.OpenSessionNoServer();
         }
 
         [Test]
         public void HibernateSessionTest()
         {
-             Assert.IsNotNull(sut_session);
+             Assert.IsNotNull(session);
         }
 
             
@@ -40,20 +36,20 @@ namespace ClientWeb.Tests
         [Test]
         public void Hibernate_Integrity_Test_Client()
         {
-            Client results = sut_session.Get<Client>(1);
+            Client results = session.OpenSession().Get<Client>(1);
             Assert.IsNotNull(results);
         }
         [Test]
         public void Hibernate_Integrity_Test_Film()
         { 
-            IList<Film> results = sut_session.QueryOver<Film>().List<Film>();
+            IList<Film> results = session.OpenSession().QueryOver<Film>().List<Film>();
 
             Assert.IsNotNull(results);
         }
         [Test]
         public void Hibernate_Integrity_Test_Film_Acteur()
         {
-            IList<FilmActeur> results = sut_session.QueryOver<FilmActeur>().List<FilmActeur>();
+            IList<FilmActeur> results = session.OpenSession().QueryOver<FilmActeur>().List<FilmActeur>();
             Assert.IsNotNull(results);
         }
 

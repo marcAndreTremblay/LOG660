@@ -2,6 +2,7 @@
 using ClientWeb.ViewModel;
 using NHibernate;
 using System.Web.Mvc;
+using ClientWeb.DAO.Nhibernate;
 
 namespace ClientWeb.Controllers
 {
@@ -33,17 +34,20 @@ namespace ClientWeb.Controllers
                     return View(vm);
                 }
 
-                Client Client = Client.TrouverClientParCourrielEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
-                Employe Employe = Employe.TrouverEmployeParMatriculeEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
+                ClientDao clientDao = new ClientDao();
+                EmployeDao employeDao = new EmployeDao();
 
-                if (Client != null)
+                Client client = clientDao.GetClientParCourrielEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
+                Employe employee = employeDao.GetEmployeParMatriculeEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
+
+                if (client != null)
                 {
-                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = Client;
+                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = client;
                     return RedirectToAction("Index");
                 }
-                else if (Employe != null)
+                else if (employee != null)
                 {
-                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = Employe;
+                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = employee;
                     return RedirectToAction("Index");
                 }
                 else

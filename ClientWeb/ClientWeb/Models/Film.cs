@@ -35,7 +35,7 @@ namespace ClientWeb.Models
         [Display(Name = "Résumé")]
         public virtual string Resume { get; set; }
 
-        public virtual ICollection<Scenariste> Scenaristes { get; set; }
+        //public virtual ICollection<Scenariste> Scenaristes { get; set; }
         public virtual string Titre { get; set; }
 
         public static IList<Film> RechercherFilmParKeyword(string keyword, int limit, int offset)
@@ -67,39 +67,58 @@ namespace ClientWeb.Models
 
                 using (var tx = session.BeginTransaction())
                 {
-                    ICriteria criteria = session.CreateCriteria<Film>();
+                    ICriteria criteria = session.CreateCriteria<Film>("f");
 
                     if (!titre.IsEmpty())
                     {
-                        criteria.Add(Restrictions.InsensitiveLike("Titre", titre, MatchMode.Anywhere));
+                        criteria.Add(Restrictions.InsensitiveLike("f.Titre", titre, MatchMode.Anywhere));
                     }
                     if (!realisateur.IsEmpty())
                     {
-                        criteria.Add(Restrictions.InsensitiveLike("Realisateur", realisateur, MatchMode.Anywhere));
+                        criteria.CreateCriteria("f.Realisateurs", "r").CreateCriteria("r.Personne", "pr")
+                            .Add(Restrictions.Or(
+                                Restrictions.InsensitiveLike("pr.NomFamille", realisateur, MatchMode.Anywhere),
+                                Restrictions.InsensitiveLike("pr.Prenom", realisateur, MatchMode.Anywhere)
+                            ));
                     }
                     if (!pays.IsEmpty())
                     {
-                        criteria.Add(Restrictions.InsensitiveLike("Pays", pays, MatchMode.Anywhere));
+                        criteria.Add(Restrictions.InsensitiveLike("f.Pays", pays, MatchMode.Anywhere));
                     }
                     if (!langueOriginale.IsEmpty())
                     {
-                        criteria.Add(Restrictions.InsensitiveLike("LangueOriginale", langueOriginale, MatchMode.Anywhere));
+                        criteria.Add(Restrictions.InsensitiveLike("f.LangueOriginale", langueOriginale, MatchMode.Anywhere));
                     }
                     if (!genre.IsEmpty())
                     {
-                        criteria.Add(Restrictions.InsensitiveLike("Genre", genre, MatchMode.Anywhere));
+                        criteria.Add(Restrictions.InsensitiveLike("f.Genres", genre, MatchMode.Anywhere));
                     }
                     if (!anneeSortie.IsEmpty())
                     {
-                        criteria.Add(Restrictions.InsensitiveLike("Annee", anneeSortie, MatchMode.Anywhere));
+                        criteria.Add(Restrictions.Eq("f.AnneeSortie", Int32.Parse(anneeSortie)));
                     }
                     if (!acteur.IsEmpty())
                     {
-                        criteria.Add(Restrictions.InsensitiveLike("FilmActeur.Personne.Prenom", acteur, MatchMode.Anywhere));
+                        criteria.CreateCriteria("f.FilmActeurs", "fm").CreateCriteria("fm.Personne", "pa")
+                            .Add(Restrictions.Or(
+                                Restrictions.InsensitiveLike("pa.Prenom", acteur, MatchMode.Anywhere),
+                                Restrictions.InsensitiveLike("pa.NomFamille", acteur, MatchMode.Anywhere)
+                            ));
                     }
                     films = criteria
                         .SetMaxResults(limit)
                         .SetFirstResult(offset)
+                        .SetProjection(
+                            Projections.Distinct(Projections.ProjectionList()
+                                .Add(Projections.Alias(Projections.Property("Titre"), "Titre"))
+                                .Add(Projections.Alias(Projections.Property("AnneeSortie"), "AnneeSortie"))
+                                .Add(Projections.Alias(Projections.Property("LangueOriginale"), "LangueOriginale"))
+                                .Add(Projections.Alias(Projections.Property("DureeMinutes"), "DureeMinutes"))
+                                .Add(Projections.Alias(Projections.Property("Id"), "Id"))
+                            )
+                        )
+                        .SetResultTransformer(
+                            new NHibernate.Transform.AliasToBeanResultTransformer(typeof(Film)))
                         .List<Film>(); ;
 
                     tx.Commit();
@@ -126,7 +145,7 @@ namespace ClientWeb.Models
             }
         }
 
-        public virtual int GetNbCopiesRestantes(int id)
+        public static int GetNbCopiesRestantes(int id)
         {
             using (ISession session = NHibernateSession.OpenSession())
             {
@@ -136,14 +155,13 @@ namespace ClientWeb.Models
                 using (var tx = session.BeginTransaction())
                 {
                     
-                    //ICollection<Inventaire> copies = session.CreateCriteria<Inventaire>().Add(Restrictions.Eq("Film.Id", id)).List<Inventaire>();
                     nbCopiesAuTotal = (decimal) session.CreateSQLQuery(
                         "SELECT COUNT(*) FROM Inventaire WHERE filmID = " + id).UniqueResult();
 
                     nbCopiesLouees = (decimal) session.CreateSQLQuery(
                         "SELECT COUNT(*) " +
                         "FROM Location_Client " +
-                        "WHERE dateRetour = null " +
+                        "WHERE (dateRetour = '01-01-01' OR dateRetour IS NULL) " +
                         "AND codeCopieID = ANY (" +
                             "SELECT codeCopieID " +
                             "FROM Inventaire " +
@@ -162,9 +180,6 @@ namespace ClientWeb.Models
         {
             using (ISession session = NHibernateSession.OpenSession())
             {
-                int nbCopiesAuTotal = 0;
-                int nbCopiesLouees = 0;
-
                 using (var tx = session.BeginTransaction())
                 {
                     IQuery query = session.GetNamedQuery("PLOUERFILM");

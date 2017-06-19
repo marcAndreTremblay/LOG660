@@ -13,25 +13,30 @@ namespace ClientWeb.Models
         public virtual int Id { get; set; }
         public virtual Inventaire Inventaire { get; set; }
 
-        public static LocationClient GetLocationByClientIdAndFilmId(int clientId, int filmId)
+        public static int GetNumberOfRentedCopiesByClientIdAndFilmId(int clientId, int filmId)
         {
             using (ISession session = NHibernateSession.OpenSession())
             {
-                LocationClient lc = null;
-                List<LocationClient> locations = null ;
+                int count = 0;
 
                 using (var tx = session.BeginTransaction())
                 {
-                    lc = session.CreateCriteria<LocationClient>()
-                        .Add(Restrictions.Eq("Client.Id", clientId))
-                        //.Add(Restrictions.Eq("Inventaire.Film.Id", filmId))
-                        .Add(Restrictions.IsNull("DateRetour"))
-                        .UniqueResult<LocationClient>();
+                    count = (int) session.CreateCriteria<LocationClient>("lc")
+                        .CreateCriteria("lc.Inventaire", "i")
+                        .CreateCriteria("i.Film", "f")
+                        .Add(Restrictions.Eq("lc.Client.Id", clientId))
+                        .Add(Restrictions.Eq("f.Id", filmId))
+                        .Add(Restrictions.Or(
+                            Restrictions.Eq("lc.DateRetour", Convert.ToDateTime("0001-01-01")),
+                            Restrictions.IsNull("lc.DateRetour")
+                        ))
+                        .SetProjection(Projections.RowCount())
+                        .UniqueResult();
 
                     tx.Commit();
                 }
 
-                return lc;
+                return count;
             }
         }
     }

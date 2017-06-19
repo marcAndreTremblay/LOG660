@@ -1,4 +1,5 @@
-﻿using NHibernate;
+﻿using System;
+using NHibernate;
 using NHibernate.Criterion;
 using System.Collections.Generic;
 
@@ -51,7 +52,10 @@ namespace ClientWeb.Models
                 {
                     nbCopiesLouees = (int) session.CreateCriteria<LocationClient>()
                         .Add(Restrictions.Eq("Client.Id", Id))
-                        .Add(Restrictions.IsNull("DateRetour"))
+                        .Add(Restrictions.Or(
+                            Restrictions.Eq("DateRetour", Convert.ToDateTime("0001-01-01")),
+                            Restrictions.IsNull("DateRetour")
+                        ))
                         .SetProjection(Projections.CountDistinct("Id"))
                         .UniqueResult();
 

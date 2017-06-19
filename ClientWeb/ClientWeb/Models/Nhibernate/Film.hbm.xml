@@ -16,10 +16,10 @@
     <property name="Resume" column="resumeFilm" />
     <property name="DureeMinutes" column="dureeMinutes" />
 
-    <set name="Scenaristes" inverse="true" fetch="join">
+    <!--<set name="Scenaristes" inverse="true" fetch="join">
       <key column="FK_FilmID"></key>
       <one-to-many class="Scenariste"/>
-    </set>
+    </set>-->
 
     <set name="FilmActeurs" inverse="true" fetch="join">
       <key column="FK_FilmID"></key>

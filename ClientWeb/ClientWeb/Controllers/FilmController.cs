@@ -19,13 +19,16 @@ namespace ClientWeb.Controllers
             }
 
             var film = Film.ChercherFilmParId(id);
-            var location = LocationClient.GetLocationByClientIdAndFilmId(((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id, id);
+            film.NbCopieRestante = Film.GetNbCopiesRestantes(id);
+            int nbRented =
+                LocationClient.GetNumberOfRentedCopiesByClientIdAndFilmId(
+                    ((Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id, id);
 
             FilmViewModel vm = new FilmViewModel
             {
                 Film = film,
                 Client = (Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"],
-                Message = location != null ? "Vous avez présentement une copie de ce film de loué" : ""
+                Message = nbRented > 0 ? "Vous avez présentement " + nbRented + " copie(s) de ce film de loué" : ""
             };
             return View(vm);
         }

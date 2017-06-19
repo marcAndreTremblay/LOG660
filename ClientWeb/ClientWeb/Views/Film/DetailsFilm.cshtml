@@ -68,7 +68,7 @@
             @Html.DisplayFor(model => model.Film.DureeMinutes)
         </dd>
 
-        @if (Model.Film.Scenaristes != null)
+        @*@if (Model.Film.Scenaristes != null)
         {
             <dt>
                 Scénariste(s)
@@ -87,7 +87,7 @@
                 Aucun Scénariste
             </dt>
             <dd></dd>
-        }
+        }*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Film.Pays)
@@ -122,7 +122,7 @@
             foreach (var item in Model.Film.FilmActeurs)
             {
                 <dd class="opener" titre="@item.Personne.Prenom @item.Personne.NomFamille - Acteur" dateNaissance="@item.Personne.DateNaissance.ToString("dddd le dd MMMM yyyy")" lieuNaissance="@item.Personne.LieuNaissance" biographie="@item.Personne.Biographie">
-                    @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.NomFamille)- jouant @Html.DisplayFor(modelItem => item.Personnage)
+                    @Html.DisplayFor(modelItem => item.Personne.Prenom) @Html.DisplayFor(modelItem => item.Personne.NomFamille), jouant @Html.DisplayFor(modelItem => item.Personnage)
                 </dd>
             }
         }
@@ -152,13 +152,13 @@
 
     @if (!Model.Message.IsEmpty())
     {
-        <strong>@Model.Message</strong>
+        <strong>@Model.Message</strong><br />
     }
-    else if (Model.Client.Forfait.LocationMax <= Model.Client.GetNbLocationsEnCours())
+    @if (Model.Client.Forfait.LocationMax <= Model.Client.GetNbLocationsEnCours())
     {
         <p>Impossible de louer le film, car on possède deja @Model.Client.GetNbLocationsEnCours() locations en cours alors que notre forfait nous en permet seulement @Model.Client.Forfait.LocationMax</p>
     }
-    else if (Model.Film.GetNbCopiesRestantes(Model.Film.Id) < 1)
+    else if (Model.Film.NbCopieRestante < 1)
     {
         <p>Impossible de louer le film car il n'en reste plus</p>
     }

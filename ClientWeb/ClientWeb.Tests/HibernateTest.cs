@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using NUnit.Framework;
+using NHibernate.Criterion;
 
 using NHibernate;
 using ClientWeb.Models;
@@ -16,10 +17,14 @@ namespace ClientWeb.Tests
     [TestFixture]
     public class HibernateTest
       {
-        ISession sut_session;
+        ClientSession session;
+
+         ISession sut_session;
         [SetUp]
         public void Init()
         {
+            session = ClientSession.GetClientSession();
+
             sut_session = NHibernateSession.OpenSessionNoServer();
         }
 
@@ -50,6 +55,43 @@ namespace ClientWeb.Tests
             IList<FilmActeur> results = sut_session.QueryOver<FilmActeur>().List<FilmActeur>();
             Assert.IsNotNull(results);
         }
-        
+
+
+
+        [TestCase("root", "root", true, TestName = "right password , rignt matricule")]
+        [TestCase("sadads", "root", false , TestName = "Wrong password , rignt matricule")]
+        [TestCase("dsdadsd", "dsadads",false, TestName = "Wrong password , wrong matricule")]
+        [TestCase("root", "dsadada",false, TestName = "right password , wrong matricule")]
+        public void Employe_Connection(string mdp, string matricule,bool expected_value)
+        {
+            Employe sut = Employe.TrouverEmployeParMatriculeEtMotDePasse(matricule, mdp);
+            bool result;
+            if(sut == null) {
+                result = false;
+            }
+            else {
+                   result =  true;
+            }
+            Assert.AreEqual(result, expected_value);
+        }
+        [TestCase("hello123", "AnneDBrown75@hotmail.com", true, TestName = "right password , rignt username")]
+        [TestCase("sadads", "AnneDBrown75@hotmail.com", false, TestName = "Wrong password , rignt username")]
+        [TestCase("hello123", "dsadads", false, TestName = "Wrong password , wrong username")]
+        [TestCase("root", "dsadada", false, TestName = "right password , wrong username")]
+        public void Client_Connection(string mdp, string email, bool expected_value)
+        {
+            Client sut = Client.TrouverClientParCourrielEtMotDePasse(email, mdp);
+            bool result;
+            if (sut == null)
+            {
+                result = false;
+            }
+            else
+            {
+                result = true;
+            }
+            Assert.AreEqual(result, expected_value);
+        }
     }
+    
 }

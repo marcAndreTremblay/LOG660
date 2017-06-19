@@ -53,6 +53,7 @@ namespace ClientWeb.Models
                 configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Realisateur.hbm.xml");
                 configuration.AddFile(@".\ClientWeb\Models\Nhibernate\LocationClient.hbm.xml");
                 configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Inventaire.hbm.xml");
+              configuration.AddFile(@".\ClientWeb\Models\Nhibernate\Scenariste.hbm.xml");
 
             ISessionFactory sessionFactory = configuration.BuildSessionFactory();
             return sessionFactory.OpenSession();

@@ -5,6 +5,7 @@ using System.Web;
 using ClientWeb.Models;
 using NHibernate;
 using NHibernate.Criterion;
+using ClientWeb.Models;
 
 namespace ClientWeb.DAO.Nhibernate
 {
@@ -12,7 +13,9 @@ namespace ClientWeb.DAO.Nhibernate
     {
         public Client GetClientParCourrielEtMotDePasse(string email, string mdp)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+
+            
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 Client client = null;
                 using (var tx = session.BeginTransaction())

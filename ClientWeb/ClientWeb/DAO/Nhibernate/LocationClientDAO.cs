@@ -12,7 +12,7 @@ namespace ClientWeb.DAO.Nhibernate
     {
         public int GetNumberOfRentedCopiesByClientIdAndFilmId(int clientId, int filmId)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 int count = 0;
 
@@ -39,7 +39,7 @@ namespace ClientWeb.DAO.Nhibernate
 
         public int GetNbLocationsEnCoursByClientId(int clientId)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 int nbCopiesLouees = 0;
                 using (var tx = session.BeginTransaction())

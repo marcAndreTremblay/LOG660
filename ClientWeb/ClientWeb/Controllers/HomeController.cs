@@ -14,7 +14,7 @@ namespace ClientWeb.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 int id = 607;
                 var creditCard = session.Get<CarteCredit>(id);
@@ -26,7 +26,7 @@ namespace ClientWeb.Controllers
         [HttpPost]
         public ActionResult Connexion(ConnexionViewModel vm)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 if (vm.EmailOuMatricule == null || vm.MotDePasse == null)
                 {

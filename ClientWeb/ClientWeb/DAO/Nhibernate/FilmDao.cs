@@ -14,7 +14,7 @@ namespace ClientWeb.DAO.Nhibernate
         public IList<Film> RechercherFilmsParCriteres(string titre, string realisateur, string pays, string langueOriginale, string genre,
             string anneeSortie, string acteur, int limit, int offset)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 IList<Film> films = null;
 
@@ -83,7 +83,7 @@ namespace ClientWeb.DAO.Nhibernate
 
         public Film GetFilmParId(int id)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 Film film = null;
 
@@ -100,7 +100,7 @@ namespace ClientWeb.DAO.Nhibernate
 
         public int GetNbCopiesRestantes(int id)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 decimal nbCopiesAuTotal = 0;
                 decimal nbCopiesLouees = 0;
@@ -132,7 +132,7 @@ namespace ClientWeb.DAO.Nhibernate
         public int CountFilmsCriteres(string titre, string realisateur, string pays, string langueOriginale,
             string genre, string anneeSortie, string acteur)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 int count = 0;
 
@@ -191,7 +191,7 @@ namespace ClientWeb.DAO.Nhibernate
 
         public void LouerCopie(int filmId, int clientId)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 using (var tx = session.BeginTransaction())
                 {

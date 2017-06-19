@@ -81,7 +81,7 @@ namespace ClientWeb.Models
             
         }
 
-        private ISession OpenSession()
+        public ISession OpenSession()
         {
             return this.sessionFactory.OpenSession();
         }

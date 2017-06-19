@@ -12,7 +12,7 @@ namespace ClientWeb.DAO.Nhibernate
     {
         public Employe GetEmployeParMatriculeEtMotDePasse(string matricule, string mdp)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 Employe UnEmploye = null;
                 using (var tx = session.BeginTransaction())

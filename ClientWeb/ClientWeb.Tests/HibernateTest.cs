@@ -10,7 +10,8 @@ using NHibernate.Criterion;
 using NHibernate;
 using ClientWeb.Models;
 
-
+using ClientWeb.DAO;
+using ClientWeb.DAO.Nhibernate;
 
 namespace ClientWeb.Tests
 {
@@ -80,9 +81,10 @@ namespace ClientWeb.Tests
         [TestCase("root", "dsadada", false, TestName = "right password , wrong username")]
         public void Client_Connection(string mdp, string email, bool expected_value)
         {
-            Client sut = Client.TrouverClientParCourrielEtMotDePasse(email, mdp);
+            ClientDao sut =new  ClientDao();
+            Client result_client = sut.GetClientParCourrielEtMotDePasse(email, mdp);
             bool result;
-            if (sut == null)
+            if (result_client == null)
             {
                 result = false;
             }

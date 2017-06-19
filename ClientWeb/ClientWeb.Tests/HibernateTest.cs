@@ -26,13 +26,10 @@ namespace ClientWeb.Tests
         }
 
         [Test]
-        public void HibernateSessionTest()
+        public void Hibernate_Integrity_Test_Session()
         {
              Assert.IsNotNull(session);
         }
-
-            
-
         [Test]
         public void Hibernate_Integrity_Test_Client()
         {
@@ -111,6 +108,21 @@ namespace ClientWeb.Tests
                 result = true;
             }
             Assert.AreEqual(result, expected_value);
+        }
+        [TestCase("", "", "", "", "", "", "", 631, TestName = "Film seach: No atribute")]
+        [TestCase("Gran Torino", "", "", "", "", "", "", 1, TestName = "Film seach : Valid Name")]
+        [TestCase("aaaaaaaaaaaaaa", "", "", "", "", "", "", 0, TestName = "Film seach : Invalid Name")]
+        [TestCase("", "", "", "English", "", "", "", 587, TestName = "Film seach : Valid langue origine")]
+        [TestCase("", "", "", "aaaaaaaaaaaaaa", "", "", "", 0, TestName = "Film seach: Invalid langue origine")]
+        [TestCase("", "", "", "", "Comedy", "", "", 236, TestName = "Film seach : Valid Genre")]
+        [TestCase("", "", "", "", "aaaaaaaaaaaaaa", "", "", 0, TestName = "Film seach : Invalid Genre")]
+        public void Film_Seach_test(string titre, string realisateur, string pays, string langueOriginale,
+            string genre, string anneeSortie, string acteur, int expedted)
+        {
+            FilmDao sut = new FilmDao();
+            int cpt = sut.CountFilmsCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur);
+         
+            Assert.AreEqual(expedted,cpt);
         }
 
         [Test]

@@ -210,6 +210,15 @@ END;
 
 /
 
+create or replace TRIGGER SetDateToNull
+BEFORE INSERT ON Location_Client
+FOR EACH ROW
+BEGIN
+  :new.dateRetour := NULL;
+END;
+
+/
+
 create or replace PROCEDURE pCreerClient
     (prenom_in IN VARCHAR2, nomFamille_in IN VARCHAR2, dateNaissance_in IN DATE, numeroTel_in IN VARCHAR2, courriel_in IN VARCHAR2, password_in IN VARCHAR2, 
     noCivique_in IN VARCHAR2, rue_in IN VARCHAR2, ville_in IN VARCHAR2, province_in IN VARCHAR2, codePostal_in IN VARCHAR2, typeCarte_in IN VARCHAR2, numero_in IN NUMBER, 
@@ -239,7 +248,6 @@ WHEN OTHERS THEN raise_application_error(-20001,'Erreur dans la procédure pCree
 END pCreerClient;
 
 /
-
 
 create or replace PROCEDURE pLouerFilm
     (filmID_in IN NUMBER, clientID_in IN NUMBER)

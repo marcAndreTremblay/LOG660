@@ -22,12 +22,12 @@ namespace ClientWeb.Controllers
             film.NbCopieRestante = Film.GetNbCopiesRestantes(id);
             int nbRented =
                 LocationClient.GetNumberOfRentedCopiesByClientIdAndFilmId(
-                    ((Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id, id);
+                    ((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id, id);
 
             FilmViewModel vm = new FilmViewModel
             {
                 Film = film,
-                Client = (Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"],
+                Client = (Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"],
                 Message = nbRented > 0 ? "Vous avez présentement " + nbRented + " copie(s) de ce film de loué" : ""
             };
             return View(vm);
@@ -43,13 +43,21 @@ namespace ClientWeb.Controllers
             }
             FilmActionViewModel vm = new FilmActionViewModel
             {
-                NbTotalPages = 10,//mettre le vrai nombre ceiling(nb film/limit)
+                NbTotalPages = 0,
                 NoPageActuelle = page,
-                Films = new List<Film>()
+                Films = new List<Film>(),
+                PremiereFois = false
             };
-            
-            vm.Films.AddRange(Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur,
+            if (titre == null && realisateur == null && pays == null && langueOriginale == null && genre == null && anneeSortie == null && acteur == null)
+            {
+                vm.PremiereFois = true;
+            }
+            else if (!(titre == "" && realisateur == "" && pays == "" && langueOriginale == "" && genre == "" && anneeSortie == "" && acteur == ""))
+            {
+                vm.Films.AddRange(Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur,
                 limit, offset));
+                vm.NbTotalPages = (Film.CountFilmsCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur) + limit - 1) / limit; ;
+            }
 
             return View(vm);
         }
@@ -61,7 +69,7 @@ namespace ClientWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Film.LouerCopie(id, ((Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id);
+            Film.LouerCopie(id, ((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id);
 
             return RedirectToAction("DetailsFilm", "Film", new { id });
         }

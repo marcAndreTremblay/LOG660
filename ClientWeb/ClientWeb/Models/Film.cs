@@ -128,6 +128,64 @@ namespace ClientWeb.Models
             }
         }
 
+        public static int CountFilmsCriteres(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeSortie, string acteur)
+        {
+            using (ISession session = NHibernateSession.OpenSession())
+            {
+                int count = 0;
+
+                using (var tx = session.BeginTransaction())
+                {
+                    ICriteria criteria = session.CreateCriteria<Film>("f");
+
+                    if (!titre.IsEmpty())
+                    {
+                        criteria.Add(Restrictions.InsensitiveLike("f.Titre", titre, MatchMode.Anywhere));
+                    }
+                    if (!realisateur.IsEmpty())
+                    {
+                        criteria.CreateCriteria("f.Realisateurs", "r").CreateCriteria("r.Personne", "pr")
+                            .Add(Restrictions.Or(
+                                Restrictions.InsensitiveLike("pr.NomFamille", realisateur, MatchMode.Anywhere),
+                                Restrictions.InsensitiveLike("pr.Prenom", realisateur, MatchMode.Anywhere)
+                            ));
+                    }
+                    if (!pays.IsEmpty())
+                    {
+                        criteria.Add(Restrictions.InsensitiveLike("f.Pays", pays, MatchMode.Anywhere));
+                    }
+                    if (!langueOriginale.IsEmpty())
+                    {
+                        criteria.Add(Restrictions.InsensitiveLike("f.LangueOriginale", langueOriginale, MatchMode.Anywhere));
+                    }
+                    if (!genre.IsEmpty())
+                    {
+                        criteria.Add(Restrictions.InsensitiveLike("f.Genres", genre, MatchMode.Anywhere));
+                    }
+                    if (!anneeSortie.IsEmpty())
+                    {
+                        criteria.Add(Restrictions.Eq("f.AnneeSortie", Int32.Parse(anneeSortie)));
+                    }
+                    if (!acteur.IsEmpty())
+                    {
+                        criteria.CreateCriteria("f.FilmActeurs", "fm").CreateCriteria("fm.Personne", "pa")
+                            .Add(Restrictions.Or(
+                                Restrictions.InsensitiveLike("pa.Prenom", acteur, MatchMode.Anywhere),
+                                Restrictions.InsensitiveLike("pa.NomFamille", acteur, MatchMode.Anywhere)
+                            ));
+                    }
+                    count = criteria.SetProjection(
+        Projections.Count(Projections.Id())
+    )
+    .UniqueResult<int>(); ;
+
+                    tx.Commit();
+                }
+
+                return count;
+            }
+        }
+
         public static Film ChercherFilmParId(int id)
         {
             using (ISession session = NHibernateSession.OpenSession())
@@ -154,11 +212,10 @@ namespace ClientWeb.Models
 
                 using (var tx = session.BeginTransaction())
                 {
-                    
-                    nbCopiesAuTotal = (decimal) session.CreateSQLQuery(
+                    nbCopiesAuTotal = (decimal)session.CreateSQLQuery(
                         "SELECT COUNT(*) FROM Inventaire WHERE filmID = " + id).UniqueResult();
 
-                    nbCopiesLouees = (decimal) session.CreateSQLQuery(
+                    nbCopiesLouees = (decimal)session.CreateSQLQuery(
                         "SELECT COUNT(*) " +
                         "FROM Location_Client " +
                         "WHERE (dateRetour = '01-01-01' OR dateRetour IS NULL) " +
@@ -172,7 +229,7 @@ namespace ClientWeb.Models
                     tx.Commit();
                 }
 
-                return (int) (nbCopiesAuTotal - nbCopiesLouees);
+                return (int)(nbCopiesAuTotal - nbCopiesLouees);
             }
         }
 
@@ -183,7 +240,7 @@ namespace ClientWeb.Models
                 using (var tx = session.BeginTransaction())
                 {
                     IQuery query = session.GetNamedQuery("PLOUERFILM");
-                   query.SetInt32("filmID", filmId);
+                    query.SetInt32("filmID", filmId);
                     query.SetInt32("clientID", clientId);
                     query.UniqueResult();
 

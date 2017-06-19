@@ -1,10 +1,9 @@
 ﻿@model ClientWeb.ViewModel.FilmViewModel
 @{
-    ViewBag.Title = "DetailsFilm";
+    ViewBag.Title = Model.Film.Titre;
 }
 <script>
     $(function () {
-        //$(("#dialog").dialog({ height: 'auto', width: 'auto' });
         $("#dialog").dialog({
             modal: true,
             width: 'auto',
@@ -30,10 +29,9 @@
         });
     });
 </script>
-<h2>DetailsFilm</h2>
 
 <div>
-    <h4>Film</h4>
+    <h2>@ViewBag.Title</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -69,25 +67,25 @@
         </dd>
 
         @*@if (Model.Film.Scenaristes != null)
-        {
-            <dt>
-                Scénariste(s)
-            </dt>
-
-            foreach (var item in Model.Film.Scenaristes)
             {
-                <dd>
-                    @Html.DisplayFor(modelItem => item.Nom)
-                </dd>
+                <dt>
+                    Scénariste(s)
+                </dt>
+
+                foreach (var item in Model.Film.Scenaristes)
+                {
+                    <dd>
+                        @Html.DisplayFor(modelItem => item.Nom)
+                    </dd>
+                }
             }
-        }
-        else
-        {
-            <dt>
-                Aucun Scénariste
-            </dt>
-            <dd></dd>
-        }*@
+            else
+            {
+                <dt>
+                    Aucun Scénariste
+                </dt>
+                <dd></dd>
+            }*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Film.Pays)
@@ -131,7 +129,7 @@
             <dt>
                 Aucun Acteur
             </dt>
-        <dd></dd>
+            <dd></dd>
         }
         <dt>
             @Html.DisplayNameFor(model => model.Film.Resume)

@@ -6,6 +6,7 @@ namespace ClientWeb.ViewModel
 {
     public class FilmActionViewModel
     {
+        public bool PremiereFois { get; set; }
         public int NbTotalPages { get; set; }
         public int NoPageActuelle { get; set; }
         public List<Film> Films { get; set; }

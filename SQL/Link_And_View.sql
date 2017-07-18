@@ -1,0 +1,13 @@
+CREATE DATABASE LINK  test_link
+CONNECT TO EXT660E IDENTIFIED BY "LoG660x" USING 'EXT660';
+
+
+select * from LOG6601C.COTES@test_link;
+
+CREATE SYNONYM Proxy_Data_Table
+FOR LOG6601C.COTES@test_link;
+
+CREATE MATERIALIZED VIEW ma_vue_moyenne
+REFRESH FORCE START WITH SYSDATE
+NEXT TRUNC(SYSDATE) + 6 
+AS select (sum(COTE)/count(IDFILM)) from Proxy_Data_Table group by IDFILM;

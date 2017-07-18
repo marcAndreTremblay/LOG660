@@ -15,7 +15,7 @@ namespace ClientWeb.Models
 
         public static Employe TrouverEmployeParMatriculeEtMotDePasse(string matricule, string mdp)// a faire
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 Employe UnEmploye = null;
                 using (var tx = session.BeginTransaction())

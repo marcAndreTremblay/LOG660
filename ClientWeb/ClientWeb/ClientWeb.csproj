@@ -140,12 +140,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAO\IClientDAO.cs" />
+    <Compile Include="DAO\IEmployeDAO.cs" />
+    <Compile Include="DAO\IFilmDAO.cs" />
+    <Compile Include="DAO\ILocationClientDAO.cs" />
+    <Compile Include="DAO\Nhibernate\ClientDAO.cs" />
+    <Compile Include="DAO\Nhibernate\EmployeDAO.cs" />
+    <Compile Include="DAO\Nhibernate\FilmDAO.cs" />
+    <Compile Include="DAO\Nhibernate\LocationClientDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientSession.cs" />
     <Compile Include="Models\FilmActeur.cs" />
     <Compile Include="Models\GestionConnexion.cs" />
-    <Compile Include="Models\NHibernateSession.cs" />
     <Compile Include="Models\Inventaire.cs" />
     <Compile Include="Models\LocationClient.cs" />
     <Compile Include="Models\Forfait.cs" />

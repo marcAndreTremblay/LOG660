@@ -5,6 +5,7 @@ using NHibernate;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using ClientWeb.DAO.Nhibernate;
 
 namespace ClientWeb.Controllers
 {
@@ -18,11 +19,19 @@ namespace ClientWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var film = Film.ChercherFilmParId(id);
-            film.NbCopieRestante = Film.GetNbCopiesRestantes(id);
+            FilmDao filmDao = new FilmDao();
+            LocationClientDao locationClientDao = new LocationClientDao();
+
+            var film = filmDao.GetFilmParId(id);
+            film.NbCopieRestante = filmDao.GetNbCopiesRestantes(id);
+
             int nbRented =
-                LocationClient.GetNumberOfRentedCopiesByClientIdAndFilmId(
+                locationClientDao.GetNumberOfRentedCopiesByClientIdAndFilmId(
                     ((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id, id);
+
+            Client client = (Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"];
+            client.NbLocationsEnCours = locationClientDao.GetNbLocationsEnCoursByClientId(client.Id);
+
 
             FilmViewModel vm = new FilmViewModel
             {
@@ -33,7 +42,7 @@ namespace ClientWeb.Controllers
             return View(vm);
         }
 
-        // GET: /Film/ListeFilm
+        // GET/POST: /Film/ListeFilm
         public ActionResult ListeFilm(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeSortie, string acteur, int limit = 10, int page = 1)
         {
             int offset = (page - 1) * limit;
@@ -41,6 +50,7 @@ namespace ClientWeb.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
             FilmActionViewModel vm = new FilmActionViewModel
             {
                 NbTotalPages = 0,
@@ -48,15 +58,18 @@ namespace ClientWeb.Controllers
                 Films = new List<Film>(),
                 PremiereFois = false
             };
+
+            FilmDao filmDao = new FilmDao();
+
             if (titre == null && realisateur == null && pays == null && langueOriginale == null && genre == null && anneeSortie == null && acteur == null)
             {
                 vm.PremiereFois = true;
             }
             else if (!(titre == "" && realisateur == "" && pays == "" && langueOriginale == "" && genre == "" && anneeSortie == "" && acteur == ""))
             {
-                vm.Films.AddRange(Film.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur,
+                vm.Films.AddRange(filmDao.RechercherFilmsParCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur,
                 limit, offset));
-                vm.NbTotalPages = (Film.CountFilmsCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur) + limit - 1) / limit; ;
+                vm.NbTotalPages = (filmDao.CountFilmsCriteres(titre, realisateur, pays, langueOriginale, genre, anneeSortie, acteur) + limit - 1) / limit; ;
             }
 
             return View(vm);
@@ -69,7 +82,9 @@ namespace ClientWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Film.LouerCopie(id, ((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id);
+            FilmDao filmDao = new FilmDao();
+
+            filmDao.LouerCopie(id, ((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id);
 
             return RedirectToAction("DetailsFilm", "Film", new { id });
         }

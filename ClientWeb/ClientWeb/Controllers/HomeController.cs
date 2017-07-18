@@ -2,6 +2,7 @@
 using ClientWeb.ViewModel;
 using NHibernate;
 using System.Web.Mvc;
+using ClientWeb.DAO.Nhibernate;
 
 namespace ClientWeb.Controllers
 {
@@ -13,7 +14,7 @@ namespace ClientWeb.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 int id = 607;
                 var creditCard = session.Get<CarteCredit>(id);
@@ -25,7 +26,7 @@ namespace ClientWeb.Controllers
         [HttpPost]
         public ActionResult Connexion(ConnexionViewModel vm)
         {
-            using (ISession session = NHibernateSession.OpenSession())
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 if (vm.EmailOuMatricule == null || vm.MotDePasse == null)
                 {
@@ -33,17 +34,20 @@ namespace ClientWeb.Controllers
                     return View(vm);
                 }
 
-                Client Client = Client.TrouverClientParCourrielEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
-                Employe Employe = Employe.TrouverEmployeParMatriculeEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
+                ClientDao clientDao = new ClientDao();
+                EmployeDao employeDao = new EmployeDao();
 
-                if (Client != null)
+                Client client = clientDao.GetClientParCourrielEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
+                Employe employee = employeDao.GetEmployeParMatriculeEtMotDePasse(vm.EmailOuMatricule, vm.MotDePasse);
+
+                if (client != null)
                 {
-                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = Client;
+                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = client;
                     return RedirectToAction("Index");
                 }
-                else if (Employe != null)
+                else if (employee != null)
                 {
-                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = Employe;
+                    System.Web.HttpContext.Current.Session["UtilisateurConnecté"] = employee;
                     return RedirectToAction("Index");
                 }
                 else

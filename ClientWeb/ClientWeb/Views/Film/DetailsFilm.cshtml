@@ -1,6 +1,7 @@
 ﻿@model ClientWeb.ViewModel.FilmViewModel
 @{
     ViewBag.Title = Model.Film.Titre;
+    ViewBag.NoReccomendation = 1;
 }
 <script>
     $(function () {
@@ -31,7 +32,7 @@
 </script>
 
 <div>
-    <h2>@ViewBag.Title</h2>
+    <h2>@ViewBag.Title             Cote moyenne: @Model.Cote</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -165,6 +166,11 @@
         @Html.ActionLink("Louer le film", "LouerCopie", new { id = Model.Film.Id })
     }
 </div>
+@foreach (var film in Model.Recommandation)
+{
+    <h3>@(ViewBag.NoReccomendation++)) @Html.ActionLink(film.Titre, "DetailsFilm", new { id = film.Id })</h3>
+}
+
 <p>
     @Html.ActionLink("Revenir à la recherche", "ListeFilm")
 </p>

@@ -26,9 +26,11 @@ namespace ClientWeb.Controllers
             var film = filmDao.GetFilmParId(id);
             film.NbCopieRestante = filmDao.GetNbCopiesRestantes(id);
 
-            recommendations.Add(filmDao.GetFilmParId(id));
-            recommendations.Add(filmDao.GetFilmParId(id));
-            recommendations.Add(filmDao.GetFilmParId(id));
+            int[] recommendationsIds = filmDao.GetRecommendationsForFilmId(id);
+
+            recommendations.Add(filmDao.GetFilmParId(id[0]));
+            recommendations.Add(filmDao.GetFilmParId(id[1]));
+            recommendations.Add(filmDao.GetFilmParId(id[2]));
 
             int nbRented =
                 locationClientDao.GetNumberOfRentedCopiesByClientIdAndFilmId(
@@ -43,7 +45,7 @@ namespace ClientWeb.Controllers
                 Client = (Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"],
                 Message = nbRented > 0 ? "Vous avez présentement " + nbRented + " copie(s) de ce film de loué" : "",
                 Recommandation = recommendations,
-                Cote = 4.2f
+                Cote = filmDao.GetCoteMoyenneForFilmId(id)
             };
             return View(vm);
         }

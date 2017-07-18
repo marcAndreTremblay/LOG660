@@ -31,7 +31,7 @@
 </script>
 
 <div>
-    <h2>@ViewBag.Title</h2>
+    <h2>@ViewBag.Title      Cote moyenne: ----</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -165,6 +165,11 @@
         @Html.ActionLink("Louer le film", "LouerCopie", new { id = Model.Film.Id })
     }
 </div>
+@foreach (var film in Model.Recommendation)
+{
+    <h3>@Html.ActionLink(film.Titre, "DetailsFilm", new { id = film.Id })</h3>
+}
+
 <p>
     @Html.ActionLink("Revenir à la recherche", "ListeFilm")
 </p>

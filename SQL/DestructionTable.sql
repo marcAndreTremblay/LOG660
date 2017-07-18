@@ -1,9 +1,9 @@
 BEGIN
-
    FOR cur_rec IN (SELECT object_name, object_type
                      FROM user_objects
                     WHERE object_type IN
-                             ('TRIGGER','TABLE',
+                             ('TRIGGER',
+                             'TABLE',
                               'VIEW',
                               'PACKAGE',
                               'PROCEDURE',

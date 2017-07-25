@@ -30,23 +30,6 @@
       <key column="FK_FilmID"></key>
       <one-to-many class="Realisateur"/>
     </set>
-
-    <one-to-one name="CoteMoyenne" class="CoteMoyenne"/>
-    <one-to-one name="Recommendations" class="Recommendations"/>
-  </class>
-
-  <class name="CoteMoyenne" table="Ma_vue_moyenne" dynamic-update="true">
-    <cache usage="read-only" />
-    <id column="Id" type="guid"/>
-    <property name="Average" column="Average"/>
-  </class>
-
-  <class name="Recommendations" table="Ma_vue_recommendations" dynamic-update="true">
-    <cache usage="read-only" />
-    <id column="Id" type="guid"/>
-    <property name="Recommendation1" column="Recommendation1"/>
-    <property name="Recommendation2" column="Recommendation2"/>
-    <property name="Recommendation3" column="Recommendation3"/>
   </class>
 
   <sql-query name="PLOUERFILM">

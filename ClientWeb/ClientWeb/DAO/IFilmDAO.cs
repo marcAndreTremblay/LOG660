@@ -14,7 +14,7 @@ namespace ClientWeb.DAO
 		int CountFilmsCriteres(string titre, string realisateur, string pays, string langueOriginale, string genre, string anneeSortie, string acteur);
         Film GetFilmParId(int id);
         int GetNbCopiesRestantes(int id);
-        IList<string> GetRecommendationsForFilmId(int id);
+        int[] GetRecommendationsForFilmId(int id);
         float GetCoteMoyenneForFilmId(int id);
         void LouerCopie(int filmId, int clientId);
     }

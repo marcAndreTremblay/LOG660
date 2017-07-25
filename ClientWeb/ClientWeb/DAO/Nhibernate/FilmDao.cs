@@ -205,34 +205,34 @@ namespace ClientWeb.DAO.Nhibernate
             }
         }
 
-        public IList<string> GetRecommendationsForFilmId(int id)
+        public int[] GetRecommendationsForFilmId(int id)
         {
             using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
-                IList<string> recommendations;
+                IList<int> recommendations;
 
                 using (var tx = session.BeginTransaction())
                 {
-                    recommentations = (decimal)session.CreateSQLQuery(
-                        "SELECT m.* " +
+                    recommendations = session.CreateSQLQuery(
+                        "SELECT m.correlation_value " +
                         "FROM Film f, Ma_Vue_Recommendations m" +
                         "WHERE f.filmid = " + id +
                         "AND m.id_movie = " + id
-                    ).UniqueResult();
+                    ).List<int>();
                 }
 
-                return recommendations;
+                return recommendations.ToArray();
             }
         }
         public float GetCoteMoyenneForFilmId(int id)
         {
             using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
-                int cote = 0;
+                float cote = 0;
 
                 using (var tx = session.BeginTransaction())
                 {
-                    cote = (decimal)session.CreateSQLQuery(
+                    cote = (float)session.CreateSQLQuery(
                         "SELECT m.average" +
                         "FROM Film f, Ma_Vue_Moyenne m" +
                         "WHERE f.filmid = " + id +

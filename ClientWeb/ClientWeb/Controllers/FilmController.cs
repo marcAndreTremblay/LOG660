@@ -28,9 +28,9 @@ namespace ClientWeb.Controllers
 
             int[] recommendationsIds = filmDao.GetRecommendationsForFilmId(id);
 
-            recommendations.Add(filmDao.GetFilmParId(id[0]));
-            recommendations.Add(filmDao.GetFilmParId(id[1]));
-            recommendations.Add(filmDao.GetFilmParId(id[2]));
+            recommendations.Add(filmDao.GetFilmParId(recommendationsIds[0]));
+            recommendations.Add(filmDao.GetFilmParId(recommendationsIds[1]));
+            recommendations.Add(filmDao.GetFilmParId(recommendationsIds[2]));
 
             int nbRented =
                 locationClientDao.GetNumberOfRentedCopiesByClientIdAndFilmId(

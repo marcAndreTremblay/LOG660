@@ -96,5 +96,15 @@ namespace ClientWeb.Controllers
 
             return RedirectToAction("DetailsFilm", "Film", new { id });
         }
+
+        public ActionResult Analyse(string groupeAge, string province, string jourSemaine, string jourMois)
+        {
+            FilmDao filmDao = new FilmDao();
+
+            int nbLocations = filmDao.AnalyserNbLocations(groupeAge, province, jourSemaine, jourMois);
+
+            ViewBag.nbLocations = nbLocations;
+            return View();
+        }
     }
 }

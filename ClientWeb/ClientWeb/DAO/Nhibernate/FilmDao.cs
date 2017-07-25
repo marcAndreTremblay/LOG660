@@ -215,9 +215,9 @@ namespace ClientWeb.DAO.Nhibernate
                 {
                     recommendations = session.CreateSQLQuery(
                         "SELECT m.correlation_value " +
-                        "FROM Film f, Ma_Vue_Recommendations m" +
+                        "FROM Film f, Ma_Vue_Recommendations m " +
                         "WHERE f.filmid = " + id +
-                        "AND m.id_movie = " + id
+                        " AND m.id_movie = " + id
                     ).List<int>();
                 }
 
@@ -233,14 +233,39 @@ namespace ClientWeb.DAO.Nhibernate
                 using (var tx = session.BeginTransaction())
                 {
                     cote = (float)session.CreateSQLQuery(
-                        "SELECT m.average" +
-                        "FROM Film f, Ma_Vue_Moyenne m" +
+                        "SELECT m.average " +
+                        "FROM Film f, Ma_Vue_Moyenne m " +
                         "WHERE f.filmid = " + id +
-                        "AND m.id_movie = " + id
+                        " AND m.id_movie = " + id
                     ).UniqueResult();
                 }
 
                 return cote;
+            }
+        }
+
+        public int AnalyserNbLocations(string groupeAge, string province, string jourSemaine, string jourMois)
+        {
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
+            {
+                decimal nbLocations = 0;
+
+                using (var tx = session.BeginTransaction())
+                {
+                    nbLocations = (decimal)session.CreateSQLQuery(
+                        "SELECT COUNT(*) " +
+                        "FROM LocationEtoile l, TempsEtoile t, ClientEtoile c, FilmEtoile f " +
+                        "WHERE l.Temps_ID = t.Temps_ID" +
+                        (!jourMois.IsEmpty() ? " AND t.jour_mois = " + jourMois : "") + 
+                        (!jourSemaine.IsEmpty() ? " AND t.jour_semaine = " + jourSemaine : "") +
+                        " AND l.Client_ID = c.Client_ID" +
+                        " AND l.Film_ID = f.Film_ID" +
+                        (!province.IsEmpty() ? " AND c.province = '" + province + "'": "") +
+                        (!province.IsEmpty() ? " AND c.groupe_Age = " + groupeAge : "")
+                    ).UniqueResult();
+                }
+
+                return (int) nbLocations;
             }
         }
     }

@@ -289,6 +289,7 @@
     <None Include="SharedLibs\nhibernate-mapping.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Film\Analyse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

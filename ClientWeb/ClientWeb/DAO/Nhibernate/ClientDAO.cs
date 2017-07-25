@@ -13,8 +13,6 @@ namespace ClientWeb.DAO.Nhibernate
     {
         public Client GetClientParCourrielEtMotDePasse(string email, string mdp)
         {
-
-            
             using (ISession session = ClientSession.GetClientSession().OpenSession())
             {
                 Client client = null;

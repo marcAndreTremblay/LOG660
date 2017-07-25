@@ -204,5 +204,44 @@ namespace ClientWeb.DAO.Nhibernate
                 }
             }
         }
+
+        public int[] GetRecommendationsForFilmId(int id)
+        {
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
+            {
+                IList<int> recommendations;
+
+                using (var tx = session.BeginTransaction())
+                {
+                    recommendations = session.CreateSQLQuery(
+                        "SELECT m.correlation_value " +
+                        "FROM Film f, Ma_Vue_Recommendations m" +
+                        "WHERE f.filmid = " + id +
+                        "AND m.id_movie = " + id
+                    ).List<int>();
+                }
+
+                return recommendations.ToArray();
+            }
+        }
+        public float GetCoteMoyenneForFilmId(int id)
+        {
+            using (ISession session = ClientSession.GetClientSession().OpenSession())
+            {
+                float cote = 0;
+
+                using (var tx = session.BeginTransaction())
+                {
+                    cote = (float)session.CreateSQLQuery(
+                        "SELECT m.average" +
+                        "FROM Film f, Ma_Vue_Moyenne m" +
+                        "WHERE f.filmid = " + id +
+                        "AND m.id_movie = " + id
+                    ).UniqueResult();
+                }
+
+                return cote;
+            }
+        }
     }
 }

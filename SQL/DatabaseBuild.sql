@@ -87,8 +87,9 @@ dateLocation DATE,
 dateRetour DATE,  
 PRIMARY KEY(LocationID));
 
+
 CREATE TABLE Film
-(FilmID INTEGER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+(FilmID INTEGER,
 annee INTEGER, 
 titre VARCHAR(100), 
 pays VARCHAR(50), 

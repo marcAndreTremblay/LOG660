@@ -14,6 +14,7 @@ namespace ClientWeb.Controllers
         // GET: /Film/DetailsFilm
         public ActionResult DetailsFilm(int id)
         {
+            List<Film> recommendations = new List<Film>();
             if (!GestionConnexion.estConnecte())
             {
                 return RedirectToAction("Index", "Home");
@@ -25,19 +26,26 @@ namespace ClientWeb.Controllers
             var film = filmDao.GetFilmParId(id);
             film.NbCopieRestante = filmDao.GetNbCopiesRestantes(id);
 
+            int[] recommendationsIds = filmDao.GetRecommendationsForFilmId(id);
+
+            recommendations.Add(filmDao.GetFilmParId(recommendationsIds[0]));
+            recommendations.Add(filmDao.GetFilmParId(recommendationsIds[1]));
+            recommendations.Add(filmDao.GetFilmParId(recommendationsIds[2]));
+
             int nbRented =
                 locationClientDao.GetNumberOfRentedCopiesByClientIdAndFilmId(
                     ((Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"]).Id, id);
 
-            Client client = (Client) System.Web.HttpContext.Current.Session["UtilisateurConnecté"];
+            Client client = (Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"];
             client.NbLocationsEnCours = locationClientDao.GetNbLocationsEnCoursByClientId(client.Id);
-
 
             FilmViewModel vm = new FilmViewModel
             {
                 Film = film,
                 Client = (Client)System.Web.HttpContext.Current.Session["UtilisateurConnecté"],
-                Message = nbRented > 0 ? "Vous avez présentement " + nbRented + " copie(s) de ce film de loué" : ""
+                Message = nbRented > 0 ? "Vous avez présentement " + nbRented + " copie(s) de ce film de loué" : "",
+                Recommandation = recommendations,
+                Cote = filmDao.GetCoteMoyenneForFilmId(id)
             };
             return View(vm);
         }
